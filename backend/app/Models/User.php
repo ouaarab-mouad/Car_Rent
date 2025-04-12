@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     protected $fillable = [
+<<<<<<< HEAD
+        'name', 'email', 'password', 'phone',
+        'phone_verified_at', 'sms_code', 'sms_code_expires_at'
+    ];
+    
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'sms_code_expires_at' => 'datetime'
+=======
         'nom',
         'prenom',
         'email',
@@ -14,6 +24,7 @@ class User extends Model
         'mot_de_passe',
         'role',
         'autorisation_location'
+>>>>>>> b00891a7de77beacc3c748b6030ebabc2049ccdd
     ];
 
     protected $hidden = [
