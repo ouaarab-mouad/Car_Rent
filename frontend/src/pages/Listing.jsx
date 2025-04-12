@@ -1,3 +1,4 @@
+// src/pages/Listing.js
 import React, { useState } from "react";
 import { FaCar, FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
 import "./Listing.css";
@@ -61,34 +62,34 @@ export const Listing = () => {
   };
 
   return (
-    <div className="listing-container">
-      <h1 className="listing-title">
-        <FaCar className="icon-spacing" /> Available Cars
+    <div className="listing-page-container">
+      <h1 className="listing-page-title">
+        <FaCar className="listing-page-icon-spacing" /> Available Cars
       </h1>
       
-      <div className="search-container">
-        <FaSearch className="search-icon" />
+      <div className="listing-page-search-container">
+        <FaSearch className="listing-page-search-icon" />
         <input
           type="text"
           placeholder="Search by brand or model..."
-          className="search-input"
+          className="listing-page-search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      <div className="listing-grid">
+      <div className="listing-page-grid">
         {displayedListings.map((item, index) => (
-          <div key={index} className="listing-card">
-            <div className="image-container">
-              <img src={item.image} alt={`${item.brand} ${item.model}`} className="car-image" />
-              <div className="price-badge">{item.price}</div>
+          <div key={index} className="listing-page-card">
+            <div className="listing-page-image-container">
+              <img src={item.image} alt={`${item.brand} ${item.model}`} className="listing-page-car-image" />
+              <div className="listing-page-price-badge">{item.price}</div>
             </div>
-            <div className="car-details">
-              <h2 className="car-brand">{item.brand}</h2>
-              <h3 className="car-model">{item.model}</h3>
-              <button className="rent-button">
-                Rent Now <FaCar className="button-icon" />
+            <div className="listing-page-car-details">
+              <h2 className="listing-page-car-brand">{item.brand}</h2>
+              <h3 className="listing-page-car-model">{item.model}</h3>
+              <button className="listing-page-rent-button">
+                Rent Now <FaCar className="listing-page-button-icon" />
               </button>
             </div>
           </div>
@@ -96,14 +97,14 @@ export const Listing = () => {
       </div>
 
       {filteredListings.length > 4 && (
-        <button className="show-more-btn" onClick={toggleShowMore}>
+        <button className="listing-page-show-more-btn" onClick={toggleShowMore}>
           {visibleItems === 4 ? (
             <>
-              Show More <FaChevronDown className="btn-icon" />
+              Show More <FaChevronDown className="listing-page-btn-icon" />
             </>
           ) : (
             <>
-              Show Less <FaChevronUp className="btn-icon" />
+              Show Less <FaChevronUp className="listing-page-btn-icon" />
             </>
           )}
         </button>
