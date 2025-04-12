@@ -1,354 +1,640 @@
-/* Main Content Area */
+/* Base Styles */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
 
+section {
+  width: 100%;
+  padding: 4rem 0;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.hero-content {
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+  background: linear-gradient(135deg, #6200ee 0%, #3700b3 100%);
+  padding: 4rem 3rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  min-height: 600px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hero-text {
+  width: 50%;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #ff9800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-description {
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-primary {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: #f57c00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.hero-image {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 600px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Features Section */
+.features-section {
+  display: flex;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.features-container {
+  width: 90%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+
+.feature-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  background-color: #f0f4ff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon img {
+  width: 60%;
+  height: auto;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.feature-card p {
+  text-align: center;
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* How It Works Section */
+.how-it-works {
+  display: flex;
+  justify-content: center;
+  padding: 5rem 0;
+}
+
+.how-it-works-container {
+  width: 90%;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.steps-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateX(10px);
+}
+
+.step-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #5937E0;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.step-content p {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Featured Cars Section */
+.featured-cars {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+}
+
+.section-header {
+  width: 90%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.view-all {
+  color: #5937E0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.view-all:hover {
+  color: #3700b3;
+  text-decoration: underline;
+}
+
+.cars-grid {
+  width: 90%;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.car-card {
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.car-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.car-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.car-card:hover .car-image img {
+  transform: scale(1.05);
+}
+
+.car-details {
+  padding: 1.5rem;
+}
+
+.car-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.car-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.car-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #5937E0;
+}
+
+.car-price span {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #666;
+}
+
+.car-type {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.car-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.car-features span {
+  background-color: #f0f4ff;
+  color: #5937E0;
+  padding: 0.375rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-view-details {
+  width: 100%;
+  background-color: #5937E0;
+  color: white;
+  border: none;
+  padding: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-view-details:hover {
+  background-color: #4926c4;
+}
+
+/* Stats Section */
+.stats-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+  background-color: #5937E0;
+  border-radius: 2rem;
+  margin: 0 1rem 5rem;
+  overflow: hidden;
+}
+
+.stats-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.stats-background img {
+  width: 40%;
+  opacity: 0.1;
+  filter: brightness(2);
+}
+
+.stats-content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1400px;
+  text-align: center;
+}
+
+.stats-content h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.stats-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.125rem;
+  max-width: 700px;
+  margin: 0 auto 3.5rem;
+  line-height: 1.6;
+}
+
+.stats-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: white;
+  padding: 1.5rem 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-info strong {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.stat-info p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  margin: 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 3rem;
+  }
   
-  /* Hero Content Styles */
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .stats-content h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 992px) {
   .hero-content {
-    position: relative;
-    align-self: center;
-    width: 80%;
-    background-color: #6200ee;
-    padding: 32px;
-    border-radius: 8px;
-    margin-top: 16px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    
-    min-height: 800px;
-    font-family:Roboto;
+    padding: 3rem 2rem;
+    min-height: 500px;
   }
   
-  .hero-text {
-    width: 50%;
-    z-index: 1;
-  
-  }
-  
-  h1.hero-title {
-    font-size: 5rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 24px;
-  }
-  
-  .highlight {
-    color: #ff9800;
+  .hero-title {
+    font-size: 2.5rem;
   }
   
   .hero-description {
-    color: white;
-    font-size: 2rem;
-    margin-bottom: 32px;
-    line-height: 1.5;
-    width: 90%;
+    font-size: 1.125rem;
   }
   
-  .hero-buttons {
-    display: flex;
-    gap: 16px;
-    margin-left: 200px;
+  .features-container {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .btn-primary {
-    background-color: #ff9800;
-    color: white;
-    border: none;
-    padding: 20px 35px;
-    border-radius: 8px;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  .feature-card {
+    width: 100%;
+    max-width: 500px;
   }
   
-  .btn-primary:hover {
-    background-color: #f57c00;
+  .how-it-works-container {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  .image-container {
+    order: 2;
+  }
+  
+  .steps-container {
+    order: 1;
+  }
+  
+  .stat-card {
+    padding: 1rem 1.5rem;
+  }
+  
+  .stat-info strong {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    flex-direction: column;
+    padding: 3rem 1.5rem;
+  }
+  
+  .hero-text, .hero-image {
+    width: 100%;
   }
   
   .hero-image {
-    bottom: 0;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
+    margin-top: 2rem;
+    order: 2;
   }
   
-  .hero-image img {
-    height: 100%;
-    width: 100%;
-    margin-right: 190px;
-    object-fit: contain;
-
-    
+  .hero-text {
+    order: 1;
   }
-  .chooseSection{
-    margin-top: 50px;
-    width: 90%;
-    align-self: center;
-    display: flex;
-    padding: 60px;
+  
+  .hero-title {
+    font-size: 2.25rem;
   }
-  .chooseSection .card{
-    display: flex;
-    gap: 15px;
+  
+  .hero-buttons {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
   }
-  .chooseSection .card p{
-    width: 70%;
+  
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
     text-align: center;
-    color: grey;
   }
-  .AboutUs{
-    margin-top: 150px;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    gap: 100px;
+  
+  .section-header h2 {
+    font-size: 1.75rem;
   }
-  .AboutUsText{
-    display: flex;
+  
+  .cars-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .stats-cards {
     flex-direction: column;
-    gap: 40px;
-    width: 40%;
-  }
-  .AboutUsText .card{
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .AboutUsText .card p span{
-    background-color: #5937E0;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size:1.3rem;
-    border-radius: 50%;
-
-  }
-  .AboutUsText .card p.title{
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-size:1.5rem;
-    font-weight: 600;
-  }
-  .AboutUsText .card p.paragraphe{
-    width: 90%;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: grey;
-  }
-
-  .carSection{
-    margin-top: 150px;
-    width: 80%;
-    padding: 15px;
-    align-self: center;
-    display: flex;
-    gap: 50px;
-    flex-direction: column;
-  }
-
-  .carSectionHeader{
-    display: flex;
-    justify-content: space-between;
     align-items: center;
   }
-  .carSectionHeader h1{
-    font-size: 3rem;
-  }
-  .carSectionHeader a{
-    all: unset;
-    font-size: 1.5rem;
-    font-weight: 700;
-    cursor: pointer;
-    margin-right: 50px;
-  }
-  .carSectionCards{
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    align-self: flex-start;
-    display: flex;
-    justify-content: center;
-  }
-  .carSectionCard{
-    width: 32%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    -webkit-box-shadow: 5px 2px 15px -4px #000000; 
-    box-shadow: 5px 2px 15px -4px #0000002d;
-    border-radius: 10px;
-  }
-  .carImg{
-    width: 100%;
-    border-radius: 15px;
-
-  }
-  .carImg img{
-    width: 100%;
-    border-radius: 15px;
-  }
-  .carInfo{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-
-  }
-  .carInfo div{
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-  }
-  .carInfo div h3{
-    font-size: 1.8rem;
-  }
-  .carInfo div h4{
-    font-size: 1.9rem;
-    font-weight: 700;
-  }
-  .carInfo div p{
-    font-size: 1.2rem;
-    color: grey;
-  }
-  .condtionSections{
-    width: 100%;
-    margin-top: 10px;
-  }
-  .carInfo .condtionSections p{
-    font-size: 1.3rem;
-    font-weight: 700;
-  }
-  .carSectionCards button{
-    all: unset;
-    text-align: center;
-    width: 100%;
-    height: 70px;
-    font-size: 1.5rem;
-    margin-top: 40px;
-    cursor: pointer;
-    border-radius: 12px;
-    font-weight: 600;
-    background-color: #5937E0;
-    color: white;
-  }
-
-  .OtherInfoSection{
-    margin-top: 150px;
-    display: flex;
-    gap: 80px;
-    flex-direction: column;
-    background-color: #5937E0;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    height: 600px;
-    width: 99%;
-    align-self: center;
-    border-radius: 50px;
-
-    
-
-  }
-  .backgroundCar {
-      width: 100%;
-      display: flex;
-      position: absolute;      
-      justify-content: center;
-      align-items: center;
-      }
-.backgroundCar img{
-    width: 40%;
-    opacity: 0.2;
-  }
-  .OtherInfo{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px ;
-    z-index: 3;
-
-  }
-  .OtherInfoSection .OtherInfo h1{
-    font-size: 5rem;
-    font-weight: 700;
-    color: white;
-
-  }
-  .OtherInfoSection .OtherInfo p{
-    width: 50%;
-    text-align: center;
-    color: white;
-    font-size: 1.2rem;
-
-  }
-  .OtherInfoCards{
-    display: flex;
+  
+  .stat-card {
     width: 100%;
     justify-content: center;
-    gap: 90px;
-    z-index: 3;
   }
-  .OtherInfoCard{
-    align-self: flex-start;
-    display: flex;
-    justify-content: space-between;    
-    align-items: center;
-    gap: 90px;    
-    border-radius: 15px;
-    background-color: white;
-    padding: 25px 60px;
-  }
-  .OtherInfoCard div{
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+}
 
+@media (max-width: 576px) {
+  .hero-content {
+    padding: 2rem 1rem;
   }
-  .OtherInfoCard strong{
-    font-weight: 700;
-    font-size: 3rem;
+  
+  .hero-title {
+    font-size: 2rem;
   }
-  .OtherInfoCard p{
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: gray;
+  
+  .hero-description {
+    font-size: 1rem;
   }
-  .OtherInfoCard img{
-    width: 100px;
+  
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
   }
-
-
-  @media (max-width: 768px) {       
-    .hero-content {
-      flex-direction: column;
-    }
-    
-    .hero-text {
-      max-width: 100%;
-      margin-bottom: 200px;
-    }
-    
-    .hero-image {
-      position: relative;
-      width: 100%;
-      height: 200px;
-      right: auto;
-      bottom: auto;
-      margin-top: 24px;
-    }
+  
+  .feature-card {
+    padding: 1.5rem 1rem;
   }
+  
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .step-card {
+    padding: 1rem;
+  }
+  
+  .car-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .stats-content h2 {
+    font-size: 1.75rem;
+  }
+  
+  .stats-content p {
+    font-size: 1rem;
+  }
+}
