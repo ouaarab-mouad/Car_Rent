@@ -2,22 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
+<<<<<<< HEAD
         'name', 'email', 'password', 'phone',
         'phone_verified_at', 'sms_code', 'sms_code_expires_at'
     ];
@@ -26,28 +16,48 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'sms_code_expires_at' => 'datetime'
+=======
+        'nom',
+        'prenom',
+        'email',
+        'numero_telephone',
+        'mot_de_passe',
+        'role',
+        'autorisation_location'
+>>>>>>> b00891a7de77beacc3c748b6030ebabc2049ccdd
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
-        'password',
+        'mot_de_passe',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function getFullNameAttribute()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->nom . ' ' . $this->prenom;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'administrateur';
+    }
+
+    public function isLoueur()
+    {
+        return $this->role === 'loueur';
+    }
+
+    public function isUtilisateur()
+    {
+        return $this->role === 'utilisateur';
+    }
+
+    public function isAutorise()
+    {
+        return $this->autorisation_location === 'autorisé';
     }
 }
