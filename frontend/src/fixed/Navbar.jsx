@@ -13,7 +13,7 @@ export const Navbar = () => {
       </div>
       <div className="navbar-links">
         <a href="#" className="nav-link">Home</a>
-        <a href="#" className="nav-link">Vehicles</a>
+        <a href="http://localhost:3000/Listing" className="nav-link">Vehicles</a>
         <a href="#" className="nav-link">Details</a>
         <a href="#" className="nav-link">About Us</a>
         <a href="#" className="nav-link">Contact Us</a>
