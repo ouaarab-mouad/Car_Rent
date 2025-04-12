@@ -1,0 +1,354 @@
+/* Main Content Area */
+
+  
+  /* Hero Content Styles */
+  .hero-content {
+    position: relative;
+    align-self: center;
+    width: 80%;
+    background-color: #6200ee;
+    padding: 32px;
+    border-radius: 8px;
+    margin-top: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    
+    min-height: 800px;
+    font-family:Roboto;
+  }
+  
+  .hero-text {
+    width: 50%;
+    z-index: 1;
+  
+  }
+  
+  h1.hero-title {
+    font-size: 5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 24px;
+  }
+  
+  .highlight {
+    color: #ff9800;
+  }
+  
+  .hero-description {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    width: 90%;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    margin-left: 200px;
+  }
+  
+  .btn-primary {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 20px 35px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #f57c00;
+  }
+  
+  .hero-image {
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  
+  .hero-image img {
+    height: 100%;
+    width: 100%;
+    margin-right: 190px;
+    object-fit: contain;
+
+    
+  }
+  .chooseSection{
+    margin-top: 50px;
+    width: 90%;
+    align-self: center;
+    display: flex;
+    padding: 60px;
+  }
+  .chooseSection .card{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .chooseSection .card p{
+    width: 70%;
+    text-align: center;
+    color: grey;
+  }
+  .AboutUs{
+    margin-top: 150px;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 100px;
+  }
+  .AboutUsText{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 40%;
+  }
+  .AboutUsText .card{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .AboutUsText .card p span{
+    background-color: #5937E0;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size:1.3rem;
+    border-radius: 50%;
+
+  }
+  .AboutUsText .card p.title{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size:1.5rem;
+    font-weight: 600;
+  }
+  .AboutUsText .card p.paragraphe{
+    width: 90%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: grey;
+  }
+
+  .carSection{
+    margin-top: 150px;
+    width: 80%;
+    padding: 15px;
+    align-self: center;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+  }
+
+  .carSectionHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .carSectionHeader h1{
+    font-size: 3rem;
+  }
+  .carSectionHeader a{
+    all: unset;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 50px;
+  }
+  .carSectionCards{
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    display: flex;
+    justify-content: center;
+  }
+  .carSectionCard{
+    width: 32%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 5px 2px 15px -4px #000000; 
+    box-shadow: 5px 2px 15px -4px #0000002d;
+    border-radius: 10px;
+  }
+  .carImg{
+    width: 100%;
+    border-radius: 15px;
+
+  }
+  .carImg img{
+    width: 100%;
+    border-radius: 15px;
+  }
+  .carInfo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+
+  }
+  .carInfo div{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  .carInfo div h3{
+    font-size: 1.8rem;
+  }
+  .carInfo div h4{
+    font-size: 1.9rem;
+    font-weight: 700;
+  }
+  .carInfo div p{
+    font-size: 1.2rem;
+    color: grey;
+  }
+  .condtionSections{
+    width: 100%;
+    margin-top: 10px;
+  }
+  .carInfo .condtionSections p{
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .carSectionCards button{
+    all: unset;
+    text-align: center;
+    width: 100%;
+    height: 70px;
+    font-size: 1.5rem;
+    margin-top: 40px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-weight: 600;
+    background-color: #5937E0;
+    color: white;
+  }
+
+  .OtherInfoSection{
+    margin-top: 150px;
+    display: flex;
+    gap: 80px;
+    flex-direction: column;
+    background-color: #5937E0;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    height: 600px;
+    width: 99%;
+    align-self: center;
+    border-radius: 50px;
+
+    
+
+  }
+  .backgroundCar {
+      width: 100%;
+      display: flex;
+      position: absolute;      
+      justify-content: center;
+      align-items: center;
+      }
+.backgroundCar img{
+    width: 40%;
+    opacity: 0.2;
+  }
+  .OtherInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px ;
+    z-index: 3;
+
+  }
+  .OtherInfoSection .OtherInfo h1{
+    font-size: 5rem;
+    font-weight: 700;
+    color: white;
+
+  }
+  .OtherInfoSection .OtherInfo p{
+    width: 50%;
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+
+  }
+  .OtherInfoCards{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 90px;
+    z-index: 3;
+  }
+  .OtherInfoCard{
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;    
+    align-items: center;
+    gap: 90px;    
+    border-radius: 15px;
+    background-color: white;
+    padding: 25px 60px;
+  }
+  .OtherInfoCard div{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+  }
+  .OtherInfoCard strong{
+    font-weight: 700;
+    font-size: 3rem;
+  }
+  .OtherInfoCard p{
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: gray;
+  }
+  .OtherInfoCard img{
+    width: 100px;
+  }
+
+
+  @media (max-width: 768px) {       
+    .hero-content {
+      flex-direction: column;
+    }
+    
+    .hero-text {
+      max-width: 100%;
+      margin-bottom: 200px;
+    }
+    
+    .hero-image {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      right: auto;
+      bottom: auto;
+      margin-top: 24px;
+    }
+  }

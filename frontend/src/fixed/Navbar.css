@@ -1,0 +1,75 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-icon {
+    margin-right: 8px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .logo-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .nav-link:hover {
+    color: #6200ee;
+  }
+  
+  .navbar-contact {
+    display: flex;
+    align-items: center;
+  }
+  
+  .phone-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    color: #6200ee;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .help-text {
+    font-size: 0.875rem;
+  }
+  
+  .phone-number {
+    font-size: 0.875rem;
+    font-weight: bold;
+  }
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .navbar-links {
+      width: 100%;
+      justify-content: space-between;
+    }}
