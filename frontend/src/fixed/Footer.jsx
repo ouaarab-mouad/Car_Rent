@@ -1,7 +1,6 @@
 // src/fixed/Footer.js
 import React from "react";
-import './Footer.css';
-
+import './Footer.css'
 export const Footer = () => {
   return (
     <footer>
@@ -95,4 +94,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};    
+};  

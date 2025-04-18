@@ -1,177 +1,250 @@
-/* src/pages/Listing.css */
+/* Listing.css */
 .listing-page-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.listing-page-title {
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.listing-page-icon-spacing {
+  margin-right: 15px;
+  color: #6c5ce7;
+}
+
+.listing-page-search-container {
+  position: relative;
+  margin-bottom: 25px;
+  max-width: 600px;
+}
+
+.listing-page-search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.listing-page-search-input {
+  width: 100%;
+  padding: 12px 20px 12px 45px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.listing-page-search-input:focus {
+  border-color: #6c5ce7;
+}
+
+.listing-page-filter-group {
+  margin-bottom: 25px;
+}
+
+.listing-page-filter-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #555;
+}
+
+.listing-page-select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.listing-page-range-slider {
+  width: 100%;
+  max-width: 300px;
+  height: 5px;
+  margin: 15px 0;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.listing-page-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #6c5ce7;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.listing-page-price-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+  font-size: 12px;
+  color: #777;
+}
+
+.listing-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.listing-page-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.listing-page-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.listing-page-image-container {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.listing-page-car-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.listing-page-card:hover .listing-page-car-image {
+  transform: scale(1.05);
+}
+
+.listing-page-price-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(108, 92, 231, 0.9);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.listing-page-car-details {
+  padding: 20px;
+}
+
+.listing-page-car-brand {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.listing-page-car-model {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #6c5ce7;
+}
+
+.listing-page-car-type {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.listing-page-car-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #555;
+}
+
+.listing-page-rent-button {
+  width: 100%;
+  padding: 12px;
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.3s;
+}
+
+.listing-page-rent-button:hover {
+  background: #5649c0;
+}
+
+.listing-page-button-icon {
+  font-size: 14px;
+}
+
+.listing-page-show-more-btn {
+  display: block;
+  margin: 40px auto 0;
+  padding: 12px 25px;
+  background: white;
+  color: #6c5ce7;
+  border: 2px solid #6c5ce7;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.listing-page-show-more-btn:hover {
+  background: #6c5ce7;
+  color: white;
+}
+
+.listing-page-btn-icon {
+  transition: transform 0.3s;
+}
+
+.listing-page-show-more-btn:hover .listing-page-btn-icon {
+  transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+  .listing-page-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
   
   .listing-page-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #2c3e50;
-    font-size: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 24px;
   }
-  
-  .listing-page-icon-spacing {
-    margin-right: 15px;
-    color: #3498db;
-  }
-  
-  .listing-page-search-container {
-    display: flex;
-    align-items: center;
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    position: relative;
-  }
-  
-  .listing-page-search-input {
-    width: 100%;
-    padding: 12px 20px 12px 40px;
-    border: 2px solid #ddd;
-    border-radius: 30px;
-    font-size: 1rem;
-    transition: all 0.3s;
-  }
-  
-  .listing-page-search-input:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
-  }
-  
-  .listing-page-search-icon {
-    position: absolute;
-    left: 15px;
-    color: #777;
+}
+
+@media (max-width: 480px) {
+  .listing-page-container {
+    padding: 15px;
   }
   
   .listing-page-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 1fr;
   }
-  
-  .listing-page-card {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .listing-page-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  }
-  
-  .listing-page-image-container {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-  }
-  
-  .listing-page-car-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  
-  .listing-page-card:hover .listing-page-car-image {
-    transform: scale(1.05);
-  }
-  
-  .listing-page-price-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: rgba(52, 152, 219, 0.9);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  
-  .listing-page-car-details {
-    padding: 1.5rem;
-    text-align: center;
-  }
-  
-  .listing-page-car-brand {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
-  }
-  
-  .listing-page-car-model {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: #7f8c8d;
-    font-weight: normal;
-  }
-  
-  .listing-page-rent-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  
-  .listing-page-rent-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-  }
-  
-  .listing-page-button-icon {
-    font-size: 0.9rem;
-  }
-  
-  .listing-page-show-more-btn {
-    display: block;
-    margin: 3rem auto 0;
-    background: none;
-    border: 2px solid #3498db;
-    color: #3498db;
-    padding: 0.8rem 1.8rem;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .listing-page-show-more-btn:hover {
-    background-color: #3498db;
-    color: white;
-  }
-  
-  .listing-page-btn-icon {
-    font-size: 0.9rem;
-  }
-  
-  @media (max-width: 768px) {
-    .listing-page-title {
-      font-size: 2rem;
-    }
-    
-    .listing-page-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+} 
