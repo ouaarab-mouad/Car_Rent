@@ -12,8 +12,8 @@ export const Navbar = () => {
         <span className="logo-text">DriveEase</span>
       </div>
       <div className="navbar-links">
-        <a href="#" className="nav-link">Home</a>
-        <a href="http://localhost:3000/Listing" className="nav-link">Vehicles</a>
+        <a href="http://localhost:3000/" className="nav-link">Home</a>
+        <a href="http://localhost:3000/Search" className="nav-link">Vehicles</a>
         <a href="#" className="nav-link">Details</a>
         <a href="#" className="nav-link">About Us</a>
         <a href="#" className="nav-link">Contact Us</a>
