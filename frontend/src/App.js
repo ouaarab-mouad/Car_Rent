@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Listing } from "./pages/Listing";
 import { Navbar } from "./fixed/Navbar";
-import {SearchFilter} from "./pages/SearchFilter";
+import {SearchFilter} from "./pages/Search&Filter";
 import { Footer } from "./fixed/Footer";
 import './App.css';
 

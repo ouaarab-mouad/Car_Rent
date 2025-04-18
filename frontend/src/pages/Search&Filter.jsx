@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './SearchFilter.css';
+import './Search&Filter.css';
 import { FaChevronDown, FaUserCircle, FaCalendarAlt, FaPlus } from 'react-icons/fa';
 import { carData, brands, locations, colors, categories } from '../data/CarData';
 
