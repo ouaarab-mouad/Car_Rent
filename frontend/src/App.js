@@ -3,8 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Listing } from "./pages/Listing";
 import { Navbar } from "./fixed/Navbar";
+import {SearchFilter} from "./pages/SearchFilter";
 import { Footer } from "./fixed/Footer";
 import './App.css';
+import { ListerUsers } from "./pages/Admin/ListerUsers";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/listing" element={<Listing />} />
+            <Route path="/search" element={<SearchFilter />} />
+            <Route path="/admin/users" element={<ListerUsers/>} />            
           </Routes>
         </main>
         <Footer />
