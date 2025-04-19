@@ -16,6 +16,11 @@ body {
   background-color: #f3f4f6;
 }
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+.main-content{
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+}
 
 
 

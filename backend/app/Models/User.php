@@ -3,25 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
 
     protected $fillable = [
-        'email_verified_at' => 'datetime',
-        'phone_verified_at' => 'datetime',
-        'sms_code_expires_at' => 'datetime',
-        'name',
+        'nom',
         'prenom',
+        'EnterpriseName',
         'email',
-        'numero_telephone',
-        'mot_de_passe',
+        'phone',
+        'password',
+        'licence',
         'role',
-        'autorisation_location'
     ];
 
     protected $hidden = [
-        'mot_de_passe',
+        'password',
         'remember_token',
     ];
 
@@ -31,7 +32,7 @@ class User extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->nom . ' ' . $this->prenom;
+        return trim($this->nom . ' ' . $this->prenom);
     }
 
     public function isAdmin()
@@ -44,13 +45,13 @@ class User extends Model
         return $this->role === 'loueur';
     }
 
-    public function isUtilisateur()
+    public function isClient()
     {
-        return $this->role === 'utilisateur';
+        return $this->role === 'client';
     }
 
-    public function isAutorise()
+    public function hasLicence()
     {
-        return $this->autorisation_location === 'autorisé';
+        return !empty($this->licence);
     }
 }
