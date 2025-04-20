@@ -10,5 +10,5 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/users',[UserController::class,'index']);
-Route::delete('/users/{id}',[UserController::class,'deleteUser']);
+Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 Route::put('/userRole/{id}',action: [UserController::class,'changeUserRole']);
