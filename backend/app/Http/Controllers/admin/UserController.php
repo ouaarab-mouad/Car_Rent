@@ -41,10 +41,17 @@ class UserController extends Controller
 {
     // Validate input
     $request->validate([
-        'role' => 'required|string|in:client,administrateur,loueur' // Adjust roles as needed
+        'role' => 'required|string|in:client,loueur' // Updated to match frontend options
     ]);
 
     $user = User::find($id);
+
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found.'
+        ], 404);
+    }
 
     // Update the role
     $user->role = $request->role;
@@ -62,4 +69,20 @@ class UserController extends Controller
         ], 500);
     }
 }
+    public function getUserDetails($id)
+    {
+        $user = User::with(['reservations', 'vehicles'])->find($id);
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ]);
+    }
 }

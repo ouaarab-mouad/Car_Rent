@@ -30,6 +30,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'client_id');
+    }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Voiture::class, 'utilisateur_id');
+    }
+
     public function getFullNameAttribute()
     {
         return trim($this->nom . ' ' . $this->prenom);

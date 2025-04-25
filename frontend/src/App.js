@@ -7,6 +7,7 @@ import {SearchFilter} from "./pages/SearchFilter";
 import { Footer } from "./fixed/Footer";
 import './App.css';
 import { ListerUsers } from "./pages/Admin/ListerUsers";
+import { UserDetails } from "./pages/Admin/UserDetails";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/listing" element={<Listing />} />
             <Route path="/search" element={<SearchFilter />} />
-            <Route path="/admin/users" element={<ListerUsers/>} />            
+            <Route path="/admin/users" element={<ListerUsers/>} />
+            <Route path="/admin/users/:id" element={<UserDetails />} />
           </Routes>
         </main>
         <Footer />

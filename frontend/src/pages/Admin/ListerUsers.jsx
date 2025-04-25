@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import './ListeUsers.css'
 import ClipLoader from "react-spinners/ClipLoader";
+import { useNavigate } from 'react-router-dom';
 
 export const ListerUsers = () => {
     const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ export const ListerUsers = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
     const [editingUser, setEditingUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/users')
@@ -37,21 +39,24 @@ export const ListerUsers = () => {
                 role: newRole
             });
             
-            setUsers(prevUsers => 
-                prevUsers.map(user => 
-                    user.id === userId ? { ...user, role: newRole } : user
-                )
-            );
-            
-            
-            setMessage({
-                type: 'success',
-                text: 'Role updated successfully'
-            });
+            if (res.data.success) {
+                setUsers(prevUsers => 
+                    prevUsers.map(user => 
+                        user.id === userId ? { ...user, role: newRole } : user
+                    )
+                );
+                
+                setMessage({
+                    type: 'success',
+                    text: res.data.message || 'Role updated successfully'
+                });
+            } else {
+                throw new Error(res.data.message || 'Failed to update role');
+            }
         } catch (error) {
             setMessage({
                 type: 'error',
-                text: error.response?.data?.message || 'Failed to update role'
+                text: error.response?.data?.message || error.message || 'Failed to update role'
             });
         }
     };
@@ -74,6 +79,10 @@ export const ListerUsers = () => {
           setShowDeleteModal(false);
           setUserToDelete(null);
         }
+    };
+
+    const handleDetailsClick = (userId) => {
+        navigate(`/admin/users/${userId}`);
     };
 
     // Message component
@@ -134,7 +143,7 @@ export const ListerUsers = () => {
     };
 
     if (loading) return (
-        <div className="loader-container">
+        <div className="loader-container" style={{marginTop:'100px'}} >
             <ClipLoader
                 color="#6342ff"
                 loading={loading}
@@ -181,8 +190,11 @@ export const ListerUsers = () => {
                                 </select>
                             </td>
                             <td>
-                                <button className="action-btn edit-btn">
-                                    <i className="fas fa-edit">Edit</i>
+                                <button 
+                                    className="action-btn edit-btn"
+                                    onClick={() => handleDetailsClick(user.id)}
+                                >
+                                    <i className="fas fa-edit">Details</i>
                                 </button>
                                 <button 
                                     className="action-btn delete-btn" 

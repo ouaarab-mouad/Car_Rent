@@ -10,5 +10,6 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/users',[UserController::class,'index']);
+Route::get('/user/{id}',[UserController::class,'getUserDetails']);
 Route::delete('/user/{id}',[UserController::class,'deleteUser']);
-Route::put('/userRole/{id}',action: [UserController::class,'changeUserRole']);
+Route::put('/user/{id}/role', [UserController::class, 'changeUserRole']);
