@@ -14,9 +14,10 @@ export const Navbar = () => {
       <div className="navbar-links">
         <a href="http://localhost:3000/" className="nav-link">Home</a>
         <a href="http://localhost:3000/Search" className="nav-link">Vehicles</a>
-        <a href="#" className="nav-link">Details</a>
-        <a href="#" className="nav-link">About Us</a>
+        <a href="http://localhost:3000/addcar" className="nav-link">Add Car</a>
+        <a href="http://localhost:3000/manage-cars" className="nav-link">delete and modify</a>
         <a href="#" className="nav-link">Contact Us</a>
+
       </div>
       <div className="navbar-contact">
         <svg className="phone-icon" viewBox="0 0 24 24" fill="currentColor">
