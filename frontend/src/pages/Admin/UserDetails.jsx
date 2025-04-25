@@ -30,6 +30,46 @@ export const UserDetails = () => {
         fetchUserDetails();
     }, [id]);
 
+    const handleApprove = async () => {
+        try {
+            const response = await axios.put(`http://localhost:8000/api/user/${id}/role`, {
+                role: 'loueur',
+                role_status: 'approved'
+            });
+            
+            if (response.data.success) {
+                setUser(prev => ({
+                    ...prev,
+                    role: 'loueur',
+                    role_status: 'approved'
+                }));
+                alert('User approved as loueur successfully!');
+            }
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to approve user');
+        }
+    };
+
+    const handleReject = async () => {
+        try {
+            const response = await axios.put(`http://localhost:8000/api/user/${id}/role`, {
+                role: 'client',
+                role_status: 'rejected'
+            });
+            
+            if (response.data.success) {
+                setUser(prev => ({
+                    ...prev,
+                    role: 'client',
+                    role_status: 'rejected'
+                }));
+                alert('User rejected successfully!');
+            }
+        } catch (error) {
+            alert(error.response?.data?.message || 'Failed to reject user');
+        }
+    };
+
     if (loading) {
         return (
             <div className="loader-container">
@@ -98,8 +138,56 @@ export const UserDetails = () => {
                             <label>Enterprise:</label>
                             <span>{user.EnterpriseName || 'N/A'}</span>
                         </div>
+                        <div className="info-item">
+                            <label>Status:</label>
+                            <span className={`status-badge ${user.role_status}`}>
+                                {user.role_status === 'pending' ? 'Pending Approval' : 
+                                 user.role_status === 'approved' ? 'Approved' : 
+                                 user.role_status === 'rejected' ? 'Rejected' : 'N/A'}
+                            </span>
+                        </div>
                     </div>
                 </div>
+
+                {user.licence && (
+                    <div className="licence-section">
+                        <h3>Licence Document</h3>
+                        <div className="licence-content">
+                            <div className="licence-preview">
+                                <img 
+                                    src={`http://localhost:8000/storage/${user.licence}`} 
+                                    alt="Licence Document"
+                                    className="licence-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = 'https://via.placeholder.com/400x300?text=Document+Not+Found';
+                                    }}
+                                />
+                                <div className="licence-actions">
+                                    <a 
+                                        href={`http://localhost:8000/storage/${user.licence}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="view-button"
+                                    >
+                                        <i className="fas fa-external-link-alt"></i> View Full Size
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {user.requested_role === 'loueur' && user.role_status === 'pending' && (
+                    <div className="approval-actions">
+                        <button onClick={handleApprove} className="approve-button">
+                            <i className="fas fa-check"></i> Approve as Loueur
+                        </button>
+                        <button onClick={handleReject} className="reject-button">
+                            <i className="fas fa-times"></i> Reject Request
+                        </button>
+                    </div>
+                )}
 
                 {user.reservations && user.reservations.length > 0 && (
                     <div className="reservations-section">

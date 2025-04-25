@@ -5,33 +5,20 @@ import { carData } from "../data/CarData";
 import "./Listing.css";
 
 export const Listing = () => {
-  const [visibleItems, setVisibleItems] = useState(6);
+  const [vehicles] = useState(carData);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("All");
   const [priceRange, setPriceRange] = useState(2000);
 
-  const filteredListings = carData.filter(car => {
-    // Search filter
-    const matchesSearch = 
-      car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      car.brand.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Brand filter
-    const matchesBrand = selectedBrand === "All" || car.brand === selectedBrand;
-    
-    // Price filter
-    const matchesPrice = car.price <= priceRange;
-    
+  const filteredVehicles = vehicles.filter(vehicle => {
+    const matchesSearch = vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        vehicle.brand.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesBrand = selectedBrand === "All" || vehicle.brand === selectedBrand;
+    const matchesPrice = vehicle.price <= priceRange;
     return matchesSearch && matchesBrand && matchesPrice;
   });
 
-  const displayedListings = filteredListings.slice(0, visibleItems);
-
-  const loadMoreCars = () => {
-    setVisibleItems(prev => prev + 6);
-  };
-
-  const brands = ["All", ...new Set(carData.map(car => car.brand))];
+  const brands = ["All", ...new Set(vehicles.map(vehicle => vehicle.brand))];
 
   return (
     <div className="listing-page-container">
@@ -39,77 +26,77 @@ export const Listing = () => {
         <FaCar className="listing-page-icon-spacing" /> Available Cars
       </h1>
       
-      <div className="listing-page-search-container">
-        <FaSearch className="listing-page-search-icon" />
-        <input
-          type="text"
-          placeholder="Search by car name or brand..."
-          className="listing-page-search-input"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      <div className="listing-page-content-wrapper">
+        {/* Left Side - Filters */}
+        <div className="listing-page-filters-section">
+          <div className="listing-page-search-container">
+            <input
+              type="text"
+              className="listing-page-search-input"
+              placeholder="Search cars..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
-      {/* Brand Filter */}
-      <div className="listing-page-filter-group">
-        <label>Brand</label>
-        <select 
-          className="listing-page-select"
-          value={selectedBrand}
-          onChange={(e) => setSelectedBrand(e.target.value)}
-        >
-          {brands.map(brand => (
-            <option key={brand} value={brand}>{brand}</option>
-          ))}
-        </select>
-      </div>
+          <div className="listing-page-filter-group">
+            <label>Brand</label>
+            <select
+              className="listing-page-select"
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+            >
+              {brands.map(brand => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+          </div>
 
-      {/* Price Filter */}
-      <div className="listing-page-filter-group">
-        <label>Max Price: {priceRange} DH/J</label>
-        <input
-          type="range"
-          min="350"
-          max="2000"
-          value={priceRange}
-          onChange={(e) => setPriceRange(parseInt(e.target.value))}
-          className="listing-page-range-slider"
-        />
-        <div className="listing-page-price-labels">
-          <span>350</span>
-          <span>2000</span>
-        </div>
-      </div>
-
-      <div className="listing-page-grid">
-        {displayedListings.map((car) => (
-          <div key={car.id} className="listing-page-card">
-            <div className="listing-page-image-container">
-              <img src={car.image} alt={`${car.brand} ${car.name}`} className="listing-page-car-image" />
-              <div className="listing-page-price-badge">{car.price} DH/J</div>
-            </div>
-            <div className="listing-page-car-details">
-              <h2 className="listing-page-car-brand">{car.brand}</h2>
-              <h3 className="listing-page-car-model">{car.name}</h3>
-              <p className="listing-page-car-type">{car.type}</p>
-              <div className="listing-page-car-info">
-                <span>{car.location}</span>
-                <span>{car.transmission}</span>
-                <span>{car.seats} seats</span>
-              </div>
-              <button className="listing-page-rent-button">
-                Rent Now <FaCar className="listing-page-button-icon" />
-              </button>
+          <div className="listing-page-filter-group">
+            <label>Max Price: {priceRange} DH/J</label>
+            <input
+              type="range"
+              className="listing-page-range-slider"
+              min="350"
+              max="2000"
+              value={priceRange}
+              onChange={(e) => setPriceRange(parseInt(e.target.value))}
+            />
+            <div className="listing-page-price-labels">
+              <span>350</span>
+              <span>2000</span>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
 
-      {filteredListings.length > visibleItems && (
-        <button className="listing-page-show-more-btn" onClick={loadMoreCars}>
-          Show More <FaPlus className="listing-page-btn-icon" />
-        </button>
-      )}
+        {/* Right Side - Cars Grid */}
+        <div className="listing-page-content">
+          <div className="listing-page-grid">
+            {filteredVehicles.map((vehicle) => (
+              <div key={vehicle.id} className="listing-page-card">
+                <div className="listing-page-image-container">
+                  <img src={vehicle.image} alt={vehicle.name} className="listing-page-car-image" />
+                  <div className="listing-page-price-badge">{vehicle.price} DH/J</div>
+                </div>
+                <div className="listing-page-car-details">
+                  <h3 className="listing-page-car-brand">{vehicle.brand}</h3>
+                  <p className="listing-page-car-model">{vehicle.name}</p>
+                  <p className="listing-page-car-type">{vehicle.type}</p>
+                  <div className="listing-page-car-info">
+                    <span>{vehicle.transmission}</span>
+                    <span>{vehicle.fuel_type}</span>
+                  </div>
+                  <button className="listing-page-rent-button">
+                    Rent Now
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
+
+export default Listing;

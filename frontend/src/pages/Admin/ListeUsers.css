@@ -53,6 +53,7 @@
   font-size: 0.9rem;
   color: #4a4a4a;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .user-role {
@@ -106,31 +107,73 @@
   border: none;
   cursor: pointer;
   margin: 0 5px;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.action-btn i {
+  font-size: 0.9rem;
 }
 
 .action-btn:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .edit-btn {
   color: #2196f3;
   background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
 }
 
 .edit-btn:hover {
   background-color: #bbdefb;
+  color: #1976d2;
 }
 
 .delete-btn {
   color: #f44336;
   background-color: #ffebee;
+  border: 1px solid #ffcdd2;
 }
 
 .delete-btn:hover {
   background-color: #ffcdd2;
+  color: #d32f2f;
+}
+
+/* Ensure action buttons maintain style in pending rows */
+.pending-approval .action-btn {
+  opacity: 1;
+  background-color: inherit;
+}
+
+.pending-approval .edit-btn {
+  color: #2196f3;
+  background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
+}
+
+.pending-approval .delete-btn {
+  color: #f44336;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+}
+
+/* Action buttons container */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .loader {
@@ -415,6 +458,7 @@
     transition: all 0.3s ease;
     outline: none;
     min-width: 100px;
+    position: relative;
 }
 
 .role-select.client {
@@ -443,4 +487,56 @@
     padding: 8px;
     background-color: white;
     color: #333;
+}
+
+.pending-approval {
+    background-color: #fff9e6 !important;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.status-badge i {
+    font-size: 0.8rem;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.status-badge.approved {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.role-select.has-pending {
+    border-color: #ffc107;
+    background-color: #fff9e6;
+}
+
+/* Add a small indicator for pending requests */
+.role-select.has-pending::after {
+    content: '⚠️';
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+}
+
+/* Make sure the status column has enough width */
+.user-table th:nth-child(7),
+.user-table td:nth-child(7) {
+    min-width: 150px;
 }

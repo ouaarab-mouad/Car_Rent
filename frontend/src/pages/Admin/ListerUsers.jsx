@@ -33,16 +33,28 @@ export const ListerUsers = () => {
         setShowDeleteModal(true);
     };
 
-    const handleRoleChange = async (userId, newRole) => {
+    const handleRoleChange = async (userId, newRole, currentRole, requestedRole) => {
+        // If user has a pending loueur request, show confirmation
+        if (requestedRole === 'loueur' && currentRole === 'client' && newRole === 'loueur') {
+            if (!window.confirm('This user has requested to be a loueur. Do you want to approve their request?')) {
+                return;
+            }
+        }
+
         try {
             const res = await axios.put(`http://localhost:8000/api/user/${userId}/role`, {
-                role: newRole
+                role: newRole,
+                role_status: newRole === 'loueur' ? 'approved' : 'pending'
             });
             
             if (res.data.success) {
                 setUsers(prevUsers => 
                     prevUsers.map(user => 
-                        user.id === userId ? { ...user, role: newRole } : user
+                        user.id === userId ? { 
+                            ...user, 
+                            role: newRole,
+                            role_status: newRole === 'loueur' ? 'approved' : 'pending'
+                        } : user
                     )
                 );
                 
@@ -63,21 +75,21 @@ export const ListerUsers = () => {
 
     const deleteUser = async (id) => {
         try {
-          const res = await axios.delete(`http://localhost:8000/api/user/${id}`);
-          setMessage({
-            type: 'success',
-            text: res.data.message
-          });
-          setUsers(prev => prev.filter(p => p.id !== id));
-          setShowDeleteModal(false);
-          setUserToDelete(null);
+            const res = await axios.delete(`http://localhost:8000/api/user/${id}`);
+            setMessage({
+                type: 'success',
+                text: res.data.message
+            });
+            setUsers(prev => prev.filter(p => p.id !== id));
+            setShowDeleteModal(false);
+            setUserToDelete(null);
         } catch (error) {
-          setMessage({
-            type: 'error',
-            text: error.response?.data?.message || 'Something went wrong'
-          });
-          setShowDeleteModal(false);
-          setUserToDelete(null);
+            setMessage({
+                type: 'error',
+                text: error.response?.data?.message || 'Something went wrong'
+            });
+            setShowDeleteModal(false);
+            setUserToDelete(null);
         }
     };
 
@@ -168,40 +180,54 @@ export const ListerUsers = () => {
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Role</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} className={user.requested_role === 'loueur' && user.role_status === 'pending' ? 'pending-approval' : ''}>
                             <td>{user.nom}</td>
                             <td>{user.prenom}</td>
-                            <td>{user.EnterpriseName ? user.EnterpriseName : 'Aucune entreprise' }</td>
+                            <td>{user.EnterpriseName ? user.EnterpriseName : 'Aucune entreprise'}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
                             <td>
                                 <select
-                                    className={`role-select ${user.role}`}
+                                    className={`role-select ${user.role} ${user.requested_role === 'loueur' && user.role_status === 'pending' ? 'has-pending' : ''}`}
                                     value={user.role}
-                                    onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                                    onChange={(e) => handleRoleChange(user.id, e.target.value, user.role, user.requested_role)}
                                 >
                                     <option value="client">Client</option>
                                     <option value="loueur">Loueur</option>
                                 </select>
                             </td>
                             <td>
-                                <button 
-                                    className="action-btn edit-btn"
-                                    onClick={() => handleDetailsClick(user.id)}
-                                >
-                                    <i className="fas fa-edit">Details</i>
-                                </button>
-                                <button 
-                                    className="action-btn delete-btn" 
-                                    onClick={() => handleDeleteClick(user)}
-                                >
-                                    <i className="fas fa-trash">Delete</i>
-                                </button>
+                                {user.requested_role === 'loueur' && user.role_status === 'pending' ? (
+                                    <span className="status-badge pending">
+                                        <i className="fas fa-clock"></i> Pending Approval
+                                    </span>
+                                ) : user.role_status === 'approved' ? (
+                                    <span className="status-badge approved">
+                                        <i className="fas fa-check"></i> Approved
+                                    </span>
+                                ) : null}
+                            </td>
+                            <td>
+                                <div className="action-buttons">
+                                    <button 
+                                        className="action-btn edit-btn"
+                                        onClick={() => handleDetailsClick(user.id)}
+                                    >
+                                        <i className="fas fa-edit"></i> Details
+                                    </button>
+                                    <button 
+                                        className="action-btn delete-btn" 
+                                        onClick={() => handleDeleteClick(user)}
+                                    >
+                                        <i className="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
