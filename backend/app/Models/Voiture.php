@@ -8,10 +8,13 @@ class Voiture extends Model
 {
     protected $fillable = [
         'utilisateur_id',
-        'nom',
         'modele',
         'marque',
-        'conditions'
+        'categorie',
+        'ville',
+        'prix_par_jour',
+        'conditions',
+        'srcimg',
     ];
 
     protected $casts = [

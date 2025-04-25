@@ -2,29 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens, Notifiable, HasFactory;
+
     protected $fillable = [
-<<<<<<< HEAD
-        'name', 'email', 'password', 'phone',
-        'phone_verified_at', 'sms_code', 'sms_code_expires_at'
+        'name', 'email', 'numero_telephone',
+        'password', 'role', 'licence',
+        'email_verified_at', 'remember_token'
     ];
     
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'sms_code_expires_at' => 'datetime'
-=======
-        'nom',
-        'prenom',
-        'email',
-        'numero_telephone',
-        'mot_de_passe',
-        'role',
-        'autorisation_location'
->>>>>>> b00891a7de77beacc3c748b6030ebabc2049ccdd
     ];
 
     protected $hidden = [
@@ -32,13 +28,11 @@ class User extends Model
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
 
     public function getFullNameAttribute()
     {
-        return $this->nom . ' ' . $this->prenom;
+        return $this->name;
     }
 
     public function isAdmin()
@@ -51,13 +45,8 @@ class User extends Model
         return $this->role === 'loueur';
     }
 
-    public function isUtilisateur()
+    public function isClient()
     {
-        return $this->role === 'utilisateur';
-    }
-
-    public function isAutorise()
-    {
-        return $this->autorisation_location === 'autorisé';
+        return $this->role === 'client';
     }
 }
