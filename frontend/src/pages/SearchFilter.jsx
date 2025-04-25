@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './SearchFilter.css';
+import { useNavigate } from 'react-router-dom';
+import './SearchFilterTest.css';
 import { FaChevronDown, FaUserCircle, FaCalendarAlt, FaPlus } from 'react-icons/fa';
 import { carData, brands, locations, colors, categories } from '../data/CarData';
 
@@ -15,8 +16,25 @@ export const SearchFilter = () => {
   const [brandDropdownOpen, setBrandDropdownOpen] = useState(false);
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [visibleCars, setVisibleCars] = useState(6); // For show more functionality
+  const [visibleCars, setVisibleCars] = useState(6);
+  
+  const navigate = useNavigate();
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setBrandDropdownOpen(false);
+      setLocationDropdownOpen(false);
+      setCategoryDropdownOpen(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  // Apply filters when any filter changes
   useEffect(() => {
     applyFilters();
   }, [selectedBrand, selectedLocation, priceRange, selectedColor, selectedCategories, selectedCondition, searchQuery]);
@@ -25,41 +43,61 @@ export const SearchFilter = () => {
     setSearchQuery(e.target.value);
   };
 
+  const toggleBrandDropdown = (e) => {
+    e.stopPropagation();
+    setBrandDropdownOpen(!brandDropdownOpen);
+    setLocationDropdownOpen(false);
+    setCategoryDropdownOpen(false);
+  };
+
+  const toggleLocationDropdown = (e) => {
+    e.stopPropagation();
+    setLocationDropdownOpen(!locationDropdownOpen);
+    setBrandDropdownOpen(false);
+    setCategoryDropdownOpen(false);
+  };
+
+  const toggleCategoryDropdown = (e) => {
+    e.stopPropagation();
+    setCategoryDropdownOpen(!categoryDropdownOpen);
+    setBrandDropdownOpen(false);
+    setLocationDropdownOpen(false);
+  };
+
   const handleBrandSelect = (brand) => {
     setSelectedBrand(brand);
     setBrandDropdownOpen(false);
-    setVisibleCars(6); // Reset visible cars when filters change
+    setVisibleCars(6);
   };
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     setLocationDropdownOpen(false);
-    setVisibleCars(6); // Reset visible cars when filters change
+    setVisibleCars(6);
   };
 
   const handleColorSelect = (color) => {
-    setSelectedColor(color === selectedColor ? '' : color);
-    setVisibleCars(6); // Reset visible cars when filters change
+    setSelectedColor(prevColor => prevColor === color ? '' : color);
+    setVisibleCars(6);
   };
 
   const handleCategoryToggle = (category) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter(cat => cat !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
-    setVisibleCars(6); // Reset visible cars when filters change
+    setSelectedCategories(prev => 
+      prev.includes(category) 
+        ? prev.filter(cat => cat !== category) 
+        : [...prev, category]
+    );
+    setVisibleCars(6);
   };
 
   const handleConditionChange = (condition) => {
     setSelectedCondition(condition);
-    setVisibleCars(6); // Reset visible cars when filters change
+    setVisibleCars(6);
   };
 
   const applyFilters = () => {
     let result = carData;
     
-    // Filter by search query
     if (searchQuery) {
       result = result.filter(car => 
         car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -67,32 +105,26 @@ export const SearchFilter = () => {
       );
     }
     
-    // Filter by brand (skip if "All" is selected)
     if (selectedBrand !== 'All') {
       result = result.filter(car => car.brand === selectedBrand);
     }
     
-    // Filter by location (skip if "All" is selected)
     if (selectedLocation !== 'All') {
       result = result.filter(car => car.location === selectedLocation);
     }
     
-    // Filter by price
     result = result.filter(car => car.price <= priceRange);
     
-    // Filter by color
     if (selectedColor) {
       result = result.filter(car => car.color === selectedColor);
     }
     
-    // Filter by categories (if any selected)
     if (selectedCategories.length > 0) {
       result = result.filter(car => 
         selectedCategories.some(category => car.category.includes(category))
       );
     }
     
-    // Filter by condition (skip if "All" is selected)
     if (selectedCondition !== 'All') {
       result = result.filter(car => car.condition === selectedCondition);
     }
@@ -104,9 +136,17 @@ export const SearchFilter = () => {
     setVisibleCars(prev => prev + 6);
   };
 
+  const handleCarClick = (carId) => {
+    navigate(`/car/${carId}`);
+  };
+
+  const handleOwnerClick = (ownerName, e) => {
+    e.stopPropagation();
+    navigate(`/profile/${encodeURIComponent(ownerName)}`);
+  };
+
   return (
     <div className="car-rental-container">
-      {/* Search Bar */}
       <div className="search-container">
         <div className="search-bar">
           <button className="search-icon">
@@ -123,20 +163,18 @@ export const SearchFilter = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="main-content">
-        {/* Filters Section */}
         <div className="filters-section">
           <h2>Filters</h2>
 
           {/* Brand Filter */}
           <div className="filter-group">
-            <div className="dropdown-filter" onClick={() => setBrandDropdownOpen(!brandDropdownOpen)}>
+            <div className="dropdown-filter" onClick={toggleBrandDropdown}>
               <span>{selectedBrand}</span>
               <FaChevronDown className={brandDropdownOpen ? 'rotated' : ''} />
             </div>
             {brandDropdownOpen && (
-              <div className="dropdown-menu">
+              <div className="dropdown-menu" onClick={e => e.stopPropagation()}>
                 <div 
                   className={`dropdown-item ${selectedBrand === 'All' ? 'selected' : ''}`}
                   onClick={() => handleBrandSelect('All')}
@@ -158,12 +196,12 @@ export const SearchFilter = () => {
 
           {/* Location Filter */}
           <div className="filter-group">
-            <div className="dropdown-filter" onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}>
+            <div className="dropdown-filter" onClick={toggleLocationDropdown}>
               <span>{selectedLocation}</span>
               <FaChevronDown className={locationDropdownOpen ? 'rotated' : ''} />
             </div>
             {locationDropdownOpen && (
-              <div className="dropdown-menu">
+              <div className="dropdown-menu" onClick={e => e.stopPropagation()}>
                 <div 
                   className={`dropdown-item ${selectedLocation === 'All' ? 'selected' : ''}`}
                   onClick={() => handleLocationSelect('All')}
@@ -214,6 +252,7 @@ export const SearchFilter = () => {
                     id={color.name.toLowerCase()} 
                     checked={selectedColor === color.name}
                     onChange={() => handleColorSelect(color.name)}
+                    hidden
                   />
                   <label htmlFor={color.name.toLowerCase()} className="color-label">
                     <span 
@@ -230,7 +269,7 @@ export const SearchFilter = () => {
 
           {/* Category Filter */}
           <div className="filter-group">
-            <div className="dropdown-filter car-type-filter" onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}>
+            <div className="dropdown-filter car-type-filter" onClick={toggleCategoryDropdown}>
               {selectedCategories.length > 0 ? (
                 selectedCategories.map(cat => (
                   <span key={cat} className="filter-tag">{cat}</span>
@@ -241,7 +280,7 @@ export const SearchFilter = () => {
               <FaChevronDown className={categoryDropdownOpen ? 'rotated' : ''} />
             </div>
             {categoryDropdownOpen && (
-              <div className="dropdown-menu">
+              <div className="dropdown-menu" onClick={e => e.stopPropagation()}>
                 {categories.map(category => (
                   <div 
                     key={category} 
@@ -278,11 +317,11 @@ export const SearchFilter = () => {
                 <input 
                   type="radio" 
                   name="condition" 
-                  id="exellent" 
-                  checked={selectedCondition === 'Exellent'} 
-                  onChange={() => handleConditionChange('Exellent')}
+                  id="excellent" 
+                  checked={selectedCondition === 'Excellent'} 
+                  onChange={() => handleConditionChange('Excellent')}
                 />
-                <label htmlFor="exellent">Exellent</label>
+                <label htmlFor="excellent">Excellent</label>
               </div>
               <div className="condition-option">
                 <input 
@@ -312,7 +351,6 @@ export const SearchFilter = () => {
           </button>
         </div>
 
-        {/* Search Results */}
         <div className="search-results">
           <h2>Résultat De Recherche</h2>
           {filteredCars.length === 0 ? (
@@ -322,7 +360,7 @@ export const SearchFilter = () => {
           ) : (
             <div className="car-grid">
               {filteredCars.slice(0, visibleCars).map(car => (
-                <div key={car.id} className="car-card">
+                <div key={car.id} className="car-card" onClick={() => handleCarClick(car.id)}>
                   <div className="car-image">
                     <img src={car.image} alt={car.name} />
                   </div>
@@ -338,7 +376,7 @@ export const SearchFilter = () => {
                       </div>
                     </div>
                     <div className="rental-info">
-                      <div className="rental-user">
+                      <div className="rental-user" onClick={(e) => handleOwnerClick(car.rentedBy, e)}>
                         <FaUserCircle className="user-icon" />
                         <span>{car.rentedBy}</span>
                       </div>

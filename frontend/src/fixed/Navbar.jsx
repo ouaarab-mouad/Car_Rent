@@ -1,32 +1,121 @@
-import React from 'react'
-import './Navbar.css'
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { 
+  Car, 
+  Search, 
+  PhoneCall, 
+  Menu, 
+  X, 
+  Home, 
+  FileText, 
+  Users, 
+  MessageSquare, 
+  ChevronDown 
+} from 'lucide-react';
+import './Navbar.css';
+
 export const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'active' : '';
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <div className="logo-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
-          </svg>
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
+          <Car size={28} className="logo-icon" strokeWidth={2.5} />
+          <span className="logo-text">
+            <span className="logo-primary">Drive</span>
+            <span className="logo-secondary">Ease</span>
+          </span>
+        </Link>
+        
+        <button 
+          className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+        
+        <div className={`navbar-links ${mobileMenuOpen ? 'active' : ''}`}>
+          <Link to="/" className={`nav-link ${isActive('/')}`}>
+            <Home size={18} className="nav-icon" />
+            <span>Home</span>
+          </Link>
+          
+          <div className="nav-dropdown">
+            <button 
+              className={`nav-link dropdown-toggle ${isActive('/Listing')}`} 
+              onClick={toggleDropdown}
+            >
+              <Car size={18} className="nav-icon" />
+              <span>Vehicles</span>
+              <ChevronDown size={16} className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`} />
+            </button>
+            
+            <div className={`dropdown-menu ${dropdownOpen ? 'active' : ''}`}>
+              <Link to="/Listing" className="dropdown-item">All Vehicles</Link>
+              <Link to="/Listing/sedan" className="dropdown-item">Sedans</Link>
+              <Link to="/Listing/suv" className="dropdown-item">SUVs</Link>
+              <Link to="/Listing/luxury" className="dropdown-item">Luxury</Link>
+            </div>
+          </div>
+          
+          <Link to="/details" className={`nav-link ${isActive('/details')}`}>
+            <FileText size={18} className="nav-icon" />
+            <span>Details</span>
+          </Link>
+          
+          <Link to="/about" className={`nav-link ${isActive('/about')}`}>
+            <Users size={18} className="nav-icon" />
+            <span>About Us</span>
+          </Link>
+          
+          <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>
+            <MessageSquare size={18} className="nav-icon" />
+            <span>Contact</span>
+          </Link>
         </div>
-        <span className="logo-text">DriveEase</span>
-      </div>
-      <div className="navbar-links">
-        <a href="http://localhost:3000/" className="nav-link">Home</a>
-        <a href="http://localhost:3000/Search" className="nav-link">Vehicles</a>
-        <a href="#" className="nav-link">Details</a>
-        <a href="#" className="nav-link">About Us</a>
-        <a href="#" className="nav-link">Contact Us</a>
-      </div>
-      <div className="navbar-contact">
-        <svg className="phone-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM12 3v10l3-3h6V3h-9z" />
-        </svg>
-        <div className="contact-info">
-          <div className="help-text">Need help?</div>
-          <div className="phone-number">+212 674997586</div>
+        
+        <div className="navbar-actions">
+          <Link to="/search" className="search-btn" aria-label="Search">
+            <Search size={20} />
+          </Link>
+          
+          <a href="tel:+212674997586" className="contact-btn">
+            <div className="contact-icon">
+              <PhoneCall size={20} />
+            </div>
+            <div className="contact-info">
+              <div className="help-text">Need help?</div>
+              <div className="phone-number">+212 674997586</div>
+            </div>
+          </a>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
