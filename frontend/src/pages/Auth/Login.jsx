@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
@@ -6,22 +6,60 @@ import './Auth.css';
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login, error } = useAuth();
+    const { login, error, user } = useAuth();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setError] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            // Redirect based on role
+            switch(user.role) {
+                case 'loueur':
+                    navigate('/loueur');
+                    break;
+                case 'client':
+                    navigate('/client');
+                    break;
+                case 'administrateur':
+                    navigate('/admin');
+                    break;
+                default:
+                    navigate('/');
+            }
+        }
+    }, [user, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await login(email, password);
-        if (success) {
-            navigate('/dashboard');
+        setError(null);
+        setLoading(true);
+
+        const result = await login(email, password);
+        
+        if (result.success) {
+            const userRole = result.user.role;
+            console.log('Login successful, user role:', userRole);
+            
+            // Redirect based on role
+            if (userRole === 'admin') {
+                navigate('/admin/dashboard');
+            } else if (userRole === 'loueur') {
+                navigate('/loueur/dashboard');
+            } else {
+                navigate('/client/dashboard');
+            }
+        } else {
+            setError(result.error);
+            setLoading(false);
         }
     };
 
     return (
         <div className="auth-container">
             <div className="auth-box">
-                <h2>Login</h2>
-                {error && <div className="error-message">{error}</div>}
+                <h2>Connexion</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Email</label>
@@ -33,7 +71,7 @@ export const Login = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Password</label>
+                        <label>Mot de passe</label>
                         <input
                             type="password"
                             value={password}
@@ -41,10 +79,10 @@ export const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="auth-button">Login</button>
+                    <button type="submit" className="auth-button" disabled={loading}>Se connecter</button>
                 </form>
                 <p className="auth-link">
-                    Don't have an account? <a href="/register">Register</a>
+                    Vous n'avez pas de compte ? <a href="/register">S'inscrire</a>
                 </p>
             </div>
         </div>

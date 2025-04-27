@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+
     "content-hash": "015e02e23a490fcf9d86230851cba120",
     "packages": [
         {
@@ -1330,6 +1331,7 @@
         },
         {
             "name": "laravel/sanctum",
+<<<<<<< HEAD
             "version": "v4.1.0",
             "source": {
                 "type": "git",
@@ -1340,6 +1342,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sanctum/zipball/4e4ced5023e9d8949214e0fb43d9f4bde79c7166",
                 "reference": "4e4ced5023e9d8949214e0fb43d9f4bde79c7166",
+=======
+            "version": "v4.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "ec1dd9ddb2ab370f79dfe724a101856e0963f43c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/ec1dd9ddb2ab370f79dfe724a101856e0963f43c",
+                "reference": "ec1dd9ddb2ab370f79dfe724a101856e0963f43c",
+>>>>>>> 797596e5702b16f92439ec205aba3ac6e125104d
                 "shasum": ""
             },
             "require": {
@@ -1390,7 +1404,11 @@
                 "issues": "https://github.com/laravel/sanctum/issues",
                 "source": "https://github.com/laravel/sanctum"
             },
+<<<<<<< HEAD
             "time": "2025-04-22T13:53:47+00:00"
+=======
+            "time": "2025-01-26T19:34:36+00:00"
+>>>>>>> 797596e5702b16f92439ec205aba3ac6e125104d
         },
         {
             "name": "laravel/serializable-closure",

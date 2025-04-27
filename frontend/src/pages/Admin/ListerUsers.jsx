@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios"
+import axios from "../../utils/axios"
 import './ListeUsers.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
 
 export const ListerUsers = () => {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState({ type: '', text: '' });
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -13,20 +14,87 @@ export const ListerUsers = () => {
     const [editingUser, setEditingUser] = useState(null);
     const navigate = useNavigate();
 
+    // Filter states
+    const [filters, setFilters] = useState({
+        nom: '',
+        prenom: '',
+        email: '',
+        role: 'all'
+    });
+
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/users')
-            .then(response => {
-                setUsers(response.data);
-                setLoading(false);
-            })
-            .catch(err => {
+        const fetchUsers = async () => {
+            try {
+                console.log('Attempting to fetch users...');
+                const response = await axios.get('/api/users');
+                console.log('Response received:', response);
+                
+                if (response.data.success) {
+                    setUsers(response.data.data);
+                    setFilteredUsers(response.data.data);
+                } else {
+                    throw new Error(response.data.message || 'Failed to load users');
+                }
+            } catch (error) {
+                console.error('Error details:', {
+                    message: error.message,
+                    response: error.response,
+                    request: error.request,
+                    config: error.config
+                });
+                
                 setMessage({
                     type: 'error',
-                    text: 'Failed to load users'
+                    text: error.response?.data?.message || error.message || 'Failed to load users. Please try again later.'
                 });
+                
+                if (error.response?.status === 403) {
+                    navigate('/login');
+                }
+            } finally {
                 setLoading(false);
-            });
-    }, []);
+            }
+        };
+
+        fetchUsers();
+    }, [navigate]);
+
+    // Filter users based on search criteria
+    useEffect(() => {
+        let filtered = [...users];
+        
+        if (filters.nom) {
+            filtered = filtered.filter(user => 
+                user.nom.toLowerCase().includes(filters.nom.toLowerCase())
+            );
+        }
+        
+        if (filters.prenom) {
+            filtered = filtered.filter(user => 
+                user.prenom.toLowerCase().includes(filters.prenom.toLowerCase())
+            );
+        }
+        
+        if (filters.email) {
+            filtered = filtered.filter(user => 
+                user.email.toLowerCase().includes(filters.email.toLowerCase())
+            );
+        }
+        
+        if (filters.role !== 'all') {
+            filtered = filtered.filter(user => user.role === filters.role);
+        }
+        
+        setFilteredUsers(filtered);
+    }, [filters, users]);
+
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     const handleDeleteClick = (user) => {
         setUserToDelete(user);
@@ -42,7 +110,7 @@ export const ListerUsers = () => {
         }
 
         try {
-            const res = await axios.put(`http://localhost:8000/api/user/${userId}/role`, {
+            const res = await axios.put(`/user/${userId}/role`, {
                 role: newRole,
                 role_status: newRole === 'loueur' ? 'approved' : 'pending'
             });
@@ -66,6 +134,7 @@ export const ListerUsers = () => {
                 throw new Error(res.data.message || 'Failed to update role');
             }
         } catch (error) {
+            console.error('Error updating role:', error);
             setMessage({
                 type: 'error',
                 text: error.response?.data?.message || error.message || 'Failed to update role'
@@ -75,26 +144,39 @@ export const ListerUsers = () => {
 
     const deleteUser = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:8000/api/user/${id}`);
-            setMessage({
-                type: 'success',
-                text: res.data.message
-            });
-            setUsers(prev => prev.filter(p => p.id !== id));
-            setShowDeleteModal(false);
-            setUserToDelete(null);
+            const res = await axios.delete(`api/user/${id}`);
+            if (res.data.success) {
+                setMessage({
+                    type: 'success',
+                    text: res.data.message || 'User deleted successfully'
+                });
+                setUsers(prev => prev.filter(p => p.id !== id));
+            } else {
+                throw new Error(res.data.message || 'Failed to delete user');
+            }
         } catch (error) {
+            console.error('Error deleting user:', error);
             setMessage({
                 type: 'error',
-                text: error.response?.data?.message || 'Something went wrong'
+                text: error.response?.data?.message || 'Failed to delete user. Please try again later.'
             });
+        } finally {
             setShowDeleteModal(false);
             setUserToDelete(null);
         }
     };
 
     const handleDetailsClick = (userId) => {
-        navigate(`/admin/users/${userId}`);
+        console.log('Navigating to user details for ID:', userId);
+        if (!userId) {
+            console.error('No user ID provided');
+            setMessage({
+                type: 'error',
+                text: 'No user ID provided'
+            });
+            return;
+        }
+        navigate(`/admin/users/${userId}`, { replace: true });
     };
 
     // Message component
@@ -155,13 +237,14 @@ export const ListerUsers = () => {
     };
 
     if (loading) return (
-        <div className="loader-container" style={{marginTop:'100px'}} >
+        <div className="loader-container">
             <ClipLoader
                 color="#6342ff"
                 loading={loading}
                 size={50}
                 aria-label="Loading Spinner"
             />
+            <p>Loading users...</p>
         </div>
     );
 
@@ -171,6 +254,68 @@ export const ListerUsers = () => {
                 <MessageAlert type={message.type} text={message.text} />
             )}
             <DeleteConfirmationModal />
+            
+            {/* Filter Section */}
+            <div className="filter-section">
+                <h3>
+                    <i className="fas fa-filter"></i>
+                    Filtres
+                </h3>
+                <div className="filter-group">
+                    <div className="filter-item">
+                        <label>Nom</label>
+                        <input
+                            type="text"
+                            name="nom"
+                            placeholder="Rechercher par nom"
+                            value={filters.nom}
+                            onChange={handleFilterChange}
+                            className="filter-input"
+                        />
+                    </div>
+                    <div className="filter-item">
+                        <label>Prénom</label>
+                        <input
+                            type="text"
+                            name="prenom"
+                            placeholder="Rechercher par prénom"
+                            value={filters.prenom}
+                            onChange={handleFilterChange}
+                            className="filter-input"
+                        />
+                    </div>
+                    <div className="filter-item">
+                        <label>Email</label>
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="Rechercher par email"
+                            value={filters.email}
+                            onChange={handleFilterChange}
+                            className="filter-input"
+                        />
+                    </div>
+                    <div className="filter-item">
+                        <label>Rôle</label>
+                        <select
+                            name="role"
+                            value={filters.role}
+                            onChange={handleFilterChange}
+                            className="filter-select"
+                        >
+                            <option value="all">Tous les rôles</option>
+                            <option value="client">Client</option>
+                            <option value="loueur">Loueur</option>
+                            <option value="administrateur">Administrateur</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="filter-results">
+                    <i className="fas fa-users"></i>
+                    {filteredUsers.length} utilisateur{filteredUsers.length !== 1 ? 's' : ''} trouvé{filteredUsers.length !== 1 ? 's' : ''}
+                </div>
+            </div>
+
             <table className="user-table">
                 <thead>
                     <tr>
@@ -185,8 +330,8 @@ export const ListerUsers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user, index) => (
-                        <tr key={index} className={user.requested_role === 'loueur' && user.role_status === 'pending' ? 'pending-approval' : ''}>
+                    {filteredUsers.map((user, index) => (
+                        <tr key={index}>
                             <td>{user.nom}</td>
                             <td>{user.prenom}</td>
                             <td>{user.EnterpriseName ? user.EnterpriseName : 'Aucune entreprise'}</td>
@@ -200,6 +345,7 @@ export const ListerUsers = () => {
                                 >
                                     <option value="client">Client</option>
                                     <option value="loueur">Loueur</option>
+                                    <option value="administrateur">Administrateur</option>
                                 </select>
                             </td>
                             <td>

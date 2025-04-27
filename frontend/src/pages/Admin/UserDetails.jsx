@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import './UserDetails.css';
@@ -12,27 +12,41 @@ export const UserDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log('UserDetails mounted with ID:', id);
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/user/${id}`);
+                console.log('Fetching user details for ID:', id);
+                const response = await axios.get(`api/user/${id}`);
+                console.log('User details response:', response.data);
+                
                 if (response.data.success) {
                     setUser(response.data.data);
                 } else {
                     setError('Failed to load user details');
                 }
             } catch (err) {
+                console.error('Error fetching user details:', err);
+                console.error('Error response:', err.response);
                 setError(err.response?.data?.message || 'Failed to load user details');
+                if (err.response?.status === 401) {
+                    navigate('/login');
+                }
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchUserDetails();
-    }, [id]);
+        if (id) {
+            fetchUserDetails();
+        } else {
+            setError('No user ID provided');
+            setLoading(false);
+        }
+    }, [id, navigate]);
 
     const handleApprove = async () => {
         try {
-            const response = await axios.put(`http://localhost:8000/api/user/${id}/role`, {
+            const response = await axios.put(`api/user/${id}/role`, {
                 role: 'loueur',
                 role_status: 'approved'
             });
@@ -52,7 +66,7 @@ export const UserDetails = () => {
 
     const handleReject = async () => {
         try {
-            const response = await axios.put(`http://localhost:8000/api/user/${id}/role`, {
+            const response = await axios.put(`/user/${id}/role`, {
                 role: 'client',
                 role_status: 'rejected'
             });
@@ -79,6 +93,7 @@ export const UserDetails = () => {
                     size={50}
                     aria-label="Loading Spinner"
                 />
+                <p>Loading user details...</p>
             </div>
         );
     }
@@ -87,7 +102,7 @@ export const UserDetails = () => {
         return (
             <div className="error-container">
                 <p className="error-message">{error}</p>
-                <button onClick={() => navigate('/admin/users')} className="back-button">
+                <button onClick={() => navigate('/admin/dashboard/users')} className="back-button">
                     Back to Users List
                 </button>
             </div>
@@ -98,7 +113,7 @@ export const UserDetails = () => {
         return (
             <div className="error-container">
                 <p className="error-message">User not found</p>
-                <button onClick={() => navigate('/admin/users')} className="back-button">
+                <button onClick={() => navigate('/admin/dashboard/users')} className="back-button">
                     Back to Users List
                 </button>
             </div>
@@ -109,7 +124,7 @@ export const UserDetails = () => {
         <div className="user-details-container">
             <div className="user-details-header">
                 <h2>User Details</h2>
-                <button onClick={() => navigate('/admin/users')} className="back-button">
+                <button onClick={() => navigate('/admin/dashboard/users')} className="back-button">
                     Back to Users List
                 </button>
             </div>
@@ -155,7 +170,7 @@ export const UserDetails = () => {
                         <div className="licence-content">
                             <div className="licence-preview">
                                 <img 
-                                    src={`http://localhost:8000/storage/${user.licence}`} 
+                                    src={`http://127.0.0.1:8000/storage/${user.licence}`} 
                                     alt="Licence Document"
                                     className="licence-image"
                                     onError={(e) => {
@@ -165,7 +180,7 @@ export const UserDetails = () => {
                                 />
                                 <div className="licence-actions">
                                     <a 
-                                        href={`http://localhost:8000/storage/${user.licence}`}
+                                        href={`http://127.0.0.1:8000/storage/${user.licence}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="view-button"

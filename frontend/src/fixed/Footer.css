@@ -10,6 +10,7 @@ footer {
     flex-direction: column;
     -webkit-box-shadow: 5px 2px 15px -4px #000000; 
     box-shadow: 5px 2px 15px -4px #0000002d;
+    z-index: 99;
 }
 .firstSectionFooter{
     display: flex;

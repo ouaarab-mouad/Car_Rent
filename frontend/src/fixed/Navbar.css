@@ -75,7 +75,6 @@
   color: #333;
 }
 
-/* Auth Styles */
 .navbar-auth {
   display: flex;
   align-items: center;
@@ -85,6 +84,38 @@
 .auth-buttons {
   display: flex;
   gap: 12px;
+}
+
+.auth-button {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.auth-button.login {
+  background-color: #6342ff;
+  color: white;
+  border: none;
+}
+
+.auth-button.login:hover {
+  background-color: #5132ee;
+  transform: translateY(-1px);
+}
+
+.auth-button.register {
+  background-color: transparent;
+  color: #6342ff;
+  border: 1px solid #6342ff;
+}
+
+.auth-button.register:hover {
+  background-color: #f3f4ff;
+  transform: translateY(-1px);
 }
 
 .user-menu-container {
@@ -130,146 +161,164 @@
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 8px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  min-width: 240px;
-  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
   z-index: 1000;
-  animation: slideDown 0.2s ease;
-  border: 1px solid #f3f4f6;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  margin-top: 8px;
 }
 
 .user-info {
   padding: 16px;
-  border-bottom: 1px solid #f3f4f6;
-  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar-large {
+  width: 48px;
+  height: 48px;
+  background: #6342ff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name-large {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
 }
 
 .user-role {
-  color: #6342ff;
-  font-size: 0.75rem;
-  text-transform: capitalize;
-  background-color: #f3f4ff;
-  padding: 4px 12px;
-  border-radius: 20px;
-  display: inline-block;
-  margin-bottom: 8px;
-  font-weight: 500;
+  color: #666;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .user-email {
   color: #666;
-  font-size: 0.875rem;
-  margin-top: 4px;
-  display: block;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.user-email i,
+.user-role i {
+  color: #6342ff;
+  width: 16px;
+  text-align: center;
 }
 
 .dropdown-divider {
   height: 1px;
-  background-color: #f3f4f6;
-  margin: 0;
+  background: #eee;
+  margin: 8px 0;
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  padding: 12px 16px;
   color: #333;
   text-decoration: none;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
+  gap: 8px;
+  transition: background-color 0.2s;
 }
 
 .dropdown-item:hover {
-  background-color: #f3f4ff;
-  color: #6342ff;
+  background: #f5f5f5;
 }
 
 .dropdown-item i {
+  width: 20px;
   color: #6342ff;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .dropdown-item.logout {
-  color: #dc2626;
-  border-top: 1px solid #f3f4f6;
-  margin-top: 4px;
-}
-
-.dropdown-item.logout:hover {
-  background-color: #fee2e2;
-  color: #dc2626;
+  color: #dc3545;
 }
 
 .dropdown-item.logout i {
-  color: #dc2626;
+  color: #dc3545;
 }
 
-.auth-button {
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.875rem;
-  cursor: pointer;
+.reservations-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: #f3f4ff;
+  border-radius: 12px;
+  margin-right: 15px;
   transition: all 0.3s ease;
   text-decoration: none;
+  position: relative;
+  padding: 10px;
 }
 
-.auth-button.login {
-  background-color: #6342ff;
-  color: white;
-  border: none;
-}
-
-.auth-button.login:hover {
-  background-color: #5132ee;
-  transform: translateY(-1px);
-}
-
-.auth-button.register {
-  background-color: transparent;
+.reservations-svg {
+  width: 24px;
+  height: 24px;
   color: #6342ff;
-  border: 1px solid #6342ff;
+  transition: all 0.3s ease;
 }
 
-.auth-button.register:hover {
-  background-color: #f3f4ff;
-  transform: translateY(-1px);
+.reservations-icon:hover {
+  background-color: #e8e9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 66, 255, 0.1);
 }
 
-.auth-button.logout {
-  background-color: transparent;
-  color: #dc2626;
-  border: 1px solid #dc2626;
+.reservations-icon:hover .reservations-svg {
+  color: #5132ee;
 }
 
-.auth-button.logout:hover {
-  background-color: #dc2626;
-  color: white;
+.vehicles-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: #e8f5e9;
+  border-radius: 12px;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  padding: 10px;
+}
+
+.vehicles-svg {
+  width: 24px;
+  height: 24px;
+  color: #2e7d32;
+  transition: all 0.3s ease;
+}
+
+.vehicles-icon:hover {
+  background-color: #c8e6c9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+}
+
+.vehicles-icon:hover .vehicles-svg {
+  color: #1b5e20;
 }
 
 /* Responsive Design */
@@ -324,116 +373,18 @@
   }
 }
 
-.reservations-link {
+.user-info-main {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: #f3f4ff;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
 }
 
-.reservations-link i {
-  font-size: 1.1rem;
-  color: #6342ff;
-}
-
-.reservations-link:hover {
-  background-color: #e8e9ff;
-  transform: translateY(-1px);
-}
-
-.reservations-link:hover i {
-  color: #5132ee;
-}
-
-.reservations-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: #f3f4ff;
-  border-radius: 12px;
-  margin-right: 15px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  position: relative;
-  padding: 10px;
-}
-
-.reservations-svg {
-  width: 24px;
-  height: 24px;
-  color: #6342ff;
-  transition: all 0.3s ease;
-}
-
-.reservations-icon:hover {
-  background-color: #e8e9ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(99, 66, 255, 0.1);
-}
-
-.reservations-icon:hover .reservations-svg {
-  color: #5132ee;
-}
-
-/* Add a small notification dot if needed */
-.reservations-icon::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  background-color: #22c55e;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-.vehicles-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: #e8f5e9;
-  border-radius: 12px;
-  margin-right: 15px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  position: relative;
-  padding: 10px;
-}
-
-.vehicles-svg {
-  width: 24px;
-  height: 24px;
-  color: #2e7d32;
-  transition: all 0.3s ease;
-}
-
-.vehicles-icon:hover {
-  background-color: #c8e6c9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
-}
-
-.vehicles-icon:hover .vehicles-svg {
-  color: #1b5e20;
-}
-
-/* Add a small notification dot if needed */
-.vehicles-icon::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  background-color: #22c55e;
-  border-radius: 50%;
-  border: 2px solid white;
+.user-role-badge {
+  font-size: 0.75rem;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 2px;
 }

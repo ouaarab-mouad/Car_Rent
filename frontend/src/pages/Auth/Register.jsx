@@ -30,12 +30,22 @@ export const Register = () => {
         e.preventDefault();
         const formDataToSend = new FormData();
         
-        // Append all form fields to FormData
-        Object.keys(formData).forEach(key => {
-            if (formData[key] !== null) {
-                formDataToSend.append(key, formData[key]);
+        // Append basic user information
+        formDataToSend.append('nom', formData.nom);
+        formDataToSend.append('prenom', formData.prenom);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+        formDataToSend.append('password_confirmation', formData.password_confirmation);
+        formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('role', formData.role);
+
+        // Only append EnterpriseName and licence if role is loueur
+        if (formData.role === 'loueur') {
+            formDataToSend.append('EnterpriseName', formData.EnterpriseName);
+            if (formData.licence) {
+                formDataToSend.append('licence', formData.licence);
             }
-        });
+        }
 
         const success = await register(formDataToSend);
         if (success) {
@@ -47,11 +57,11 @@ export const Register = () => {
     };
 
     return (
-        <div className="auth-container">
-            <div className="auth-box">
+        <div className="auth-container register-page">
+            <div className="auth-box"  >
                 <h2>Register</h2>
-                {error && <div className="error-message">{error}</div>}
-                <form onSubmit={handleSubmit}>
+                {error && <div className="error-message" >{error}</div>}
+                <form onSubmit={handleSubmit} >
                     <div className="form-group">
                         <label>First Name</label>
                         <input

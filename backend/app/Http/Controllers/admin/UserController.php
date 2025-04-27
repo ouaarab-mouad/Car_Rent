@@ -5,13 +5,33 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return $users;
+        try {
+            // Check if user is authenticated and is an admin
+            if (!Auth::check() || Auth::user()->role !== 'administrateur') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthorized. Only administrators can access this resource.'
+                ], 403);
+            }
+
+            $users = User::all();
+
+            return response()->json([
+                'success' => true,
+                'data' => $users
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch users: ' . $e->getMessage()
+            ], 500);
+        }
     }
     public function deleteUser($id)
     {

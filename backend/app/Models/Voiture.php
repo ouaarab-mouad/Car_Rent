@@ -2,16 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Voiture extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'utilisateur_id',
-        'nom',
         'modele',
         'marque',
-        'conditions'
+        'categorie',
+        'ville',
+        'prix_par_jour',
+        'conditions',
+        'srcimg',
     ];
 
     protected $casts = [

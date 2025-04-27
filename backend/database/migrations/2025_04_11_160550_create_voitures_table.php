@@ -13,9 +13,13 @@ return new class extends Migration
             $table->foreignId('utilisateur_id')->constrained('users')->onDelete('cascade');
             $table->string('modele');
             $table->string('marque');
+            $table->string('categorie')->nullable();
+            $table->string('consumption-per-km')->nullable();
+            $table->string('ville');
             $table->integer('prix_par_jour');
             $table->boolean('disponible')->default(true);
             $table->json('conditions')->nullable();
+            $table->string('srcimg')->nullable();
             $table->timestamps();
         });
     }
