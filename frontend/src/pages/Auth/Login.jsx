@@ -16,13 +16,14 @@ export const Login = () => {
             // Redirect based on role
             switch(user.role) {
                 case 'loueur':
-                    navigate('/loueur');
+                    navigate('/loueur/dashboard');
                     break;
                 case 'client':
-                    navigate('/client');
+                    navigate('/client/dashboard');
                     break;
                 case 'administrateur':
-                    navigate('/admin');
+                case 'admin':
+                    navigate('/admin/dashboard');
                     break;
                 default:
                     navigate('/');
@@ -42,12 +43,19 @@ export const Login = () => {
             console.log('Login successful, user role:', userRole);
             
             // Redirect based on role
-            if (userRole === 'admin') {
-                navigate('/admin/dashboard');
-            } else if (userRole === 'loueur') {
-                navigate('/loueur/dashboard');
-            } else {
-                navigate('/client/dashboard');
+            switch(userRole) {
+                case 'loueur':
+                    navigate('/loueur/dashboard');
+                    break;
+                case 'client':
+                    navigate('/client/dashboard');
+                    break;
+                case 'administrateur':
+                case 'admin':
+                    navigate('/admin/dashboard');
+                    break;
+                default:
+                    navigate('/');
             }
         } else {
             setError(result.error);
@@ -79,7 +87,9 @@ export const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="auth-button" disabled={loading}>Se connecter</button>
+                    <button type="submit" className="auth-button" disabled={loading}>
+                        {loading ? 'Connexion en cours...' : 'Se connecter'}
+                    </button>
                 </form>
                 <p className="auth-link">
                     Vous n'avez pas de compte ? <a href="/register">S'inscrire</a>

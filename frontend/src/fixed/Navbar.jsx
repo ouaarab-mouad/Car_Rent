@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { FaTachometerAlt, FaUsersCog, FaUser, FaCog, FaSignOutAlt, FaEnvelope, FaUserTag } from 'react-icons/fa'
 import './Navbar.css'
 
 export const Navbar = () => {
@@ -91,18 +92,6 @@ export const Navbar = () => {
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/listing" className="nav-link">Vehicles</Link>
         
-        {/* Admin Links */}
-        {user && user.role === 'administrateur' && (
-          <>
-            <Link to="/admin/dashboard" className="nav-link">
-              <i className="fas fa-tachometer-alt"></i> Dashboard
-            </Link>
-            <Link to="/admin/dashboard/users" className="nav-link">
-              <i className="fas fa-users-cog"></i> Users
-            </Link>
-          </>
-        )}
-        
         {/* Loueur (Car Owner) Dashboard Link */}
         {user && user.role === 'loueur' && (
           <Link to="/loueur" className="nav-link">Dashboard</Link>
@@ -117,17 +106,14 @@ export const Navbar = () => {
         <Link to="/contact" className="nav-link">Contact Us</Link>
       </div>
       
-      <div className="navbar-contact">
-        <svg className="phone-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM12 3v10l3-3h6V3h-9z" />
-        </svg>
-        <div className="contact-info">
-          <div className="help-text">Need help?</div>
-          <div className="phone-number">+212 674997586</div>
-        </div>
-      </div>
-      
       <div className="navbar-auth">
+        {/* Admin Dashboard Icon */}
+        {user && (user.role === 'administrateur' || user.role === 'admin') && (
+          <Link to="/admin/dashboard" className="nav-link admin-dashboard-icon">
+            <FaTachometerAlt />
+          </Link>
+        )}
+        
         {/* User Menu */}
         {user ? (
           <div className="user-menu-container">
@@ -154,12 +140,12 @@ export const Navbar = () => {
                     <div className="user-name-large">{getUserFullName()}</div>
                     {user.email && (
                       <div className="user-email">
-                        <i className="fas fa-envelope"></i>
+                        <FaEnvelope />
                         {user.email}
                       </div>
                     )}
                     <div className="user-role">
-                      <i className="fas fa-user-tag"></i>
+                      <FaUserTag />
                       {getUserRole()}
                     </div>
                   </div>
@@ -170,36 +156,36 @@ export const Navbar = () => {
                 {(user.role === 'administrateur' || user.role === 'admin') && (
                   <>
                     <Link to="/admin/dashboard" className="dropdown-item">
-                      <i className="fas fa-tachometer-alt"></i> Tableau de bord
+                      <FaTachometerAlt /> Tableau de bord
                     </Link>
                     <Link to="/admin/dashboard/users" className="dropdown-item">
-                      <i className="fas fa-users-cog"></i> Gestion des utilisateurs
+                      <FaUsersCog /> Gestion des utilisateurs
                     </Link>
                   </>
                 )}
                 {user.role === 'loueur' && (
                   <Link to="/loueur" className="dropdown-item">
-                    <i className="fas fa-tachometer-alt"></i> Tableau de bord
+                    <FaTachometerAlt /> Tableau de bord
                   </Link>
                 )}
                 {user.role === 'client' && (
                   <Link to="/client" className="dropdown-item">
-                    <i className="fas fa-tachometer-alt"></i> Mes réservations
+                    <FaTachometerAlt /> Mes réservations
                   </Link>
                 )}
                 
                 <Link to="/profile" className="dropdown-item">
-                  <i className="fas fa-user"></i> Mon profil
+                  <FaUser /> Mon profil
                 </Link>
                 <Link to="/settings" className="dropdown-item">
-                  <i className="fas fa-cog"></i> Paramètres
+                  <FaCog /> Paramètres
                 </Link>
                 <button 
                   onClick={handleLogout} 
                   className="dropdown-item logout"
                   type="button"
                 >
-                  <i className="fas fa-sign-out-alt"></i> Déconnexion
+                  <FaSignOutAlt /> Déconnexion
                 </button>
               </div>
             )}
