@@ -12,6 +12,7 @@ import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
 import { ListerUsers } from './pages/Admin/ListerUsers';
 import { UserDetails } from './pages/Admin/UserDetails';
+import { ListerVoitures } from './pages/Admin/ListerVoitures';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import Dashboard from './pages/Loueur/Dashboard';
 import AdminSidebar from './pages/Admin/AdminSidebar';
@@ -155,6 +156,7 @@ const App = () => {
                                                 <Routes>
                                                     <Route path="dashboard" element={<AdminDashboard />} />
                                                     <Route path="dashboard/users" element={<ListerUsers />} />
+                                                    <Route path="dashboard/voitures" element={<ListerVoitures />} />
                                                     <Route path="users/:id" element={<UserDetails />} />
                                                     <Route index element={<Navigate to="dashboard" />} />
                                                 </Routes>

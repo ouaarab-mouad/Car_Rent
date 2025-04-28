@@ -19,7 +19,7 @@ const AdminSidebar = () => {
       label: 'Users'
     },
     {
-      path: '/admin/cars',
+      path: '/admin/dashboard/voitures',
       icon: <FaCar />,
       label: 'Gestion des voitures'
     },

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Voiture extends Model
 {
@@ -18,15 +19,18 @@ class Voiture extends Model
         'prix_par_jour',
         'conditions',
         'srcimg',
+        'status',
+        'disponible'
     ];
 
     protected $casts = [
-        'conditions' => 'array'
+        'conditions' => 'array',
+        'disponible' => 'boolean'
     ];
 
     public function utilisateur()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'utilisateur_id');
     }
 
     public function getConditionsAttribute($value)

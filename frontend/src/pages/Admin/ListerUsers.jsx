@@ -19,7 +19,8 @@ export const ListerUsers = () => {
         nom: '',
         prenom: '',
         email: '',
-        role: 'all'
+        role: 'all',
+        status: 'all'
     });
 
     useEffect(() => {
@@ -83,6 +84,17 @@ export const ListerUsers = () => {
         
         if (filters.role !== 'all') {
             filtered = filtered.filter(user => user.role === filters.role);
+        }
+
+        if (filters.status !== 'all') {
+            filtered = filtered.filter(user => {
+                if (filters.status === 'pending') {
+                    return user.requested_role === 'loueur' && user.role_status === 'pending';
+                } else if (filters.status === 'approved') {
+                    return user.role_status === 'approved';
+                }
+                return true;
+            });
         }
         
         setFilteredUsers(filtered);
@@ -309,6 +321,21 @@ export const ListerUsers = () => {
                             <option value="administrateur">Administrateur</option>
                         </select>
                     </div>
+                    {filters.role === 'client' || filters.role === 'all' && (
+                        <div className="filter-item">
+                            <label>Statut</label>
+                            <select
+                                name="status"
+                                value={filters.status}
+                                onChange={handleFilterChange}
+                                className="filter-select"
+                            >
+                                <option value="all">Tous les statuts</option>
+                                <option value="pending">En attente</option>
+                                <option value="approved">Approuvé</option>
+                            </select>
+                        </div>
+                    )}
                 </div>
                 <div className="filter-results">
                     <i className="fas fa-users"></i>
@@ -349,14 +376,16 @@ export const ListerUsers = () => {
                                 </select>
                             </td>
                             <td>
-                                {user.requested_role === 'loueur' && user.role_status === 'pending' ? (
-                                    <span className="status-badge pending">
-                                        <i className="fas fa-clock"></i> Pending Approval
-                                    </span>
-                                ) : user.role_status === 'approved' ? (
-                                    <span className="status-badge approved">
-                                        <i className="fas fa-check"></i> Approved
-                                    </span>
+                                {user.role === 'client' && user.requested_role === 'loueur' ? (
+                                    user.role_status === 'pending' ? (
+                                        <span className="status-badge pending">
+                                            <i className="fas fa-clock"></i> En attente
+                                        </span>
+                                    ) : user.role_status === 'approved' ? (
+                                        <span className="status-badge approved">
+                                            <i className="fas fa-check"></i> Approuvé
+                                        </span>
+                                    ) : null
                                 ) : null}
                             </td>
                             <td>
