@@ -18,13 +18,13 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'http://localhost:3001'],
+    'allowed_origins' => ['http://localhost:3000'],
 
     'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => ['XSRF-TOKEN'],
 
     'max_age' => 0,
 

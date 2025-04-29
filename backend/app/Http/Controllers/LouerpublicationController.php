@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Url;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class LouerpublicationController extends Controller
 {
@@ -98,15 +99,34 @@ class LouerpublicationController extends Controller
 
     public function destroy($id)
     {
-        // Find the car by ID
-        $voiture = Voiture::findOrFail($id);
+        try {
+            // Find the car by ID
+            $voiture = Voiture::find($id);
 
-        // Delete the car
-        $voiture->delete();
+            if (!$voiture) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Voiture not found'
+                ], 404);
+            }
 
-        return response()->json([
-            'message' => 'Voiture supprimée avec succès'
-        ], 200);
+            // Delete related reservations first
+            $voiture->reservations()->delete();
+
+            // Delete the car
+            $voiture->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Voiture supprimée avec succès'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error deleting voiture: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete voiture: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

@@ -13,6 +13,40 @@ export const ListerVoitures = () => {
     const [voitureToDelete, setVoitureToDelete] = useState(null);
     const navigate = useNavigate();
 
+    // Initialize CSRF token and fetch voitures
+    useEffect(() => {
+        const initializeData = async () => {
+            try {
+                // First get CSRF token
+                await axios.get('/sanctum/csrf-cookie');
+                
+                // Then fetch voitures
+                const response = await axios.get('/api/voitures');
+                
+                if (response.data.success) {
+                    setVoitures(response.data.data);
+                    setFilteredVoitures(response.data.data);
+                } else {
+                    throw new Error(response.data.message || 'Failed to load cars');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setMessage({
+                    type: 'error',
+                    text: error.response?.data?.message || error.message || 'Failed to load cars. Please try again later.'
+                });
+                
+                if (error.response?.status === 403) {
+                    navigate('/login');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        initializeData();
+    }, [navigate]);
+
     // Filter states
     const [filters, setFilters] = useState({
         marque: '',
@@ -87,7 +121,21 @@ export const ListerVoitures = () => {
 
     const deleteVoiture = async (id) => {
         try {
-            const res = await axios.delete(`api/voiture/${id}`);
+            // First get CSRF token
+            const csrfResponse = await axios.get('/sanctum/csrf-cookie');
+            
+            // Get the XSRF-TOKEN from the response headers
+            const xsrfToken = csrfResponse.headers['x-xsrf-token'];
+            
+            // Then make the delete request using the correct API endpoint
+            const res = await axios.delete(`api/cars/${id}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': xsrfToken
+                },
+                withCredentials: true
+            });
+            
             if (res.data.success) {
                 setMessage({
                     type: 'success',
@@ -219,6 +267,7 @@ export const ListerVoitures = () => {
                         />
                     </div>
                     <div className="filter-item">
+
                         <label>Statut</label>
                         <select
                             name="status"

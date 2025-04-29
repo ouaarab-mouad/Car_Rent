@@ -17,23 +17,39 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
+            // Remove any spaces and special characters from the phone number first
+            $phone = preg_replace('/[^0-9]/', '', $request->phone);
+
+            // Validate the phone number format
+            if (!preg_match('/^(06|05)[0-9]{8}$/', $phone)) {
+                return response()->json([
+                    'message' => 'Le numéro de téléphone doit commencer par 06 ou 05 suivi de 8 chiffres'
+                ], 422);
+            }
+
             $request->validate([
                 'nom' => 'required|string|max:255',
                 'prenom' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:8|confirmed',
-                'phone' => 'required|string|max:20|unique:users',
                 'role' => 'required|in:client,loueur',
                 'EnterpriseName' => 'required_if:role,loueur|string|max:255',
                 'licence' => 'required_if:role,loueur|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048'
             ]);
+
+            // Check if phone number is unique
+            if (User::where('phone', $phone)->exists()) {
+                return response()->json([
+                    'message' => 'Ce numéro de téléphone est déjà utilisé'
+                ], 422);
+            }
 
             $userData = [
                 'nom' => $request->nom,
                 'prenom' => $request->prenom,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone,
+                'phone' => $phone,
                 'role' => $request->role === 'client' ? 'client' : 'client', // Default to client until approved
                 'requested_role' => $request->role,
                 'role_status' => $request->role === 'client' ? 'approved' : 'pending'

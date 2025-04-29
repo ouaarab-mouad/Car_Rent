@@ -33,6 +33,11 @@ class Voiture extends Model
         return $this->belongsTo(User::class, 'utilisateur_id');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'voiture_id');
+    }
+
     public function getConditionsAttribute($value)
     {
         return json_decode($value, true);
