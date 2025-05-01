@@ -52,7 +52,7 @@ export const Register = () => {
             if (formData.role === 'loueur') {
                 alert('Registration successful! Your loueur status is pending admin approval. You will be notified once approved.');
             }
-            navigate('/dashboard');
+            navigate('/client/dashboard');
         }
     };
 
