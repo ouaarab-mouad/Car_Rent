@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from "../../utils/axios"
-import './ListeVoitures.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
-
+import './ListeVoitures.css'
 export const ListeVoitures = () => {
     const [voitures, setVoitures] = useState([]);
     const [filteredVoitures, setFilteredVoitures] = useState([]);
@@ -247,7 +246,7 @@ export const ListeVoitures = () => {
             <DeleteConfirmationModal />
             
             {/* Filter Section */}
-            <div className="filter-section">
+            <div className="filter-section-voitures">
                 <h3>
                     <i className="fas fa-filter"></i>
                     Filtres

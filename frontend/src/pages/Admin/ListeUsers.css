@@ -11,7 +11,7 @@
 }
 
 /* Filter Section */
-.filter-section {
+.filter-section-users {
   margin-bottom: 30px;
   padding: 25px;
   background: white;
@@ -19,8 +19,8 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(99, 66, 255, 0.1);
   backdrop-filter: blur(10px);
-  width: 100%;
   margin: 0 auto 30px;
+  width: 100%;
 }
 
 /* Table Container */
@@ -352,7 +352,7 @@
     padding: 15px;
   }
   
-  .filter-section {
+  .filter-section-users {
     margin-bottom: 20px;
     padding: 20px;
   }
@@ -585,7 +585,7 @@
 }
 
 /* Enhanced Filter Section Styles */
-.filter-section h3 {
+.filter-section-users h3 {
     color: #1a1a1a;
     font-size: 1.3rem;
     margin-bottom: 25px;
@@ -595,7 +595,7 @@
     font-weight: 600;
 }
 
-.filter-section h3 i {
+.filter-section-users h3 i {
     color: #6342ff;
     background: rgba(99, 66, 255, 0.1);
     padding: 8px;
@@ -711,7 +711,7 @@
 
 /* Responsive Design for Filters */
 @media (max-width: 768px) {
-    .filter-section {
+    .filter-section-users {
         padding: 20px;
         margin: 0 -15px 30px;
         border-radius: 0;

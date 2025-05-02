@@ -263,7 +263,7 @@ export const ListeUsers = () => {
             <DeleteConfirmationModal />
             
             {/* Filter Section */}
-            <div className="filter-section">
+            <div className="filter-section-users">
                 <h3>
                     <i className="fas fa-filter"></i>
                     Filtres

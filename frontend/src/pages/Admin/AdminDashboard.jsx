@@ -19,30 +19,35 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [usersRes, carsRes, rentalsRes] = await Promise.all([
+        console.log('Fetching dashboard data...');
+        
+        const [usersRes, carsRes] = await Promise.all([
           axios.get('/api/users'),
-          axios.get('/api/cars'),
-          axios.get('/api/rentals')
+          axios.get('/api/voitures')
         ]);
 
-        const users = usersRes.data;
-        const cars = carsRes.data;
-        const rentals = rentalsRes.data;
+        console.log('Users response:', usersRes.data);
+        console.log('Cars response:', carsRes.data);
 
-        // Calculate total revenue
-        const revenue = rentals.reduce((sum, rental) => sum + rental.total_price, 0);
+        // Extract data from the response
+        const users = usersRes.data.data || [];
+        const cars = carsRes.data.data || [];
 
-        setStats({
+        setStats(prevStats => ({
+          ...prevStats,
           totalUsers: users.length,
-          totalCars: cars.length,
-          totalRentals: rentals.length,
-          totalRevenue: revenue,
-          recentRentals: rentals.slice(-5).reverse(),
-          recentUsers: users.slice(-5).reverse()
+          totalCars: cars.length
+        }));
+
+        console.log('Updated stats:', {
+          totalUsers: users.length,
+          totalCars: cars.length
         });
-        setLoading(false);
+
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        console.error('Error response:', error.response);
+      } finally {
         setLoading(false);
       }
     };
@@ -83,63 +88,6 @@ const AdminDashboard = () => {
             <div className="stat-info">
               <h3>Voitures</h3>
               <p>{stats.totalCars}</p>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-icon rentals">
-              <FaCalendarAlt />
-            </div>
-            <div className="stat-info">
-              <h3>Locations</h3>
-              <p>{stats.totalRentals}</p>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-icon revenue">
-              <FaMoneyBillWave />
-            </div>
-            <div className="stat-info">
-              <h3>Revenu Total</h3>
-              <p>{stats.totalRevenue.toFixed(2)} DH</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Activities */}
-        <div className="dashboard-content">
-          <div className="recent-section">
-            <h2>Locations Récentes</h2>
-            <div className="recent-list">
-              {stats.recentRentals.map(rental => (
-                <div key={rental.id} className="recent-item">
-                  <div className="recent-info">
-                    <span className="recent-title">Location #{rental.id}</span>
-                    <span className="recent-date">
-                      {new Date(rental.start_date).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="recent-amount">{rental.total_price} DH</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="recent-section">
-            <h2>Nouveaux Utilisateurs</h2>
-            <div className="recent-list">
-              {stats.recentUsers.map(user => (
-                <div key={user.id} className="recent-item">
-                  <div className="recent-info">
-                    <span className="recent-title">{user.nom} {user.prenom}</span>
-                    <span className="recent-date">
-                      {new Date(user.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="recent-role">{user.role}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>

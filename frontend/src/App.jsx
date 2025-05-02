@@ -29,7 +29,12 @@ const PrivateRoute = ({ children }) => {
     
     return user ? children : <Navigate to="/login" />;
 };
-
+/*const allData = {};
+for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    allData[key] = localStorage.getItem(key);
+}
+console.log(allData);*/
 const AdminRoute = ({ children }) => {
     const { user, loading } = useAuth();
     
