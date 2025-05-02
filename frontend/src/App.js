@@ -5,6 +5,7 @@ import { Listing } from "./pages/Listing";
 import { Navbar } from "./fixed/Navbar";
 import {SearchFilter} from "./pages/SearchFilter";
 import { Footer } from "./fixed/Footer";
+import About from './pages/About';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/listing" element={<Listing />} />
             <Route path="/search" element={<SearchFilter />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
         <Footer />
