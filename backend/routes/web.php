@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\VoitureController;
-use App\Http\Controllers\admin\ReservationController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +20,6 @@ Route::prefix('api')->group(function () {
     Route::delete('/voiture/{id}', [VoitureController::class, 'destroy']);
 
     // Reservation routes
-    Route::get('/reservations', [ReservationController::class, 'index']);
+
 });
 

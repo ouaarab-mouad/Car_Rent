@@ -56,4 +56,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar; 
+export default AdminSidebar;

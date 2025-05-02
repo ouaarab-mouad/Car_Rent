@@ -28,4 +28,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/cars/{id}', [LouerpublicationController::class, 'update']);
     Route::delete('/cars/{id}', [LouerpublicationController::class, 'destroy']);
 });
-

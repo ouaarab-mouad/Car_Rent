@@ -3,6 +3,7 @@ import axios from "../../utils/axios"
 import './ListeUsers.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export const ListerUsers = () => {
     const [users, setUsers] = useState([]);
@@ -13,6 +14,7 @@ export const ListerUsers = () => {
     const [userToDelete, setUserToDelete] = useState(null);
     const [editingUser, setEditingUser] = useState(null);
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     // Filter states
     const [filters, setFilters] = useState({
@@ -26,9 +28,7 @@ export const ListerUsers = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                console.log('Attempting to fetch users...');
                 const response = await axios.get('/api/users');
-                console.log('Response received:', response);
                 
                 if (response.data.success) {
                     setUsers(response.data.data);
@@ -37,19 +37,14 @@ export const ListerUsers = () => {
                     throw new Error(response.data.message || 'Failed to load users');
                 }
             } catch (error) {
-                console.error('Error details:', {
-                    message: error.message,
-                    response: error.response,
-                    request: error.request,
-                    config: error.config
-                });
-                
+                console.error('Error:', error);
                 setMessage({
                     type: 'error',
                     text: error.response?.data?.message || error.message || 'Failed to load users. Please try again later.'
                 });
                 
-                if (error.response?.status === 403) {
+                // Only redirect if it's a 403 error and user is not an admin
+                if (error.response?.status === 403 && user?.role !== 'administrateur') {
                     navigate('/login');
                 }
             } finally {
@@ -58,7 +53,7 @@ export const ListerUsers = () => {
         };
 
         fetchUsers();
-    }, [navigate]);
+    }, [navigate, user]);
 
     // Filter users based on search criteria
     useEffect(() => {
@@ -122,7 +117,7 @@ export const ListerUsers = () => {
         }
 
         try {
-            const res = await axios.put(`/user/${userId}/role`, {
+            const res = await axios.put(`/api/user/${userId}/role`, {
                 role: newRole,
                 role_status: newRole === 'loueur' ? 'approved' : 'pending'
             });

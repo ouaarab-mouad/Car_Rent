@@ -18,13 +18,17 @@ export const AuthProvider = ({ children }) => {
                     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                     
                     const response = await axios.get('/api/user');
+                    console.log('User data from API:', response.data);
+                    
                     if (response.data && typeof response.data === 'object' && !response.data.message) {
                         setUser(response.data);
+                        console.log('User role:', response.data.role);
                     } else {
                         throw new Error('Invalid user data');
                     }
                 } catch (error) {
                     console.error('Auth initialization failed:', error);
+                    console.error('Error response:', error.response);
                     // Only clear token if it's an authentication error
                     if (error.response?.status === 401) {
                         localStorage.removeItem('token');
