@@ -4,7 +4,7 @@ import './ListeVoitures.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
 
-export const ListerVoitures = () => {
+export const ListeVoitures = () => {
     const [voitures, setVoitures] = useState([]);
     const [filteredVoitures, setFilteredVoitures] = useState([]);
     const [loading, setLoading] = useState(true);

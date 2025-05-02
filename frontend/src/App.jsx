@@ -10,9 +10,9 @@ import CarDetailsForm from "./louer-publication-crud/addcar";
 import CarManagement from "./louer-publication-crud/deleteAndModify/app";
 import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
-import { ListerUsers } from './pages/Admin/ListerUsers';
+import { ListeUsers } from './pages/Admin/ListeUsers';
 import { UserDetails } from './pages/Admin/UserDetails';
-import { ListerVoitures } from './pages/Admin/ListerVoitures';
+import { ListeVoitures } from './pages/Admin/ListeVoitures';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import Dashboard from './pages/Loueur/Dashboard';
 import AdminSidebar from './pages/Admin/AdminSidebar';
@@ -157,8 +157,8 @@ const App = () => {
                                             <AdminLayout>
                                                 <Routes>
                                                     <Route path="dashboard" element={<AdminDashboard />} />
-                                                    <Route path="dashboard/users" element={<ListerUsers />} />
-                                                    <Route path="dashboard/voitures" element={<ListerVoitures />} />
+                                                    <Route path="dashboard/users" element={<ListeUsers />} />
+                                                    <Route path="dashboard/voitures" element={<ListeVoitures />} />
                                                     <Route path="dashboard/voitures/:id" element={<DetailsVoiture />} />
                                                     <Route path="dashboard/voitures/:id/edit" element={<EditVoiture />} />
                                                     <Route path="users/:id" element={<UserDetails />} />
