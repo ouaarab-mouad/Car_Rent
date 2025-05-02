@@ -258,7 +258,7 @@ export const ListerUsers = () => {
     return (
         <div className="user-table-container">
             {message.text && (
-                <MessageAlert type={message.type} text={message.text} />
+                    <MessageAlert type={message.type} text={message.text} />
             )}
             <DeleteConfirmationModal />
             
