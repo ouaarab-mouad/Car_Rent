@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'client_id',
         'loueur_id',
-        'publication_id',
+        'voiture_id',
         'date_debut',
         'date_fin',
+        'prix_total',
         'statut'
     ];
 
@@ -25,9 +29,9 @@ class Reservation extends Model
         return $this->belongsTo(User::class, 'loueur_id');
     }
 
-    public function publication()
+    public function voiture()
     {
-        return $this->belongsTo(Publication::class);
+        return $this->belongsTo(Voiture::class, 'voiture_id');
     }
 
     public function isDisponible()
@@ -47,12 +51,20 @@ class Reservation extends Model
 
     public function setDateDebutAttribute($value)
     {
-        $this->attributes['date_debut'] = date('Y-m-d', strtotime($value));
+        if ($value instanceof \DateTime) {
+            $this->attributes['date_debut'] = $value->format('Y-m-d');
+        } else {
+            $this->attributes['date_debut'] = date('Y-m-d', strtotime($value));
+        }
     }
 
     public function setDateFinAttribute($value)
     {
-        $this->attributes['date_fin'] = date('Y-m-d', strtotime($value));
+        if ($value instanceof \DateTime) {
+            $this->attributes['date_fin'] = $value->format('Y-m-d');
+        } else {
+            $this->attributes['date_fin'] = date('Y-m-d', strtotime($value));
+        }
     }
 
     public function getDureeReservation()

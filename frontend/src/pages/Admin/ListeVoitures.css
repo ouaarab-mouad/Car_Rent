@@ -1,0 +1,471 @@
+/* Modern and Professional Car List Styling */
+
+.voiture-table-container {
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Filter Section */
+.filter-section {
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(99, 66, 255, 0.1);
+    backdrop-filter: blur(10px);
+    width: 1200px;
+}
+
+.filter-section h3 {
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+}
+
+.filter-section h3 i {
+    color: #6342ff;
+    font-size: 1.2rem;
+}
+
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.filter-item {
+    width: 100%;
+}
+
+.filter-item label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.filter-input,
+.filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: #6342ff;
+    box-shadow: 0 0 0 3px rgba(99, 66, 255, 0.1);
+}
+
+.filter-results {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #4b5563;
+    font-size: 0.95rem;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.filter-results i {
+    color: #6342ff;
+    font-size: 1.1rem;
+}
+
+/* Table Container */
+.table-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    width: 1200px;
+}
+
+.voiture-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.voiture-table thead {
+    background: linear-gradient(135deg, #6342ff, #8069ff);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.voiture-table th {
+    padding: 16px 20px;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+}
+
+.voiture-table tbody tr {
+    transition: all 0.3s ease;
+    height: 60px;
+}
+
+.voiture-table tbody tr:nth-child(even) {
+    background-color: #f8f9ff;
+}
+
+.voiture-table tbody tr:hover {
+    background-color: #f0f2ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 66, 255, 0.1);
+}
+
+.voiture-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eef0f7;
+    font-size: 0.9rem;
+    color: #4a4a4a;
+    vertical-align: middle;
+    white-space: nowrap;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.status-badge i {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+.status-badge.disponible {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.en_location {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-badge.en_maintenance {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
+}
+
+.action-btn i {
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn {
+    color: #2196f3;
+    background-color: #e3f2fd;
+    border: 1px solid #bbdefb;
+}
+
+.edit-btn:hover {
+    background-color: #bbdefb;
+    color: #1976d2;
+}
+
+.delete-btn {
+    color: #f44336;
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+}
+
+.delete-btn:hover {
+    background-color: #ffcdd2;
+    color: #d32f2f;
+}
+
+/* Message Alert */
+.message-alert {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    animation: slideIn 0.3s ease-out;
+}
+
+.message-alert.success {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #dcfce7;
+}
+
+.message-alert.error {
+    background-color: #fef3f2;
+    color: #991b1b;
+    border: 1px solid #fee2e2;
+}
+
+.message-icon {
+    margin-right: 16px;
+    font-size: 1.3rem;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.message-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.message-close:hover {
+    opacity: 1;
+}
+
+/* Delete Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.delete-modal {
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delete-modal h3 {
+    margin-bottom: 16px;
+    color: #1a1a1a;
+    font-size: 1.25rem;
+}
+
+.delete-modal p {
+    margin-bottom: 32px;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.modal-btn.cancel-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.modal-btn.cancel-btn:hover {
+    background-color: #e5e7eb;
+}
+
+.modal-btn.confirm-btn {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.modal-btn.confirm-btn:hover {
+    background-color: #fecaca;
+}
+
+/* Loader */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 16px;
+}
+
+.loader-container p {
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .voiture-table-container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .filter-section,
+    .table-wrapper {
+        width: 100%;
+    }
+    
+    .voiture-table th,
+    .voiture-table td {
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .voiture-table-container {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .filter-section {
+        padding: 15px;
+    }
+    
+    .table-wrapper {
+        margin-top: 15px;
+    }
+    
+    .voiture-table {
+        font-size: 0.9rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .message-alert {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .message-content p {
+        margin: 8px 0;
+    }
+    
+    .message-icon {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+    
+    .filter-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        width: 100%;
+    }
+} 

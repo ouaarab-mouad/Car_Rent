@@ -1,0 +1,236 @@
+.edit-container {
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.edit-header h1 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-section {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(99, 66, 255, 0.1);
+}
+
+.form-section h2 {
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    background-color: #f9fafb;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #6342ff;
+    box-shadow: 0 0 0 3px rgba(99, 66, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.submit-btn,
+.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    background-color: #6342ff;
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #5234d4;
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.cancel-btn:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+.message-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease;
+}
+
+.message-alert.success {
+    background-color: #ecfdf5;
+    border: 1px solid #10b981;
+}
+
+.message-alert.error {
+    background-color: #fef2f2;
+    border: 1px solid #ef4444;
+}
+
+.message-icon {
+    font-size: 1.2rem;
+}
+
+.message-alert.success .message-icon {
+    color: #10b981;
+}
+
+.message-alert.error .message-icon {
+    color: #ef4444;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.message-content p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.message-alert.success .message-content p {
+    color: #065f46;
+}
+
+.message-alert.error .message-content p {
+    color: #991b1b;
+}
+
+.message-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.message-close:hover {
+    opacity: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 16px;
+}
+
+.loader-container p {
+    color: #6b7280;
+    font-size: 0.95rem;
+} 

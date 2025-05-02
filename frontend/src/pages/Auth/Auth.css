@@ -1,0 +1,210 @@
+.auth-container {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.auth-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #6342ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 66, 255, 0.1);
+}
+
+.form-text {
+    display: block;
+    margin-top: 4px;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* Role-specific fields */
+.role-specific-fields {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* File input styling */
+input[type="file"] {
+    padding: 8px;
+    background-color: #f8f9fa;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: #6342ff;
+    background-color: #f3f4ff;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background: #6342ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+    background: #5132ee;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.auth-link a {
+    color: #6342ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 20px;
+    }
+
+    .auth-box h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 8px;
+    }
+}
+
+/* Register page specific styles */
+.register-page .auth-box {
+    max-width: 800px;
+    padding: 48px;
+}
+
+.register-page .auth-box h2 {
+    font-size: 2.2rem;
+}
+
+.register-page .form-group {
+    width: 48%;
+    display: inline-block;
+    margin-right: 4%;
+}
+
+.register-page .form-group:nth-child(2n) {
+    margin-right: 0;
+}
+
+.register-page .form-group input,
+.register-page .form-group select {
+    font-size: 1.15rem;
+    padding: 16px;
+}
+
+.register-page .auth-button {
+    font-size: 1.15rem;
+    padding: 16px;
+    margin-top: 20px;
+}
+
+.register-page .role-specific-fields {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    width: 100%;
+}
+
+.register-page .role-specific-fields .form-group {
+    width: 100%;
+    margin-right: 0;
+}
+
+@media (max-width: 768px) {
+    .register-page .form-group {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-page .auth-box {
+        max-width: 98vw;
+        padding: 12px;
+    }
+    .register-page .auth-box h2 {
+        font-size: 1.3rem;
+    }
+    .register-page .form-group input,
+    .register-page .form-group select {
+        font-size: 1rem;
+        padding: 8px;
+    }
+    .register-page .auth-button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+} 
