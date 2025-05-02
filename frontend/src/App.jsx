@@ -17,6 +17,8 @@ import AdminDashboard from './pages/Admin/AdminDashboard';
 import Dashboard from './pages/Loueur/Dashboard';
 import AdminSidebar from './pages/Admin/AdminSidebar';
 import './App.css';
+import { DetailsVoiture } from './pages/Admin/DetailsVoiture';
+import { EditVoiture } from './pages/Admin/EditVoiture';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -157,6 +159,8 @@ const App = () => {
                                                     <Route path="dashboard" element={<AdminDashboard />} />
                                                     <Route path="dashboard/users" element={<ListerUsers />} />
                                                     <Route path="dashboard/voitures" element={<ListerVoitures />} />
+                                                    <Route path="dashboard/voitures/:id" element={<DetailsVoiture />} />
+                                                    <Route path="dashboard/voitures/:id/edit" element={<EditVoiture />} />
                                                     <Route path="users/:id" element={<UserDetails />} />
                                                     <Route index element={<Navigate to="dashboard" />} />
                                                 </Routes>

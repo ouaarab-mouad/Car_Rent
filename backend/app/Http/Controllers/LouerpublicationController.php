@@ -12,56 +12,55 @@ use Illuminate\Support\Facades\Log;
 class LouerpublicationController extends Controller
 {
     public function store(Request $request)
-{
-    \Log::info('Incoming request data:', $request->all());
+    {
+        \Log::info('Incoming request data:', $request->all());
 
-    $validatedData = $request->validate([
-        'modele' => 'required|string|max:255',
-        'marque' => 'required|string|max:255',
-        'categorie' => 'nullable|string|max:255',
-        'consumption-per-km' => 'nullable|string|max:255',
-        'ville' => 'required|string|max:255',
-        'prix_par_jour' => 'required|numeric|min:1',
-        'conditions' => 'required',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096' // Changed to nullable
-    ]);
+        $validatedData = $request->validate([
+            'modele' => 'required|string|max:255',
+            'marque' => 'required|string|max:255',
+            'categorie' => 'nullable|string|max:255',
+            'consumption-per-km' => 'nullable|string|max:255',
+            'ville' => 'required|string|max:255',
+            'prix_par_jour' => 'required|numeric|min:1',
+            'conditions' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096' // Changed to nullable
+        ]);
 
-    try {
-        $validatedData['utilisateur_id'] = auth()->id() ?? 1;
+        try {
+            $validatedData['utilisateur_id'] = auth()->id() ?? 1;
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imgPath = $image->store('louerlisting', 'public');
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imgPath = $image->store('louerlisting', 'public');
 
-            \Log::info('Stored image at: ' . $imgPath);
-            $validatedData['srcimg'] = '/storage/' . $imgPath; // relative path for flexibility
-        } else {
-            // Optional: Set a fallback default image
-            $validatedData['srcimg'] = '/storage/louerlisting/default.jpg';
-            \Log::warning('No image uploaded, using default image.');
+                \Log::info('Stored image at: ' . $imgPath);
+                $validatedData['srcimg'] = '/storage/' . $imgPath; // relative path for flexibility
+            } else {
+                // Optional: Set a fallback default image
+                $validatedData['srcimg'] = '/storage/louerlisting/default.jpg';
+                \Log::warning('No image uploaded, using default image.');
+            }
+
+            if (is_string($validatedData['conditions'])) {
+                $validatedData['conditions'] = json_decode($validatedData['conditions'], true);
+            }
+
+            $voiture = \App\Models\Voiture::create($validatedData);
+
+            return response()->json([
+                'message' => 'Voiture ajoutée avec succès',
+                'voiture' => $voiture
+            ], 201);
+
+        } catch (\Exception $e) {
+            \Log::error('Error creating voiture: ' . $e->getMessage());
+
+            return response()->json([
+                'message' => 'Erreur lors de l\'ajout de la voiture',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        if (is_string($validatedData['conditions'])) {
-            $validatedData['conditions'] = json_decode($validatedData['conditions'], true);
-        }
-
-        $voiture = \App\Models\Voiture::create($validatedData);
-
-        return response()->json([
-            'message' => 'Voiture ajoutée avec succès',
-            'voiture' => $voiture
-        ], 201);
-
-    } catch (\Exception $e) {
-        \Log::error('Error creating voiture: ' . $e->getMessage());
-
-        return response()->json([
-            'message' => 'Erreur lors de l\'ajout de la voiture',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
-
 
     public function index()
     {
@@ -143,5 +142,75 @@ class LouerpublicationController extends Controller
             return $car;
         });
         return response()->json($cars);
+    }
+
+    public function show($id)
+    {
+        try {
+            $voiture = Voiture::with(['utilisateur', 'reservations' => function($query) {
+                $query->where('statut', '!=', 'cancelled')
+                      ->orderBy('date_debut', 'desc');
+            }])->find($id);
+
+            if (!$voiture) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Car not found'
+                ], 404);
+            }
+
+            // Format the car data for the frontend
+            $formattedData = [
+                'id' => $voiture->id,
+                'marque' => $voiture->marque,
+                'modele' => $voiture->modele,
+                'categorie' => $voiture->categorie,
+                'ville' => $voiture->ville,
+                'prix_par_jour' => $voiture->prix_par_jour,
+                'status' => $voiture->status,
+                'disponible' => $voiture->disponible,
+                'srcimg' => $voiture->srcimg,
+                'conditions' => $voiture->conditions,
+                'created_at' => $voiture->created_at,
+                'updated_at' => $voiture->updated_at,
+                'utilisateur' => [
+                    'id' => $voiture->utilisateur->id,
+                    'nom' => $voiture->utilisateur->nom,
+                    'prenom' => $voiture->utilisateur->prenom,
+                    'email' => $voiture->utilisateur->email,
+                    'telephone' => $voiture->utilisateur->phone,
+                    'role' => $voiture->utilisateur->role
+                ],
+                'reservations' => $voiture->reservations->map(function($reservation) {
+                    return [
+                        'id' => $reservation->id,
+                        'date_debut' => $reservation->date_debut,
+                        'date_fin' => $reservation->date_fin,
+                        'prix_total' => $reservation->prix_total,
+                        'statut' => $reservation->statut,
+                        'client' => [
+                            'id' => $reservation->client->id,
+                            'nom' => $reservation->client->nom,
+                            'prenom' => $reservation->client->prenom,
+                            'email' => $reservation->client->email
+                        ]
+                    ];
+                })
+            ];
+
+            return response()->json([
+                'success' => true,
+                'data' => $formattedData
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching car details: ' . $e->getMessage(), [
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch car details: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Car management routes
     Route::get('/user/{id}/cars', [LouerpublicationController::class, 'userCars']);
+    Route::get('/cars/{id}', [LouerpublicationController::class, 'show']);
     Route::post('/cars', [LouerpublicationController::class, 'store']);
     Route::put('/cars/{id}', [LouerpublicationController::class, 'update']);
     Route::delete('/cars/{id}', [LouerpublicationController::class, 'destroy']);

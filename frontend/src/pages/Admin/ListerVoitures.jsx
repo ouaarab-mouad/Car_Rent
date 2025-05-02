@@ -158,7 +158,16 @@ export const ListerVoitures = () => {
     };
 
     const handleDetailsClick = (voitureId) => {
-        navigate(`/admin/voitures/${voitureId}`);
+        console.log('Navigating to car details for ID:', voitureId);
+        if (!voitureId) {
+            console.error('No car ID provided');
+            setMessage({
+                type: 'error',
+                text: 'No car ID provided'
+            });
+            return;
+        }
+        navigate(`/admin/dashboard/voitures/${voitureId}`);
     };
 
     // Message component

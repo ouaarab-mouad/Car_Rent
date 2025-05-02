@@ -35,23 +35,69 @@ class VoitureController extends Controller
     public function show($id)
     {
         try {
-            $voiture = Voiture::with('utilisateur')->find($id);
+            $voiture = Voiture::with(['utilisateur', 'reservations' => function($query) {
+                $query->where('statut', '!=', 'cancelled')
+                      ->orderBy('date_debut', 'desc');
+            }])->find($id);
 
             if (!$voiture) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Voiture not found'
+                    'message' => 'Car not found'
                 ], 404);
             }
 
+            // Format the car data for the frontend
+            $formattedData = [
+                'id' => $voiture->id,
+                'marque' => $voiture->marque,
+                'modele' => $voiture->modele,
+                'categorie' => $voiture->categorie,
+                'ville' => $voiture->ville,
+                'prix_par_jour' => $voiture->prix_par_jour,
+                'status' => $voiture->status,
+                'disponible' => $voiture->disponible,
+                'srcimg' => $voiture->srcimg,
+                'conditions' => $voiture->conditions,
+                'created_at' => $voiture->created_at,
+                'updated_at' => $voiture->updated_at,
+                'utilisateur' => [
+                    'id' => $voiture->utilisateur->id,
+                    'nom' => $voiture->utilisateur->nom,
+                    'prenom' => $voiture->utilisateur->prenom,
+                    'email' => $voiture->utilisateur->email,
+                    'telephone' => $voiture->utilisateur->phone,
+                    'role' => $voiture->utilisateur->role
+                ],
+                'reservations' => $voiture->reservations->map(function($reservation) {
+                    return [
+                        'id' => $reservation->id,
+                        'date_debut' => $reservation->date_debut,
+                        'date_fin' => $reservation->date_fin,
+                        'prix_total' => $reservation->prix_total,
+                        'statut' => $reservation->statut,
+                        'client' => [
+                            'id' => $reservation->client->id,
+                            'nom' => $reservation->client->nom,
+                            'prenom' => $reservation->client->prenom,
+                            'email' => $reservation->client->email
+                        ]
+                    ];
+                })
+            ];
+
             return response()->json([
                 'success' => true,
-                'data' => $voiture
+                'data' => $formattedData
             ]);
         } catch (\Exception $e) {
+            \Log::error('Error fetching car details: ' . $e->getMessage(), [
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch voiture: ' . $e->getMessage()
+                'message' => 'Failed to fetch car details: ' . $e->getMessage()
             ], 500);
         }
     }
