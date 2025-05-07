@@ -91,19 +91,21 @@ export const Navbar = () => {
       <div className="navbar-links">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/listing" className="nav-link">Vehicles</Link>
-        
-        {/* Loueur (Car Owner) Dashboard Link */}
+        <Link to="/search" className="nav-link">Search</Link>
+        <Link to="/contact" className="nav-link">Contact Us</Link>
+
+        {/* Loueur (Car Owner) Dashboard Links */}
         {user && user.role === 'loueur' && (
-          <Link to="/loueur" className="nav-link">Dashboard</Link>
+          <>
+            <Link to="/loueur/dashboard" className="nav-link">Dashboard</Link>
+            <Link to="/loueur/manage-cars" className="nav-link">Manage Cars</Link>
+          </>
         )}
         
         {/* Client Dashboard Link */}
         {user && user.role === 'client' && (
-          <Link to="/client" className="nav-link">Dashboard</Link>
+          <Link to="/client/dashboard" className="nav-link">Dashboard</Link>
         )}
-        
-        <Link to="/about" className="nav-link">About Us</Link>
-        <Link to="/contact" className="nav-link">Contact Us</Link>
       </div>
       
       <div className="navbar-auth">

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: 'http://localhost:8000',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -24,7 +24,7 @@ instance.interceptors.request.use(
             try {
                 // Get fresh CSRF token
                 await axios.get('/sanctum/csrf-cookie', {
-                    baseURL: 'http://127.0.0.1:8000',
+                    baseURL: 'http://localhost:8000',
                     withCredentials: true
                 });
                 

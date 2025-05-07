@@ -18,9 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            AdminSeeder::class,
-        ]);
+        // Only run AdminSeeder if no users exist
+        if (!\App\Models\User::count()) {
+            $this->call([
+                AdminSeeder::class,
+            ]);
+        }
 
         // Create users
         User::factory(10)->create();
