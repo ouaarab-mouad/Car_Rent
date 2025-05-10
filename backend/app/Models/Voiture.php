@@ -20,7 +20,9 @@ class Voiture extends Model
         'conditions',
         'srcimg',
         'status',
-        'disponible'
+        'disponible',
+        'consumption-per-km',
+        'classe'
     ];
 
     protected $casts = [

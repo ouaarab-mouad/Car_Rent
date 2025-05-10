@@ -4,10 +4,10 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { Home } from "./pages/Home";
 import { Listing } from "./pages/Listing";
 import { Navbar } from "./fixed/Navbar";
-import { SearchFilter } from "./pages/SearchFilter";
 import { Footer } from "./fixed/Footer";
-import CarDetailsForm from "./louer-publication-crud/addcar";
+import ModifyCar from "./louer-publication-crud/modify";
 import CarManagement from "./louer-publication-crud/deleteAndModify/app";
+import CarDetailsForm from "./louer-publication-crud/addcar";
 import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
 import { ListeUsers } from './pages/Admin/ListeUsers';
@@ -19,6 +19,7 @@ import AdminSidebar from './pages/Admin/AdminSidebar';
 import './App.css';
 import { DetailsVoiture } from './pages/Admin/DetailsVoiture';
 import { EditVoiture } from './pages/Admin/EditVoiture';
+
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -120,18 +121,18 @@ const App = () => {
                                 {/* Public routes */}
                                 <Route path="/" element={<Home />} />
                                 <Route path="/listing" element={<Listing />} />
-                                <Route path="/search" element={<SearchFilter />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
 
                                 {/* Loueur routes */}
-                                <Route path="/loueur" element={
+                                <Route path="/loueur/*" element={
                                     <PrivateRoute>
                                         <LoueurRoute>
                                             <LoueurLayout>
                                                 <Routes>
                                                     <Route path="dashboard" element={<Dashboard />} />
-                                                    <Route path="add-car" element={<CarDetailsForm />} />
+                                                    <Route path="addcar" element={<CarDetailsForm />} />
+                                                    <Route path="modify/:id" element={<ModifyCar />} />
                                                     <Route path="manage-cars" element={<CarManagement />} />
                                                     <Route index element={<Navigate to="dashboard" />} />
                                                 </Routes>

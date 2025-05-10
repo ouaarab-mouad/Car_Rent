@@ -1,5 +1,6 @@
 // components/CarCard.js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './CarCard.css';
 
@@ -22,11 +23,28 @@ function CarCard({ car, onDelete }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/api/cars/${id}`);
-      if (onDelete) onDelete(id);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in to delete cars');
+        return;
+      }
+
+      const response = await axios.delete(`http://localhost:8000/api/cars/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.status === 200) {
+        if (onDelete) onDelete(id);
+      } else {
+        throw new Error('Failed to delete car');
+      }
     } catch (error) {
       console.error('Error deleting car:', error);
-      alert('Failed to delete car.');
+      alert(error.response?.data?.message || 'Failed to delete car. You may not have permission.');
     } finally {
       setShowConfirm(false);
     }
@@ -48,6 +66,8 @@ function CarCard({ car, onDelete }) {
         ) : (
           <div className="car-silhouette" />
         )}
+      </div>
+      <div className="car-actions">
         {showConfirm && (
           <div className="confirm-dialog">
             <p>Are you sure you want to delete this car?</p>
@@ -78,8 +98,8 @@ function CarCard({ car, onDelete }) {
           )}
         </div>
         <div className="car-actions">
-          <button className="delete-button" onClick={() => setShowConfirm(true)}>delete</button>
-          <button className="modify-button">view and modify</button>
+          <button className="delete-button" onClick={() => setShowConfirm(true)}>Delete</button>
+          <Link to={`/loueur/modify/${id}`} className="modify-button">View and Modify</Link>
         </div>
       </div>
     </div>

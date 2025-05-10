@@ -10,12 +10,13 @@ return new class extends Migration
     {
         Schema::create('voitures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('utilisateur_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('utilisateur_id')->constrained('users', 'id')->onDelete('cascade');
             $table->string('modele');
             $table->string('marque');
             $table->string('categorie')->nullable();
-            $table->string('consumption-per-km')->nullable();
+            $table->decimal('consumption-per-km', 5, 2)->nullable();
             $table->string('ville');
+            $table->string('classe')->nullable();
             $table->integer('prix_par_jour');
             $table->boolean('disponible')->default(true);
             $table->json('conditions')->nullable();

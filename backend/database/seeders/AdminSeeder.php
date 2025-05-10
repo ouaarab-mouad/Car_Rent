@@ -12,22 +12,24 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
-        // Create admin user
-        $admin = User::create([
+        // Create admin user if it doesn't exist
+        $admin = User::firstOrCreate([
+            'email' => 'admin@example.com'
+        ], [
             'nom' => 'Admin',
             'prenom' => 'User',
-            'email' => 'admin@example.com',
             'password' => Hash::make('admin123'),
             'phone' => '1234567890',
             'role' => 'administrateur',
             'role_status' => 'approved'
         ]);
 
-        // Create a client user
-        $client = User::create([
+        // Create a client user if it doesn't exist
+        $client = User::firstOrCreate([
+            'email' => 'client@example.com'
+        ], [
             'nom' => 'Client',
             'prenom' => 'Test',
-            'email' => 'client@example.com',
             'password' => Hash::make('client123'),
             'phone' => '0987654321',
             'role' => 'client',

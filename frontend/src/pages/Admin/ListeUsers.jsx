@@ -263,7 +263,7 @@ export const ListeUsers = () => {
             <DeleteConfirmationModal />
             
             {/* Filter Section */}
-            <div className="filter-section-users">
+            <div className="filter-section">
                 <h3>
                     <i className="fas fa-filter"></i>
                     Filtres
@@ -316,7 +316,6 @@ export const ListeUsers = () => {
                             <option value="administrateur">Administrateur</option>
                         </select>
                     </div>
-                    {filters.role === 'client' || filters.role === 'all' && (
                         <div className="filter-item">
                             <label>Statut</label>
                             <select
@@ -330,7 +329,6 @@ export const ListeUsers = () => {
                                 <option value="approved">Approuvé</option>
                             </select>
                         </div>
-                    )}
                 </div>
                 <div className="filter-results">
                     <i className="fas fa-users"></i>

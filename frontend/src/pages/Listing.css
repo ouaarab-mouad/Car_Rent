@@ -1,16 +1,40 @@
 /* Listing.css */
 .listing-page-container {
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 80px;
     font-family: 'Poppins', sans-serif;
     position: relative;
+    max-width: 2400px;
+    width: 100%;
+    background-color: #f8f9fa;
+    min-height: 100vh;
 }
 
 .listing-page-title {
     text-align: center;
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 40px;
-    color: #333;
+    color: #2d3436;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.listing-page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #6c5ce7, #a29bfe);
+    border-radius: 2px;
+}
+
+.listing-page-icon-spacing {
+    margin-right: 12px;
+    color: #6c5ce7;
 }
 
 .listing-page-content-wrapper {
@@ -21,12 +45,12 @@
 
 /* Left Side - Filters */
 .listing-page-filters-section {
-    width: 280px;
+    width: 300px;
     flex-shrink: 0;
     background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 20px;
     height: fit-content;
@@ -35,76 +59,93 @@
 
 .listing-page-search-container {
     position: relative;
-    margin-bottom: 25px;
-}
-
-.listing-page-search-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #777;
+    margin-bottom: 30px;
 }
 
 .listing-page-search-input {
     width: 100%;
-    padding: 12px 20px 12px 45px;
-    border: 1px solid #ddd;
-    border-radius: 30px;
-    font-size: 16px;
+    padding: 14px 20px 14px 45px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 15px;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
 }
 
 .listing-page-search-input:focus {
     border-color: #6c5ce7;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
 }
 
 .listing-page-filter-group {
-    margin-bottom: 25px;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 .listing-page-filter-group label {
     display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: #555;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 15px;
 }
 
 .listing-page-select {
     width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: white;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 15px;
+    background-color: #f8f9fa;
     cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236c5ce7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.listing-page-select:focus {
+    border-color: #6c5ce7;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
 }
 
 .listing-page-range-slider {
     width: 100%;
-    height: 5px;
-    margin: 15px 0;
+    height: 6px;
+    margin: 20px 0;
     -webkit-appearance: none;
-    background: #ddd;
-    border-radius: 5px;
+    background: #e9ecef;
+    border-radius: 3px;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 .listing-page-range-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     background: #6c5ce7;
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 2px 6px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s ease;
+}
+
+.listing-page-range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
 }
 
 .listing-page-price-labels {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: #777;
+    font-size: 13px;
+    color: #636e72;
+    margin-top: 10px;
 }
 
 /* Right Side - Cars Grid */
@@ -114,25 +155,26 @@
 
 .listing-page-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .listing-page-card {
     background: white;
-    width: 450px;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .listing-page-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .listing-page-image-container {
@@ -140,13 +182,14 @@
     height: 200px;
     overflow: hidden;
     flex-shrink: 0;
+    background: #f8f9fa;
 }
 
 .listing-page-car-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.5s ease;
 }
 
 .listing-page-card:hover .listing-page-car-image {
@@ -157,12 +200,15 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    background: rgba(108, 92, 231, 0.9);
+    background: rgba(108, 92, 231, 0.95);
     color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
+    padding: 8px 16px;
+    border-radius: 30px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 .listing-page-car-details {
@@ -170,30 +216,41 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    background: white;
+    position: relative;
 }
 
 .listing-page-car-brand {
     font-size: 18px;
-    margin-bottom: 5px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-bottom: 6px;
+    color: #2d3436;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .listing-page-car-model {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 15px;
+    margin-bottom: 6px;
     color: #6c5ce7;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-weight: 500;
 }
 
 .listing-page-car-type {
     font-size: 14px;
-    color: #777;
+    color: #636e72;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.listing-page-car-type::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #6c5ce7;
+    border-radius: 50%;
 }
 
 .listing-page-car-info {
@@ -201,7 +258,22 @@
     justify-content: space-between;
     margin-bottom: 20px;
     font-size: 13px;
-    color: #555;
+    color: #2d3436;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.listing-page-car-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.listing-page-car-info span:first-child {
+    color: #6c5ce7;
 }
 
 .listing-page-rent-button {
@@ -210,62 +282,282 @@
     background: #6c5ce7;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
     margin-top: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.listing-page-rent-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
 }
 
 .listing-page-rent-button:hover {
     background: #5649c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
-.listing-page-button-icon {
-    font-size: 14px;
+.listing-page-rent-button:hover::before {
+    left: 100%;
 }
 
-.listing-page-show-more-btn {
-    display: block;
-    margin: 40px auto 0;
-    padding: 12px 25px;
-    background: white;
+.listing-page-rent-button:active {
+    transform: translateY(0);
+}
+
+/* Add a subtle gradient overlay to the image */
+.listing-page-image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+    pointer-events: none;
+}
+
+/* Loading and Error States */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    font-size: 1.4rem;
     color: #6c5ce7;
-    border: 2px solid #6c5ce7;
-    border-radius: 30px;
+    font-weight: 500;
+}
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    font-size: 1.4rem;
+    color: #e74c3c;
+    text-align: center;
+    padding: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+/* Dropdown Styles */
+.listing-page-dropdown {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 15px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.listing-page-dropdown:hover {
+    border-color: #6c5ce7;
+    background-color: white;
+}
+
+.listing-page-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.listing-page-dropdown-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.listing-page-dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.listing-page-dropdown-item.selected {
+    background-color: #6c5ce7;
+    color: white;
+}
+
+/* Color Options */
+.listing-page-color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.listing-page-color-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.listing-page-color-option:hover {
+    border-color: #6c5ce7;
+}
+
+.listing-page-color-option.selected {
+    border-color: #6c5ce7;
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+.listing-page-color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #e9ecef;
+}
+
+.listing-page-color-name {
+    font-size: 14px;
+    color: #2d3436;
+}
+
+/* Condition Options */
+.listing-page-condition-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.listing-page-condition-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.listing-page-condition-option:hover {
+    border-color: #6c5ce7;
+}
+
+.listing-page-condition-option.selected {
+    border-color: #6c5ce7;
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+/* Load More Button */
+.listing-page-load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.listing-page-load-more-btn {
+    padding: 12px 24px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
-.listing-page-show-more-btn:hover {
-    background: #6c5ce7;
-    color: white;
+.listing-page-load-more-btn:hover {
+    background: #5649c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
-.listing-page-btn-icon {
-    transition: transform 0.3s;
-}
-
-.listing-page-show-more-btn:hover .listing-page-btn-icon {
-    transform: translateY(2px);
+/* Rotated Icon */
+.rotated {
+    transform: rotate(180deg);
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 2000px) {
+    .listing-page-container {
+        padding: 40px 60px;
+    }
+}
+
+@media (max-width: 1600px) {
+    .listing-page-container {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .listing-page-container {
+        padding: 30px;
+    }
+    
     .listing-page-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .listing-page-container {
+        padding: 30px;
+    }
+    
+    .listing-page-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 900px) {
+    .listing-page-container {
+        padding: 25px;
+    }
+
     .listing-page-content-wrapper {
         flex-direction: column;
     }
@@ -273,24 +565,38 @@
     .listing-page-filters-section {
         width: 100%;
         position: static;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 
     .listing-page-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .listing-page-dropdown-menu {
+        position: static;
+        margin-top: 5px;
+        max-height: 150px;
+    }
+
+    .listing-page-color-options {
+        justify-content: center;
+    }
+
+    .listing-page-condition-options {
+        align-items: center;
+    }
 }
 
 @media (max-width: 480px) {
     .listing-page-container {
-        padding: 15px;
-    }
-    
-    .listing-page-grid {
-        grid-template-columns: 1fr;
+        padding: 20px;
     }
     
     .listing-page-title {
-        font-size: 24px;
+        font-size: 28px;
+    }
+    
+    .listing-page-grid {
+        grid-template-columns: repeat(1, 1fr);
     }
 } 
