@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaCar, FaChevronDown, FaChevronUp, FaSearch, FaPlus, FaUserCircle, FaCalendarAlt } from "react-icons/fa";
 import axios from "axios";
 import "./Listing.css";
+import { Link } from 'react-router-dom';
 
 export const Listing = () => {
   const [vehicles, setVehicles] = useState([]);
@@ -276,24 +277,26 @@ export const Listing = () => {
         <div className="listing-page-content">
           <div className="listing-page-grid">
             {filteredVehicles.slice(0, visibleCars).map((vehicle) => (
-              <div key={vehicle.id} className="listing-page-card">
-                <div className="listing-page-image-container">
-                  <img src={vehicle.image} alt={vehicle.name} className="listing-page-car-image" />
-                  <div className="listing-page-price-badge">{vehicle.price} DH/J</div>
-                </div>
-                <div className="listing-page-car-details">
-                  <h3 className="listing-page-car-brand">{vehicle.brand}</h3>
-                  <p className="listing-page-car-model">{vehicle.name}</p>
-                  <p className="listing-page-car-type">{vehicle.type}</p>
-                  <div className="listing-page-car-info">
-                    <span>{vehicle.transmission}</span>
-                    <span>{vehicle.fuel_type}</span>
+              <Link to={`/cars/${vehicle.id}`} key={vehicle.id} className="listing-page-card-link">
+                <div className="listing-page-card">
+                  <div className="listing-page-image-container">
+                    <img src={vehicle.image} alt={vehicle.name} className="listing-page-car-image" />
+                    <div className="listing-page-price-badge">{vehicle.price} DH/J</div>
                   </div>
-                  <button className="listing-page-rent-button">
-                    Rent Now
-                  </button>
+                  <div className="listing-page-car-details">
+                    <h3 className="listing-page-car-brand">{vehicle.brand}</h3>
+                    <p className="listing-page-car-model">{vehicle.name}</p>
+                    <p className="listing-page-car-type">{vehicle.type}</p>
+                    <div className="listing-page-car-info">
+                      <span>{vehicle.transmission}</span>
+                      <span>{vehicle.fuel_type}</span>
+                    </div>
+                    <button className="listing-page-rent-button">
+                      Rent Now
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           {filteredVehicles.length > visibleCars && (

@@ -19,6 +19,11 @@ import AdminSidebar from './pages/Admin/AdminSidebar';
 import './App.css';
 import { DetailsVoiture } from './pages/Admin/DetailsVoiture';
 import { EditVoiture } from './pages/Admin/EditVoiture';
+import Profile from './pages/Profile';
+import LoueurProfile from './pages/Loueur/LoueurProfile';
+import PublicProfile from './pages/PublicProfile';
+import DetailCar from './pages/DetailCar';
+import Reservation from './pages/Reservation';
 
 
 const PrivateRoute = ({ children }) => {
@@ -123,6 +128,16 @@ const App = () => {
                                 <Route path="/listing" element={<Listing />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
+                                <Route path="/profile" element={
+                                  <PrivateRoute>
+                                    <ProfileSwitcher />
+                                  </PrivateRoute>
+                                } />
+                                <Route path="/profile/:id" element={
+                                  <PrivateRoute>
+                                    <PublicProfile />
+                                  </PrivateRoute>
+                                } />
 
                                 {/* Loueur routes */}
                                 <Route path="/loueur/*" element={
@@ -174,6 +189,9 @@ const App = () => {
                                         </AdminRoute>
                                     </PrivateRoute>
                                 } />
+
+                                <Route path="/cars/:id" element={<DetailCar />} />
+                                <Route path="/reservation/:carId" element={<Reservation />} />
                             </Routes>
                         </main>
                         <Footer />
@@ -182,6 +200,13 @@ const App = () => {
             </AuthProvider>
         </React.StrictMode>
     );
+};
+
+const ProfileSwitcher = () => {
+  const { user } = useAuth();
+  if (!user) return null;
+  if (user.role === 'loueur') return <LoueurProfile />;
+  return <Profile />;
 };
 
 export default App; 
