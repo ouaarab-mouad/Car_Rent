@@ -127,10 +127,7 @@ export const Navbar = () => {
             </Link>
           </div>
           
-          <div className="navbar-actions">
-            <Link to="/search" className="search-btn" aria-label="Search">
-              <Search size={20} />
-            </Link>
+          <div className="navbar-actions">           
             
             <div className="auth-buttons">
               <Link to="/login" className="auth-button login">
@@ -216,9 +213,7 @@ export const Navbar = () => {
         </div>
         
         <div className="navbar-actions">
-          <Link to="/search" className="search-btn" aria-label="Search">
-            <Search size={20} />
-          </Link>
+         
 
           <div className="user-menu-container">
             <button 
