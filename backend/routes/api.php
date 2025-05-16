@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/cars', [App\Http\Controllers\CarController::class, 'index']); // Public cars listing
+Route::get('/cars/{id}', [LouerpublicationController::class, 'show']); // Public car details
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,5 +29,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cars', [LouerpublicationController::class, 'store']);
     Route::put('/cars/{id}', [LouerpublicationController::class, 'update']);
     Route::delete('/cars/{id}', [LouerpublicationController::class, 'destroy']);
-    Route::get('/cars/{id}', [LouerpublicationController::class, 'show']);
+
+    // Profile routes
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me']);
+    Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update']);
+    Route::get('/users/{id}/profile', [\App\Http\Controllers\ProfileController::class, 'show']);
+    Route::get('/loeur/profile', [\App\Http\Controllers\ProfileController::class, 'loueurProfile']);
+
+    // Reservation routes
+    Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store']);
 });

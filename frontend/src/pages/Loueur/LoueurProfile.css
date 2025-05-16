@@ -1,0 +1,377 @@
+/* LoueurProfile.css */
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    }
+    /* Loading and Error States */
+    .loading-container, .error-container, .no-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    margin: 30px auto;
+    text-align: center;
+    }
+    .loading-spinner {
+    border: 4px solid rgba(108, 92, 231, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #6c5ce7;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+    }
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+    .retry-button, .add-car-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    }
+    .retry-button:hover, .add-car-btn:hover {
+    background: #5649c0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    /* Owner Profile Header */
+    .owner-profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    padding: 30px;
+    border-radius: 15px;
+    color: white;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.2);
+    }
+    .owner-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    border: 3px solid white;
+    flex-shrink: 0;
+    }
+    .owner-info {
+    flex: 1;
+    min-width: 250px;
+    }
+    .owner-name {
+    font-size: 28px;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    }
+    .owner-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 14px;
+    align-items: center;
+    }
+    .owner-location, .owner-rating, .owner-stats {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 5px 12px;
+    border-radius: 20px;
+    }
+    .owner-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    }
+    .rating-star {
+    color: #ddd;
+    font-size: 14px;
+    }
+    .rating-star.filled {
+    color: #fdcb6e;
+    }
+    .rating-star.half-filled {
+    position: relative;
+    color: #ddd;
+    }
+    .rating-star.half-filled::before {
+    content: '\f005';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #fdcb6e;
+    }
+    .owner-contact {
+    min-width: 250px;
+    }
+    .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+    .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+    }
+    /* Owner's Cars Section */
+    .owner-cars-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #2d3436;
+    }
+    .cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    }
+    .car-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #f1f1f1;
+    }
+    .car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .car-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    }
+    .car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    }
+    .car-card:hover .car-image {
+    transform: scale(1.05);
+    }
+    .car-price-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(108, 92, 231, 0.9);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    }
+    .car-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2d3436;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 12px;
+    }
+    .car-badge.exellent,
+    .car-badge.excellent {
+    background: rgba(46, 204, 113, 0.9);
+    color: white;
+    }
+    .car-badge.good {
+    background: rgba(241, 196, 15, 0.9);
+    color: white;
+    }
+    .car-badge.bad {
+    background: rgba(231, 76, 60, 0.9);
+    color: white;
+    }
+    .car-details {
+    padding: 20px;
+    }
+    .car-title {
+    font-size: 18px;
+    margin: 0 0 5px 0;
+    color: #2d3436;
+    font-weight: 600;
+    }
+    .car-type {
+    font-size: 14px;
+    color: #636e72;
+    margin: 0 0 15px 0;
+    }
+    .car-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    }
+    .feature {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #636e72;
+    }
+    .car-availability {
+    font-size: 13px;
+    color: #e17055;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-style: italic;
+    }
+    .car-actions {
+    display: flex;
+    gap: 10px;
+    }
+    .edit-button, .delete-button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    }
+    .edit-button {
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    }
+    .delete-button {
+    background: white;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    }
+    .edit-button:hover {
+    background: #5649c0;
+    }
+    .delete-button:hover {
+    background: #e74c3c;
+    color: white;
+    }
+    .load-more-button {
+    display: block;
+    margin: 40px auto 0;
+    padding: 12px 25px;
+    background: white;
+    color: #6c5ce7;
+    border: 2px solid #6c5ce7;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s;
+    }
+    .load-more-button:hover {
+    background: #6c5ce7;
+    color: white;
+    transform: translateY(-2px);
+    }
+    .no-cars-message {
+    text-align: center;
+    padding: 40px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    color: #636e72;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    }
+    /* Responsive Design */
+    @media (max-width: 992px) {
+    .owner-profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+    }
+    .owner-avatar {
+    margin: 0 auto 20px;
+    }
+    .owner-meta {
+    justify-content: center;
+    }
+    .contact-info {
+    margin-top: 20px;
+    }
+    }
+    @media (max-width: 768px) {
+    .cars-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .owner-name {
+    font-size: 24px;
+    }
+    .section-title {
+    font-size: 20px;
+    }
+    }
+    @media (max-width: 576px) {
+    .profile-container {
+    padding: 20px 15px;
+    }
+    .owner-profile-header, .owner-cars-section {
+    padding: 20px;
+    }
+    .owner-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
+    }
+    .owner-name {
+    font-size: 22px;
+    }
+    .owner-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    }
+    .owner-location, .owner-rating, .owner-stats {
+    width: 100%;
+    justify-content: center;
+    }
+    .car-actions {
+    flex-direction: column;
+    }
+    }

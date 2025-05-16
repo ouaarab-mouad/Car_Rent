@@ -637,3 +637,23 @@ section {
     font-size: 1rem;
   }
 }
+
+.loading-spinner {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #6c5ce7;
+    font-weight: 500;
+}
+
+.error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: #ef4444;
+    font-size: 1.1rem;
+    background-color: #fee2e2;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
