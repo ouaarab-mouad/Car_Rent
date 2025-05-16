@@ -86,4 +86,78 @@
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.reservations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-content: flex-start;
+}
+
+.reservation-card {
+    min-width: 280px;
+    max-width: 350px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+}
+
+.reservation-card:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+
+.reservation-card img {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.reservation-card p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+}
+
+.reservation-card h3 {
+    margin-bottom: 0.7rem;
+    font-size: 1.2rem;
+    color: #2d3a4b;
+}
+
+.accept-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.accept-btn:disabled {
+    background: #a5d6a7;
+    cursor: not-allowed;
+}
+
+.refuse-btn {
+    background: #f44336;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.refuse-btn:disabled {
+    background: #ef9a9a;
+    cursor: not-allowed;
 } 

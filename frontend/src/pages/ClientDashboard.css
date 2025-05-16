@@ -7,7 +7,7 @@
   }
   
   /* Dashboard header */
-  .dashboard-header {
+  .client-dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,25 +16,25 @@
     padding-bottom: 1rem;
   }
   
-  .dashboard-header h2 {
+  .client-dashboard-header h2 {
     font-size: 1.8rem;
     font-weight: 600;
     color: #2c3e50;
     margin: 0;
   }
   
-  .filter-controls {
+  .client-filter-controls {
     display: flex;
     align-items: center;
     gap: 0.8rem;
   }
   
-  .filter-controls span {
+  .client-filter-controls span {
     font-size: 0.9rem;
     color: #666;
   }
   
-  .filter-dropdown {
+  .client-filter-dropdown {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -45,14 +45,14 @@
     transition: all 0.2s ease;
   }
   
-  .filter-dropdown:focus {
+  .client-filter-dropdown:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
   }
   
   /* Empty state styles */
-  .no-reservations {
+  .client-no-reservations {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,19 +63,19 @@
     text-align: center;
   }
   
-  .empty-icon {
+  .client-empty-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: #bbb;
   }
   
-  .no-reservations p {
+  .client-no-reservations p {
     font-size: 1.1rem;
     color: #666;
     margin-bottom: 1.5rem;
   }
   
-  .browse-cars-btn, .reset-filter-btn {
+  .client-browse-cars-btn, .client-reset-filter-btn {
     padding: 0.7rem 1.5rem;
     background-color: #3498db;
     color: white;
@@ -88,19 +88,19 @@
     font-weight: 500;
   }
   
-  .browse-cars-btn:hover, .reset-filter-btn:hover {
+  .client-browse-cars-btn:hover, .client-reset-filter-btn:hover {
     background-color: #2980b9;
   }
   
   /* Reservation cards container */
-  .reservations-container {
+  .client-reservations-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 1.5rem;
   }
   
   /* Individual reservation card */
-  .reservation-card {
+  .client-reservation-card {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -108,12 +108,12 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
-  .reservation-card:hover {
+  .client-reservation-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
   
-  .reservation-header {
+  .client-reservation-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,53 +122,53 @@
     border-bottom: 1px solid #eee;
   }
   
-  .reservation-id {
+  .client-reservation-id {
     font-size: 0.8rem;
     color: #777;
   }
   
-  .reservation-status {
+  .client-reservation-status {
     font-size: 0.8rem;
     padding: 0.3rem 0.8rem;
     border-radius: 12px;
     font-weight: 500;
   }
   
-  .status-confirmed {
+  .client-status-confirmed {
     background-color: #e3f2fd;
     color: #1565c0;
   }
   
-  .status-pending {
+  .client-status-pending {
     background-color: #fff8e1;
     color: #ff8f00;
   }
   
-  .status-cancelled {
+  .client-status-cancelled {
     background-color: #ffebee;
     color: #c62828;
   }
   
-  .status-completed {
+  .client-status-completed {
     background-color: #e8f5e9;
     color: #2e7d32;
   }
   
   /* Car details section */
-  .reservation-car-details {
+  .client-reservation-car-details {
     display: flex;
     padding: 1rem;
     border-bottom: 1px solid #eee;
   }
   
-  .car-image {
+  .client-car-image {
     width: 100px;
     height: 70px;
     object-fit: cover;
     border-radius: 4px;
   }
   
-  .car-image-placeholder {
+  .client-car-image-placeholder {
     width: 100px;
     height: 70px;
     display: flex;
@@ -181,44 +181,44 @@
     text-align: center;
   }
   
-  .car-info {
+  .client-car-info {
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   
-  .car-info h3 {
+  .client-car-info h3 {
     margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
     font-weight: 600;
     color: #2c3e50;
   }
   
-  .loueur-info {
+  .client-loueur-info {
     font-size: 0.9rem;
     color: #666;
   }
   
-  .loueur-label {
+  .client-loueur-label {
     margin-right: 0.3rem;
     color: #888;
   }
   
-  .loueur-link {
+  .client-loueur-link {
     color: #3498db;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
   }
   
-  .loueur-link:hover {
+  .client-loueur-link:hover {
     color: #2980b9;
     text-decoration: underline;
   }
   
   /* Reservation dates section */
-  .reservation-dates {
+  .client-reservation-dates {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -227,55 +227,55 @@
     border-bottom: 1px solid #eee;
   }
   
-  .date-group {
+  .client-date-group {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .date-label {
+  .client-date-label {
     font-size: 0.8rem;
     color: #888;
     margin-bottom: 0.3rem;
   }
   
-  .date-value {
+  .client-date-value {
     font-size: 0.95rem;
     font-weight: 500;
     color: #333;
   }
   
-  .date-separator {
+  .client-date-separator {
     color: #ccc;
     font-size: 1.2rem;
   }
   
   /* Reservation footer */
-  .reservation-footer {
+  .client-reservation-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
   }
   
-  .price-info {
+  .client-price-info {
     display: flex;
     flex-direction: column;
   }
   
-  .price-label {
+  .client-price-label {
     font-size: 0.8rem;
     color: #888;
     margin-bottom: 0.2rem;
   }
   
-  .price-value {
+  .client-price-value {
     font-size: 1.2rem;
     font-weight: 600;
     color: #2c3e50;
   }
   
-  .details-button {
+  .client-details-button {
     padding: 0.5rem 1rem;
     background-color: #3498db;
     color: white;
@@ -287,12 +287,12 @@
     transition: background-color 0.2s ease;
   }
   
-  .details-button:hover {
+  .client-details-button:hover {
     background-color: #2980b9;
   }
   
   /* Loading styles */
-  .loading-container {
+  .client-loading-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -301,23 +301,23 @@
     color: #666;
   }
   
-  .loader {
+  .client-loader {
     border: 3px solid #f3f3f3;
     border-top: 3px solid #3498db;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    animation: spin 1s linear infinite;
+    animation: client-spin 1s linear infinite;
     margin-bottom: 1rem;
   }
   
-  @keyframes spin {
+  @keyframes client-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
   
   /* Error styles */
-  .error-container {
+  .client-error-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -329,7 +329,7 @@
     margin-top: 1rem;
   }
   
-  .error-icon {
+  .client-error-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,17 +343,17 @@
     margin-bottom: 1rem;
   }
   
-  .error-container h3 {
+  .client-error-container h3 {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
   }
   
-  .error-container p {
+  .client-error-container p {
     text-align: center;
     margin-bottom: 1.5rem;
   }
   
-  .retry-button {
+  .client-retry-button {
     padding: 0.5rem 1.5rem;
     background-color: #c62828;
     color: white;
@@ -364,7 +364,7 @@
     transition: background-color 0.2s ease;
   }
   
-  .retry-button:hover {
+  .client-retry-button:hover {
     background-color: #b71c1c;
   }
   
@@ -374,36 +374,36 @@
       padding: 1rem;
     }
     
-    .dashboard-header {
+    .client-dashboard-header {
       flex-direction: column;
       align-items: flex-start;
       gap: 1rem;
     }
     
-    .reservations-container {
+    .client-reservations-container {
       grid-template-columns: 1fr;
     }
     
-    .reservation-car-details {
+    .client-reservation-car-details {
       flex-direction: column;
     }
     
-    .car-info {
+    .client-car-info {
       margin-left: 0;
       margin-top: 1rem;
     }
     
-    .car-image, .car-image-placeholder {
+    .client-car-image, .client-car-image-placeholder {
       width: 100%;
       height: 140px;
     }
     
-    .reservation-dates {
+    .client-reservation-dates {
       flex-direction: column;
       gap: 1rem;
     }
     
-    .date-separator {
+    .client-date-separator {
       transform: rotate(90deg);
     }
   }

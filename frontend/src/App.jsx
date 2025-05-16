@@ -28,6 +28,8 @@ import LoueurPublicProfile from './pages/LoueurPublicProfile';
 import ClientDashboard from './pages/ClientDashboard';
 import ClientRoutes from './pages/ClientRoutes';
 import axios from 'axios';
+import Reservations from './pages/Loueur/Reservations';
+import LoueurStatistics from './pages/Loueur/Statistics';
 
 
 const PrivateRoute = ({ children }) => {
@@ -153,6 +155,8 @@ const App = () => {
                                                     <Route path="addcar" element={<CarDetailsForm />} />
                                                     <Route path="modify/:id" element={<ModifyCar />} />
                                                     <Route path="manage-cars" element={<CarManagement />} />
+                                                    <Route path="reservations" element={<Reservations />} />
+                                                    <Route path="statistics" element={<LoueurStatistics />} />
                                                     <Route index element={<Navigate to="dashboard" />} />
                                                 </Routes>
                                             </LoueurLayout>
