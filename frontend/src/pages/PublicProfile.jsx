@@ -156,7 +156,7 @@ const PublicProfile = () => {
                   <Link to={`/cars/${car.id}`} key={car.id} className="block bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
                     <div className="h-40 bg-gray-200 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
                       <img
-                        src={car.srcimg || '/images/cars/default-car.jpg'}
+                        src={car.srcimg ? `http://127.0.0.1:8000${car.srcimg}` : '/images/cars/default-car.jpg'}
                         alt={`${car.marque} ${car.modele}`}
                         className="object-cover w-full h-full"
                         onError={e => { e.target.onerror = null; e.target.src = '/images/cars/default-car.jpg'; }}

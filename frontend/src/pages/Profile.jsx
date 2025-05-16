@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, Briefcase, Edit2, Check, X, ArrowLeft } from 'lucide-react';
-import axios from '../utils/axios';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -10,33 +9,32 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
+    const fetchUser = async () => {
       setLoading(true);
-      const response = await axios.get('/api/profile');
-      const userData = response.data;
-      setUser(userData);
-      setForm({
-        nom: userData.nom || '',
-        prenom: userData.prenom || '',
-        email: userData.email || '',
-        phone: userData.phone || '',
-        EnterpriseName: userData.EnterpriseName || '',
-      });
       setError('');
-    } catch (err) {
-      setError('Failed to load profile data. Please try again.');
-      console.error('Error fetching profile:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('http://localhost:8000/api/user', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setUser(res.data);
+        setForm({
+          nom: res.data.nom || '',
+          prenom: res.data.prenom || '',
+          email: res.data.email || '',
+          phone: res.data.phone || '',
+          EnterpriseName: res.data.EnterpriseName || '',
+        });
+      } catch (err) {
+        setError('Erreur lors du chargement du profil.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -62,23 +60,35 @@ const Profile = () => {
   };
 
   const handleSave = async () => {
+    setLoading(true);
+    setError('');
+    setSuccess('');
     try {
-      setLoading(true);
-      const response = await axios.put('/api/profile', form);
-      setUser(response.data);
+      const token = localStorage.getItem('token');
+      let payload = { ...form };
+      if (user.role === 'loueur') {
+        payload.EnterpriseName = String(form.EnterpriseName ?? '');
+      } else {
+        delete payload.EnterpriseName;
+      }
+      const res = await axios.put('http://localhost:8000/api/profile', payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUser(res.data);
       setEditMode(false);
       setSuccess('Profile updated successfully!');
-      setError('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
-      console.error('Error updating profile:', err);
+      let msg = 'Erreur lors de la mise à jour du profil.';
+      if (err.response && err.response.data && err.response.data.message) {
+        msg += ' ' + err.response.data.message;
+      } else if (err.message) {
+        msg += ' ' + err.message;
+      }
+      setError(msg);
+      console.error('Profile update error:', err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleBack = () => {
-    navigate(-1);
   };
 
   if (loading) return (
