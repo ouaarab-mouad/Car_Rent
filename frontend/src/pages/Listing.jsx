@@ -305,6 +305,16 @@ export const Listing = () => {
                     <button className="listing-page-rent-button">
                       Details
                     </button>
+                    {vehicle.utilisateur_id && (
+                      <Link
+                        to={`/loueur/public/${vehicle.utilisateur_id}`}
+                        className="loueur-profile-link"
+                        style={{ display: 'inline-block', marginTop: 8, color: '#6c5ce7', fontWeight: 500 }}
+                        onClick={e => e.stopPropagation()}
+                      >
+                        Voir le profil du loueur
+                      </Link>
+                    )}
                   </div>
                 </div>
               </Link>

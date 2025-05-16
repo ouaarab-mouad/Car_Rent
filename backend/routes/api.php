@@ -38,4 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Reservation routes
     Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store']);
+    Route::get('/client/reservations', [\App\Http\Controllers\ReservationController::class, 'clientReservations']);
+    Route::get('/loueur/reservations', [\App\Http\Controllers\LoueurController::class, 'reservations']);
+    Route::post('/loueur/reservations/{id}/accept', [\App\Http\Controllers\LoueurController::class, 'acceptReservation']);
+    Route::post('/loueur/reservations/{id}/refuse', [\App\Http\Controllers\LoueurController::class, 'refuseReservation']);
 });

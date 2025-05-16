@@ -25,7 +25,12 @@ import PublicProfile from './pages/PublicProfile';
 import DetailCar from './pages/DetailCar';
 import Reservation from './pages/Reservation';
 import About from './pages/About';
-
+import LoueurPublicProfile from './pages/LoueurPublicProfile';
+import ClientDashboard from './pages/ClientDashboard';
+import ClientRoutes from './pages/ClientRoutes';
+import axios from 'axios';
+import Reservations from './pages/Loueur/Reservations';
+import LoueurStatistics from './pages/Loueur/Statistics';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -36,12 +41,7 @@ const PrivateRoute = ({ children }) => {
     
     return user ? children : <Navigate to="/login" />;
 };
-/*const allData = {};
-for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    allData[key] = localStorage.getItem(key);
-}
-console.log(allData);*/
+
 const AdminRoute = ({ children }) => {
     const { user, loading } = useAuth();
     
@@ -127,7 +127,7 @@ const App = () => {
                                 {/* Public routes */}
                                 <Route path="/" element={<Home />} />
                                 <Route path="/listing" element={<Listing />} />
-                                <Route path='/About' element={<About/>} ></Route>
+                                <Route path='/About' element={<About/>} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
                                 <Route path="/profile" element={
@@ -151,6 +151,8 @@ const App = () => {
                                                     <Route path="addcar" element={<CarDetailsForm />} />
                                                     <Route path="modify/:id" element={<ModifyCar />} />
                                                     <Route path="manage-cars" element={<CarManagement />} />
+                                                    <Route path="reservations" element={<Reservations />} />
+                                                    <Route path="statistics" element={<LoueurStatistics />} />
                                                     <Route index element={<Navigate to="dashboard" />} />
                                                 </Routes>
                                             </LoueurLayout>
@@ -162,16 +164,14 @@ const App = () => {
                                 <Route path="/client" element={
                                     <PrivateRoute>
                                         <ClientRoute>
-                                            <ClientLayout>
-                                                <Routes>
-                                                    <Route path="dashboard" element={<Listing />} />
-                                                    <Route path="reservations" element={<Listing />} />
-                                                    <Route index element={<Navigate to="dashboard" />} />
-                                                </Routes>
-                                            </ClientLayout>
+                                            <ClientRoutes />
                                         </ClientRoute>
                                     </PrivateRoute>
-                                } />
+                                }>
+                                    <Route path="dashboard" element={<ClientDashboard />} />
+                                    <Route path="reservations" element={<Listing />} />
+                                    <Route index element={<Navigate to="dashboard" />} />
+                                </Route>
 
                                 {/* Admin routes */}
                                 <Route path="/admin/*" element={
@@ -194,6 +194,7 @@ const App = () => {
 
                                 <Route path="/cars/:id" element={<DetailCar />} />
                                 <Route path="/reservation/:carId" element={<Reservation />} />
+                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                             </Routes>
                         </main>
                         <Footer />

@@ -332,10 +332,23 @@ class LouerpublicationController extends Controller
         try {
             $car = Voiture::with('utilisateur:id,nom,prenom,phone')->findOrFail($id);
 
-            // Transform conditions if it's stored as JSON
+            // Transform the conditions to a proper array if it's stored as JSON
             if (is_string($car->conditions)) {
-                $car->conditions = json_decode($car->conditions, true);
+                $decoded = json_decode($car->conditions, true);
+                $car->conditions = is_array($decoded) ? $decoded : [];
+            } elseif (!is_array($car->conditions)) {
+                $car->conditions = [];
             }
+
+            // Ensure all condition fields are present with default values
+            $defaultConditions = [
+                'airConditioner' => false,
+                'automatic' => false,
+                'airbag' => false,
+                'abs' => false,
+                'cruiseControl' => false
+            ];
+            $car->conditions = array_merge($defaultConditions, $car->conditions);
 
             // Ensure image URL is absolute
             if ($car->srcimg && preg_match('#^/storage#', $car->srcimg)) {

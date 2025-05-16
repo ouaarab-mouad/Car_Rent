@@ -1,0 +1,409 @@
+.client-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Dashboard header */
+.client-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.client-dashboard-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.client-filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.client-filter-controls span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.client-filter-dropdown {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.client-filter-dropdown:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Empty state styles */
+.client-no-reservations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.client-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #bbb;
+}
+
+.client-no-reservations p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.client-browse-cars-btn, .client-reset-filter-btn {
+  padding: 0.7rem 1.5rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 500;
+}
+
+.client-browse-cars-btn:hover, .client-reset-filter-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Reservation cards container */
+.client-reservations-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual reservation card */
+.client-reservation-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.client-reservation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.client-reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.client-reservation-id {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.client-reservation-status {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.client-status-confirmed {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.client-status-pending {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.client-status-cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.client-status-completed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Car details section */
+.client-reservation-car-details {
+  display: flex;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.client-car-image {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.client-car-image-placeholder {
+  width: 100px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  color: #999;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.client-car-info {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.client-car-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.client-loueur-info {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.client-loueur-label {
+  margin-right: 0.3rem;
+  color: #888;
+}
+
+.client-loueur-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.client-loueur-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Reservation dates section */
+.client-reservation-dates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.client-date-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.client-date-label {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+
+.client-date-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.client-date-separator {
+  color: #ccc;
+  font-size: 1.2rem;
+}
+
+/* Reservation footer */
+.client-reservation-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.client-price-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-price-label {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+
+.client-price-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.client-details-button {
+  padding: 0.5rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.client-details-button:hover {
+  background-color: #2980b9;
+}
+
+/* Loading styles */
+.client-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.client-loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: client-spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes client-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error styles */
+.client-error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #fff8f8;
+  border-radius: 8px;
+  border: 1px solid #ffcdd2;
+  color: #c62828;
+  margin-top: 1rem;
+}
+
+.client-error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffcdd2;
+  color: #c62828;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.client-error-container h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.client-error-container p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.client-retry-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #c62828;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.client-retry-button:hover {
+  background-color: #b71c1c;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .client-dashboard {
+    padding: 1rem;
+  }
+  
+  .client-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .client-reservations-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .client-reservation-car-details {
+    flex-direction: column;
+  }
+  
+  .client-car-info {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  
+  .client-car-image, .client-car-image-placeholder {
+    width: 100%;
+    height: 140px;
+  }
+  
+  .client-reservation-dates {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .client-date-separator {
+    transform: rotate(90deg);
+  }
+}
