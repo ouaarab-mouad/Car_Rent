@@ -18,7 +18,7 @@ export const Listing = () => {
   const [brandDropdownOpen, setBrandDropdownOpen] = useState(false);
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [visibleCars, setVisibleCars] = useState(6);
+  const [visibleCars, setVisibleCars] = useState(100);
 
   useEffect(() => {
     const fetchCars = async () => {
