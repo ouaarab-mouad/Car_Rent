@@ -18,9 +18,12 @@ const LoueurProfile = () => {
     setLoading(true);
     try {
       const res = await axios.get('/api/loeur/profile');
+      console.log('Loueur Profile Data:', res.data);
+      console.log('Cars Data:', res.data.vehicles);
       setUser(res.data);
       setLoading(false);
     } catch (err) {
+      console.error('Error fetching profile:', err);
       setError('Failed to load loueur profile');
       setLoading(false);
     }
@@ -127,10 +130,11 @@ const LoueurProfile = () => {
                   <div className="car-card">
                     <div className="car-image-container">
                       <img 
-                        src={car.image_url || '/images/cars/default-car.jpg'} 
+                        src={car.srcimg ? `http://localhost:8000${car.srcimg}` : '/images/cars/default-car.jpg'} 
                         alt={`${car.marque} ${car.modele}`} 
                         className="car-image"
                         onError={(e) => {
+                          console.error('Image failed to load:', e.target.src);
                           e.target.onerror = null;
                           e.target.src = '/images/cars/default-car.jpg';
                         }}

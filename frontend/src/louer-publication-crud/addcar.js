@@ -182,7 +182,7 @@ export default function CarDetailsForm() {
       if (response.status === 201) {
         alert('Car added successfully!');
         // Navigate to manage cars page
-        window.location.href = '/manage-cars';
+        window.location.href = '/loueur/manage-cars';
       }
     } catch (error) {
       if (error.response?.status === 401) {
