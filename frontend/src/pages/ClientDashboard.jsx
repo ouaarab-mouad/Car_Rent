@@ -82,14 +82,14 @@ const ClientDashboard = () => {
 
   return (
     <div className="client-dashboard">
-      <div className="dashboard-header">
+      <div className="client-dashboard-header">
         <h2>Mes Réservations</h2>
-        <div className="filter-controls">
+        <div className="client-filter-controls">
           <span>Filtrer par:</span>
           <select 
             value={filter} 
             onChange={(e) => setFilter(e.target.value)}
-            className="filter-dropdown"
+            className="client-filter-dropdown"
           >
             <option value="all">Toutes les réservations</option>
             <option value="confirmé">Confirmées</option>
@@ -101,44 +101,41 @@ const ClientDashboard = () => {
       </div>
 
       {reservations.length === 0 ? (
-        <div className="no-reservations">
-          <div className="empty-icon">📅</div>
+        <div className="client-no-reservations">
+          <div className="client-empty-icon">📅</div>
           <p>Vous n'avez aucune réservation.</p>
-          <Link to="/cars" className="browse-cars-btn">Parcourir les voitures disponibles</Link>
+          <Link to="/cars" className="client-browse-cars-btn">Parcourir les voitures disponibles</Link>
         </div>
       ) : filteredReservations.length === 0 ? (
-        <div className="no-reservations">
+        <div className="client-no-reservations">
           <p>Aucune réservation ne correspond à ce filtre.</p>
-          <button onClick={() => setFilter('all')} className="reset-filter-btn">
+          <button onClick={() => setFilter('all')} className="client-reset-filter-btn">
             Réinitialiser le filtre
           </button>
         </div>
       ) : (
-        <div className="reservations-container">
+        <div className="client-reservations-container">
           {filteredReservations.map(res => (
-            <div key={res.id} className="reservation-card">
-              <div className="reservation-header">
-                <span className={`reservation-status ${getStatusClass(res.statut)}`}>
-                  {res.statut}
-                </span>
-                <span className="reservation-id">Réservation #{res.id}</span>
+            <div key={res.id} className="client-reservation-card">
+              <div className="client-reservation-header">
+                <span className={`client-reservation-status ${getStatusClass(res.statut)}`}>{res.statut}</span>
+                <span className="client-reservation-id">Réservation #{res.id}</span>
               </div>
-              
-              <div className="reservation-car-details">
+              <div className="client-reservation-car-details">
                 {res.car.srcimg ? (
-                  <img src={res.car.srcimg} alt={`${res.car.marque} ${res.car.modele}`} className="car-image" />
+                  <img src={res.car.srcimg} alt={`${res.car.marque} ${res.car.modele}`} className="client-car-image" />
                 ) : (
-                  <div className="car-image-placeholder">
+                  <div className="client-car-image-placeholder">
                     <span>Image non disponible</span>
                   </div>
                 )}
-                <div className="car-info">
+                <div className="client-car-info">
                   <h3>{res.car.marque} {res.car.modele}</h3>
-                  <div className="loueur-info">
+                  <div className="client-loueur-info">
                     {res.loueur ? (
                       <>
-                        <span className="loueur-label">Loueur:</span>
-                        <Link to={`/profile/${res.loueur.id}`} className="loueur-link">
+                        <span className="client-loueur-label">Loueur:</span>
+                        <Link to={`/profile/${res.loueur.id}`} className="client-loueur-link">
                           {res.loueur.nom} {res.loueur.prenom}
                         </Link>
                       </>
@@ -146,25 +143,23 @@ const ClientDashboard = () => {
                   </div>
                 </div>
               </div>
-              
-              <div className="reservation-dates">
-                <div className="date-group">
-                  <span className="date-label">Date de début</span>
-                  <span className="date-value">{formatDate(res.date_debut)}</span>
+              <div className="client-reservation-dates">
+                <div className="client-date-group">
+                  <span className="client-date-label">Date de début</span>
+                  <span className="client-date-value">{formatDate(res.date_debut)}</span>
                 </div>
-                <div className="date-separator">→</div>
-                <div className="date-group">
-                  <span className="date-label">Date de fin</span>
-                  <span className="date-value">{formatDate(res.date_fin)}</span>
+                <div className="client-date-separator">→</div>
+                <div className="client-date-group">
+                  <span className="client-date-label">Date de fin</span>
+                  <span className="client-date-value">{formatDate(res.date_fin)}</span>
                 </div>
               </div>
-              
-              <div className="reservation-footer">
-                <div className="price-info">
-                  <span className="price-label">Prix total</span>
-                  <span className="price-value">{res.prix_total} DH</span>
+              <div className="client-reservation-footer">
+                <div className="client-price-info">
+                  <span className="client-price-label">Prix total</span>
+                  <span className="client-price-value">{res.prix_total} DH</span>
                 </div>
-                <Link to={`/cars/${res.car.id}`} className="details-button">
+                <Link to={`/cars/${res.car.id}`} className="client-details-button">
                   Voir détails
                 </Link>
               </div>
