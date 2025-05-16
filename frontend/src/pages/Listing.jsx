@@ -76,7 +76,7 @@ export const Listing = () => {
       vehicle.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       vehicle.brand.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesBrand = selectedBrand === "All" || vehicle.brand === selectedBrand;
-    const matchesLocation = selectedLocation === "All" || vehicle.location === selectedLocation;
+    const matchesLocation = selectedLocation === "All" || vehicle.ville === selectedLocation;
     const matchesPrice = vehicle.price <= priceRange;
     const matchesColor = selectedColor === "" || vehicle.color === selectedColor;
     const matchesCategories = selectedCategories.length === 0 || 
@@ -88,7 +88,7 @@ export const Listing = () => {
   });
 
   const brands = ["All", ...new Set(vehicles.map(vehicle => vehicle.brand))];
-  const locations = ["All", ...new Set(vehicles.map(vehicle => vehicle.location))];
+  const locations = ["All", ...new Set(vehicles.map(vehicle => vehicle.ville))];
   const categories = ["Sedan", "SUV", "Sports", "Luxury", "Electric", "Hybrid"];
   const colors = [
     { name: "Red", code: "#FF0000" },
