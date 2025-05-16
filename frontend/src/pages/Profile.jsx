@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, Briefcase, Edit2, Check, X, ArrowLeft } from 'lucide-react';
+import axios from 'axios';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -10,26 +11,29 @@ const Profile = () => {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    // Simulate API call for demonstration
-    setTimeout(() => {
-      const mockUser = {
-        nom: 'Dupont',
-        prenom: 'Jean',
-        email: 'jean.dupont@example.com',
-        phone: '+33 6 12 34 56 78',
-        EnterpriseName: 'Dupont Rentals',
-        role: 'loueur'
-      };
-      setUser(mockUser);
-      setForm({
-        nom: mockUser.nom || '',
-        prenom: mockUser.prenom || '',
-        email: mockUser.email || '',
-        phone: mockUser.phone || '',
-        EnterpriseName: mockUser.EnterpriseName || '',
-      });
-      setLoading(false);
-    }, 1000);
+    const fetchUser = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('http://localhost:8000/api/user', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setUser(res.data);
+        setForm({
+          nom: res.data.nom || '',
+          prenom: res.data.prenom || '',
+          email: res.data.email || '',
+          phone: res.data.phone || '',
+          EnterpriseName: res.data.EnterpriseName || '',
+        });
+      } catch (err) {
+        setError('Erreur lors du chargement du profil.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleChange = (e) => {
@@ -55,16 +59,36 @@ const Profile = () => {
     setSuccess('');
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setUser({...form});
+    setError('');
+    setSuccess('');
+    try {
+      const token = localStorage.getItem('token');
+      let payload = { ...form };
+      if (user.role === 'loueur') {
+        payload.EnterpriseName = String(form.EnterpriseName ?? '');
+      } else {
+        delete payload.EnterpriseName;
+      }
+      const res = await axios.put('http://localhost:8000/api/profile', payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUser(res.data);
       setEditMode(false);
       setSuccess('Profile updated successfully!');
+    } catch (err) {
+      let msg = 'Erreur lors de la mise à jour du profil.';
+      if (err.response && err.response.data && err.response.data.message) {
+        msg += ' ' + err.response.data.message;
+      } else if (err.message) {
+        msg += ' ' + err.message;
+      }
+      setError(msg);
+      console.error('Profile update error:', err);
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   if (loading) return (
