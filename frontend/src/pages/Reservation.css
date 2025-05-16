@@ -1,0 +1,445 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Container styles */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  
+  /* Back button */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #3182ce;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+  
+  .back-link:hover {
+    color: #2c5282;
+  }
+  
+  .back-link svg {
+    margin-right: 0.5rem;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Main card */
+  .card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #3182ce 0%, #1e3a8a 100%);
+    padding: 1.75rem 2rem;
+    color: white;
+  }
+  
+  .card-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  
+  .card-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  /* Grid layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Car info section */
+  .car-info {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .car-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .car-details {
+    padding: 1.25rem;
+  }
+  
+  .car-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1rem;
+  }
+  
+  .car-info-list {
+    margin-top: 1.25rem;
+  }
+  
+  .car-info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+  }
+  
+  .car-info-item svg {
+    color: #3182ce;
+    margin-right: 0.75rem;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .car-info-item .price {
+    font-weight: 600;
+  }
+  
+  .car-info-item .price-unit {
+    color: #718096;
+    margin-left: 0.25rem;
+  }
+  
+  /* Form styles */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-wrapper {
+    position: relative;
+  }
+  
+  .input-wrapper svg {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+  }
+  
+  /* Summary box */
+  .summary-box {
+    background-color: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #4a5568;
+    padding: 0.5rem 0;
+  }
+  
+  .summary-row.total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2b6cb0;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #bee3f8;
+  }
+  
+  /* Button styles */
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    background-color: #3182ce;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.25);
+  }
+  
+  .btn:hover {
+    background-color: #2b6cb0;
+  }
+  
+  .btn:active {
+    transform: translateY(1px);
+  }
+  
+  .btn:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  .btn svg {
+    margin-right: 0.5rem;
+  }
+  
+  /* Status messages */
+  .status-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .status-message svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .status-message.success {
+    background-color: #f0fff4;
+    border: 1px solid #c6f6d5;
+  }
+  
+  .status-message.success svg {
+    color: #38a169;
+  }
+  
+  .status-message.success p {
+    color: #276749;
+  }
+  
+  .status-message.success .redirect {
+    font-size: 0.875rem;
+    color: #38a169;
+    margin-top: 0.25rem;
+  }
+  
+  .status-message.error {
+    background-color: #fff5f5;
+    border: 1px solid #fed7d7;
+  }
+  
+  .status-message.error svg {
+    color: #e53e3e;
+  }
+  
+  .status-message.error p {
+    color: #c53030;
+  }
+  
+  /* Loading spinner */
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #718096;
+    margin-top: 1.5rem;
+  }
+  
+  /* Loading state */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    gap: 1rem;
+  }
+  
+  .loading-container svg {
+    color: #3182ce;
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .loading-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #4a5568;
+  }
+  
+  /* Error state */
+  .error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+  }
+  
+  .error-box {
+    background-color: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 28rem;
+    width: 100%;
+  }
+  
+  .error-box.not-found {
+    background-color: #fffbeb;
+    border-color: #fef3c7;
+  }
+  
+  .error-box.not-found .error-heading h3 {
+    color: #b45309;
+  }
+  
+  .error-box.not-found .error-heading svg {
+    color: #d97706;
+  }
+  
+  .error-box.not-found .error-message {
+    color: #92400e;
+  }
+  
+  .error-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .error-heading svg {
+    color: #e53e3e;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .error-heading h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #c53030;
+  }
+  
+  .error-message {
+    color: #e53e3e;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .card-header {
+      padding: 1.25rem 1.5rem;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .grid {
+      gap: 1.5rem;
+    }
+    
+    .form {
+      gap: 1.25rem;
+    }
+  }
+  
+  /* Focus and accessibility styles */
+  button:focus,
+  a:focus,
+  input:focus {
+    outline: 2px solid #3182ce;
+    outline-offset: 2px;
+  }
+  
+  /* Better touch target sizes for mobile */
+  @media (max-width: 768px) {
+    .back-link,
+    .car-info-item,
+    .form-label,
+    .btn {
+      padding: 0.5rem 0;
+    }
+    
+    .input-wrapper svg {
+      left: 0.75rem;
+    }
+    
+    .form-input {
+      padding-left: 2.5rem;
+    }
+  }

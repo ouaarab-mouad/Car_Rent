@@ -46,4 +46,42 @@ class ReservationController extends Controller
             'reservation' => $reservation
         ], 201);
     }
+
+    // Get all reservations for the authenticated client
+    public function clientReservations(Request $request)
+    {
+        $client = $request->user();
+        $reservations = \App\Models\Reservation::with(['voiture.utilisateur', 'loueur'])
+            ->where('client_id', $client->id)
+            ->orderBy('date_debut', 'desc')
+            ->get();
+
+        // Format the reservations for frontend
+        $formatted = $reservations->map(function ($reservation) {
+            return [
+                'id' => $reservation->id,
+                'date_debut' => $reservation->date_debut,
+                'date_fin' => $reservation->date_fin,
+                'prix_total' => $reservation->prix_total,
+                'statut' => $reservation->statut,
+                'car' => [
+                    'id' => $reservation->voiture->id ?? null,
+                    'marque' => $reservation->voiture->marque ?? null,
+                    'modele' => $reservation->voiture->modele ?? null,
+                    'srcimg' => $reservation->voiture->srcimg ?? null,
+                ],
+                'loueur' => $reservation->loueur ? [
+                    'id' => $reservation->loueur->id,
+                    'nom' => $reservation->loueur->nom,
+                    'prenom' => $reservation->loueur->prenom,
+                    'email' => $reservation->loueur->email,
+                ] : null,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'reservations' => $formatted
+        ]);
+    }
 } 

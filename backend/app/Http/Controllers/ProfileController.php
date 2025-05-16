@@ -18,14 +18,14 @@ class ProfileController extends Controller
     // Get a public profile by user ID
     public function show($id, Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('vehicles')->findOrFail($id);
         $authUser = $request->user();
         // If the authenticated user is the owner, return full info
         if ($authUser && $authUser->id === $user->id) {
             return response()->json($user);
         }
         // Otherwise, return only public info
-        $public = $user->only(['id', 'nom', 'prenom', 'email', 'role', 'EnterpriseName']);
+        $public = $user->only(['id', 'nom', 'prenom', 'email', 'role', 'EnterpriseName', 'vehicles']);
         return response()->json($public);
     }
 

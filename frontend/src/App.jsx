@@ -24,6 +24,10 @@ import LoueurProfile from './pages/Loueur/LoueurProfile';
 import PublicProfile from './pages/PublicProfile';
 import DetailCar from './pages/DetailCar';
 import Reservation from './pages/Reservation';
+import LoueurPublicProfile from './pages/LoueurPublicProfile';
+import ClientDashboard from './pages/ClientDashboard';
+import ClientRoutes from './pages/ClientRoutes';
+import axios from 'axios';
 
 
 const PrivateRoute = ({ children }) => {
@@ -160,16 +164,14 @@ const App = () => {
                                 <Route path="/client" element={
                                     <PrivateRoute>
                                         <ClientRoute>
-                                            <ClientLayout>
-                                                <Routes>
-                                                    <Route path="dashboard" element={<Listing />} />
-                                                    <Route path="reservations" element={<Listing />} />
-                                                    <Route index element={<Navigate to="dashboard" />} />
-                                                </Routes>
-                                            </ClientLayout>
+                                            <ClientRoutes />
                                         </ClientRoute>
                                     </PrivateRoute>
-                                } />
+                                }>
+                                    <Route path="dashboard" element={<ClientDashboard />} />
+                                    <Route path="reservations" element={<Listing />} />
+                                    <Route index element={<Navigate to="dashboard" />} />
+                                </Route>
 
                                 {/* Admin routes */}
                                 <Route path="/admin/*" element={
@@ -192,6 +194,7 @@ const App = () => {
 
                                 <Route path="/cars/:id" element={<DetailCar />} />
                                 <Route path="/reservation/:carId" element={<Reservation />} />
+                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                             </Routes>
                         </main>
                         <Footer />

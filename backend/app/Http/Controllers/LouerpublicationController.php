@@ -330,28 +330,7 @@ class LouerpublicationController extends Controller
     public function show($id)
     {
         try {
-            // Check authentication
-            if (!Auth::check()) {
-                return response()->json([
-                    'message' => 'Unauthorized'
-                ], 401);
-            }
-
-            // Check if user is a loueur
-            if (!Auth::user()->isLoueur()) {
-                return response()->json([
-                    'message' => 'Only loueurs can view car details'
-                ], 403);
-            }
-
-            $voiture = Voiture::findOrFail($id);
-            
-            // Check if user owns this car
-            if ($voiture->utilisateur_id !== Auth::id()) {
-                return response()->json([
-                    'message' => 'You do not have permission to view this car'
-                ], 403);
-            }
+            $voiture = Voiture::with('utilisateur')->findOrFail($id);
 
             // Transform the conditions to a proper array if it's stored as JSON
             if (is_string($voiture->conditions)) {
@@ -360,7 +339,7 @@ class LouerpublicationController extends Controller
             } elseif (!is_array($voiture->conditions)) {
                 $voiture->conditions = [];
             }
-            
+
             // Ensure all condition fields are present with default values
             $defaultConditions = [
                 'airConditioner' => false,
@@ -369,15 +348,13 @@ class LouerpublicationController extends Controller
                 'abs' => false,
                 'cruiseControl' => false
             ];
-            
-            // Merge with defaults to ensure all fields are present
             $voiture->conditions = array_merge($defaultConditions, $voiture->conditions);
 
             // Ensure image URL is absolute
             if ($voiture->srcimg && preg_match('#^/storage#', $voiture->srcimg)) {
                 $voiture->srcimg = url($voiture->srcimg);
             }
-            
+
             return response()->json($voiture);
         } catch (\Exception $e) {
             return response()->json([

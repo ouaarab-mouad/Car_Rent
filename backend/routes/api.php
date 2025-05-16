@@ -38,4 +38,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Reservation routes
     Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store']);
+    Route::get('/client/reservations', [\App\Http\Controllers\ReservationController::class, 'clientReservations']);
 });
