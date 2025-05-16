@@ -1,17 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FaTachometerAlt, FaUsersCog, FaUser, FaCog, FaSignOutAlt, FaEnvelope, FaUserTag } from 'react-icons/fa'
+import { 
+  Car, 
+  Search, 
+  Menu, 
+  X, 
+  Home, 
+  Users, 
+  MessageSquare, 
+  ChevronDown,
+  Settings,
+  LogOut,
+  User,
+  LayoutDashboard,
+  UserCog
+} from 'lucide-react'
 import './Navbar.css'
 
 export const Navbar = () => {
-  const { user, logout } = useAuth()
+  const { user, logout, loading } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
   useEffect(() => {
-    console.log('Current user data:', user);
-  }, [user]);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleLogout = async () => {
     await logout()
@@ -19,104 +41,185 @@ export const Navbar = () => {
     setShowUserMenu(false)
   }
 
+  const isActive = (path) => {
+    return location.pathname === path ? 'active' : ''
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
   const getUserInitials = () => {
-    if (!user) return 'U';
-    const nom = user.nom || '';
-    const prenom = user.prenom || '';
-    if (!nom && !prenom) return 'U';
-    return `${nom.charAt(0)}${prenom.charAt(0)}`.toUpperCase();
+    if (!user) return 'U'
+    const nom = user.nom || ''
+    const prenom = user.prenom || ''
+    if (!nom && !prenom) return 'U'
+    return `${nom.charAt(0)}${prenom.charAt(0)}`.toUpperCase()
   }
 
   const getUserFullName = () => {
-    if (!user) return 'Utilisateur';
-    const nom = user.nom || '';
-    const prenom = user.prenom || '';
-    if (!nom && !prenom) return 'Utilisateur';
-    return `${nom} ${prenom}`.trim();
+    if (!user) return 'Utilisateur'
+    const nom = user.nom || ''
+    const prenom = user.prenom || ''
+    if (!nom && !prenom) return 'Utilisateur'
+    return `${nom} ${prenom}`.trim()
   }
 
   const getUserRole = () => {
-    if (!user || !user.role) return 'Utilisateur';
-    console.log('User role:', user.role);
+    if (!user || !user.role) return 'Utilisateur'
     const roles = {
       'administrateur': 'Administrateur',
       'client': 'Client',
       'loueur': 'Loueur',
       'admin': 'Administrateur'
-    };
-    return roles[user.role] || 'Utilisateur';
-  };
+    }
+    return roles[user.role] || 'Utilisateur'
+  }
+
+  // Show a simplified navbar while loading
+  if (loading) {
+    return (
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo">
+            <Car size={28} className="logo-icon" strokeWidth={2.5} />
+            <span className="logo-text">
+              <span className="logo-primary">Drive</span>
+              <span className="logo-secondary">Ease</span>
+            </span>
+          </Link>
+        </div>
+      </nav>
+    )
+  }
 
   if (!user) {
     return (
-      <nav className="navbar">
-        <div className="navbar-logo">
-          <div className="logo-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
-            </svg>
-          </div>
-          <Link to="/" className="logo-text">DriveEase</Link>
-        </div>
-        <div className="navbar-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/listing" className="nav-link">Vehicles</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/contact" className="nav-link">Contact Us</Link>
-        </div>
-        <div className="navbar-auth">
-          <div className="auth-buttons">
-            <Link to="/login" className="auth-button login">
-              Connexion
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo">
+            <Car size={28} className="logo-icon" strokeWidth={2.5} />
+            <span className="logo-text">
+              <span className="logo-primary">Drive</span>
+              <span className="logo-secondary">Ease</span>
+            </span>
+          </Link>
+          
+          <div className="navbar-links">
+            <Link to="/" className={`nav-link ${isActive('/')}`}>
+              <Home size={18} className="nav-icon" />
+              <span>Home</span>
             </Link>
-            <Link to="/register" className="auth-button register">
-              Inscription
+            
+            <Link to="/listing" className={`nav-link ${isActive('/listing')}`}>
+              <Car size={18} className="nav-icon" />
+              <span>Vehicles</span>
+            </Link>
+            
+            <Link to="/about" className={`nav-link ${isActive('/about')}`}>
+              <Users size={18} className="nav-icon" />
+              <span>About Us</span>
+            </Link>
+            
+            <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>
+              <MessageSquare size={18} className="nav-icon" />
+              <span>Contact</span>
             </Link>
           </div>
+          
+          <div className="navbar-actions">
+            <Link to="/search" className="search-btn" aria-label="Search">
+              <Search size={20} />
+            </Link>
+            
+            <div className="auth-buttons">
+              <Link to="/login" className="auth-button login">
+                Connexion
+              </Link>
+              <Link to="/register" className="auth-button register">
+                Inscription
+              </Link>
+            </div>
+          </div>
+
+          <button 
+            className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </nav>
-    );
+    )
   }
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <div className="logo-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
-          </svg>
-        </div>
-        <Link to="/" className="logo-text">DriveEase</Link>
-      </div>
-      <div className="navbar-links">
-        <Link to="/" className="nav-link">Home</Link>
-        <Link to="/listing" className="nav-link">Vehicles</Link>
-        <Link to="/contact" className="nav-link">Contact Us</Link>
-
-        {/* Loueur (Car Owner) Dashboard Links */}
-        {user && user.role === 'loueur' && (
-          <>
-            <Link to="/loueur/dashboard" className="nav-link">Dashboard</Link>
-            <Link to="/loueur/manage-cars" className="nav-link">Manage Cars</Link>
-          </>
-        )}
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
+          <Car size={28} className="logo-icon" strokeWidth={2.5} />
+          <span className="logo-text">
+            <span className="logo-primary">Drive</span>
+            <span className="logo-secondary">Ease</span>
+          </span>
+        </Link>
         
-        {/* Client Dashboard Link */}
-        {user && user.role === 'client' && (
-          <Link to="/client/dashboard" className="nav-link">Dashboard</Link>
-        )}
-      </div>
-      
-      <div className="navbar-auth">
-        {/* Admin Dashboard Icon */}
-        {user && (user.role === 'administrateur' || user.role === 'admin') && (
-          <Link to="/admin/dashboard" className="nav-link admin-dashboard-icon">
-            <FaTachometerAlt />
+        <div className="navbar-links">
+          <Link to="/" className={`nav-link ${isActive('/')}`}>
+            <Home size={18} className="nav-icon" />
+            <span>Home</span>
           </Link>
-        )}
+          
+          <Link to="/listing" className={`nav-link ${isActive('/listing')}`}>
+            <Car size={18} className="nav-icon" />
+            <span>Vehicles</span>
+          </Link>
+          
+          {user.role === 'loueur' && (
+            <>
+              <Link to="/loueur/dashboard" className={`nav-link ${isActive('/loueur/dashboard')}`}>
+                <LayoutDashboard size={18} className="nav-icon" />
+                <span>Dashboard</span>
+              </Link>
+              <Link to="/loueur/manage-cars" className={`nav-link ${isActive('/loueur/manage-cars')}`}>
+                <Car size={18} className="nav-icon" />
+                <span>Manage Cars</span>
+              </Link>
+            </>
+          )}
+          
+          {user.role === 'client' && (
+            <Link to="/client/dashboard" className={`nav-link ${isActive('/client/dashboard')}`}>
+              <LayoutDashboard size={18} className="nav-icon" />
+              <span>Dashboard</span>
+            </Link>
+          )}
+          
+          <Link to="/about" className={`nav-link ${isActive('/about')}`}>
+            <Users size={18} className="nav-icon" />
+            <span>About Us</span>
+          </Link>
+          
+          <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>
+            <MessageSquare size={18} className="nav-icon" />
+            <span>Contact</span>
+          </Link>
+
+          {/* Admin Dashboard Link */}
+          {(user.role === 'administrateur' || user.role === 'admin') && (
+            <Link to="/admin/dashboard" className={`nav-link ${isActive('/admin/dashboard')}`}>
+              <LayoutDashboard size={18} className="nav-icon" />
+              <span>Admin Dashboard</span>
+            </Link>
+          )}
+        </div>
         
-        {/* User Menu */}
-        {user ? (
+        <div className="navbar-actions">
+          <Link to="/search" className="search-btn" aria-label="Search">
+            <Search size={20} />
+          </Link>
+
           <div className="user-menu-container">
             <button 
               className="user-menu-button"
@@ -141,66 +244,64 @@ export const Navbar = () => {
                     <div className="user-name-large">{getUserFullName()}</div>
                     {user.email && (
                       <div className="user-email">
-                        <FaEnvelope />
+                        <MessageSquare size={16} />
                         {user.email}
                       </div>
                     )}
                     <div className="user-role">
-                      <FaUserTag />
+                      <UserCog size={16} />
                       {getUserRole()}
                     </div>
                   </div>
                 </div>
                 <div className="dropdown-divider"></div>
                 
-                {/* Dashboard Links based on role */}
                 {(user.role === 'administrateur' || user.role === 'admin') && (
                   <>
                     <Link to="/admin/dashboard" className="dropdown-item">
-                      <FaTachometerAlt /> Tableau de bord
+                      <LayoutDashboard size={18} /> Tableau de bord
                     </Link>
                     <Link to="/admin/dashboard/users" className="dropdown-item">
-                      <FaUsersCog /> Gestion des utilisateurs
+                      <UserCog size={18} /> Gestion des utilisateurs
                     </Link>
                   </>
                 )}
                 {user.role === 'loueur' && (
                   <Link to="/loueur" className="dropdown-item">
-                    <FaTachometerAlt /> Tableau de bord
+                    <LayoutDashboard size={18} /> Tableau de bord
                   </Link>
                 )}
                 {user.role === 'client' && (
                   <Link to="/client" className="dropdown-item">
-                    <FaTachometerAlt /> Mes réservations
+                    <LayoutDashboard size={18} /> Mes réservations
                   </Link>
                 )}
                 
                 <Link to="/profile" className="dropdown-item">
-                  <FaUser /> Mon profil
+                  <User size={18} /> Mon profil
                 </Link>
                 <Link to="/settings" className="dropdown-item">
-                  <FaCog /> Paramètres
+                  <Settings size={18} /> Paramètres
                 </Link>
                 <button 
                   onClick={handleLogout} 
                   className="dropdown-item logout"
                   type="button"
                 >
-                  <FaSignOutAlt /> Déconnexion
+                  <LogOut size={18} /> Déconnexion
                 </button>
               </div>
             )}
           </div>
-        ) : (
-          <div className="auth-buttons">
-            <Link to="/login" className="auth-button login">
-              Connexion
-            </Link>
-            <Link to="/register" className="auth-button register">
-              Inscription
-            </Link>
-          </div>
-        )}
+        </div>
+
+        <button 
+          className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
     </nav>
   )

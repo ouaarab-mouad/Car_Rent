@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FaMapMarkerAlt, FaUser, FaCalendarAlt, FaGasPump, FaCar, FaCog, FaChevronLeft } from 'react-icons/fa';
-import axios from '../utils/axios';
+import axios from 'axios';
 import './DetailCar.css';
 
 const getColorCode = (colorName) => {
@@ -30,9 +30,10 @@ const DetailCar = () => {
     const fetchCar = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/cars/${id}`);
+        const res = await axios.get(`http://localhost:8000/api/cars/${id}`);
         setCar(res.data);
       } catch (err) {
+        console.error('Error fetching car details:', err);
         setCar(null);
       }
       setLoading(false);

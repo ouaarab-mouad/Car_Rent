@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/cars', [App\Http\Controllers\CarController::class, 'index']); // Public cars listing
+Route::get('/cars/{id}', [LouerpublicationController::class, 'show']); // Public car details
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,7 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cars', [LouerpublicationController::class, 'store']);
     Route::put('/cars/{id}', [LouerpublicationController::class, 'update']);
     Route::delete('/cars/{id}', [LouerpublicationController::class, 'destroy']);
-    Route::get('/cars/{id}', [LouerpublicationController::class, 'show']);
 
     // Profile routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me']);

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, Briefcase, Edit2, Check, X, ArrowLeft } from 'lucide-react';
+import axios from '../utils/axios';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -8,29 +10,33 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate API call for demonstration
-    setTimeout(() => {
-      const mockUser = {
-        nom: 'Dupont',
-        prenom: 'Jean',
-        email: 'jean.dupont@example.com',
-        phone: '+33 6 12 34 56 78',
-        EnterpriseName: 'Dupont Rentals',
-        role: 'loueur'
-      };
-      setUser(mockUser);
-      setForm({
-        nom: mockUser.nom || '',
-        prenom: mockUser.prenom || '',
-        email: mockUser.email || '',
-        phone: mockUser.phone || '',
-        EnterpriseName: mockUser.EnterpriseName || '',
-      });
-      setLoading(false);
-    }, 1000);
+    fetchProfile();
   }, []);
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/profile');
+      const userData = response.data;
+      setUser(userData);
+      setForm({
+        nom: userData.nom || '',
+        prenom: userData.prenom || '',
+        email: userData.email || '',
+        phone: userData.phone || '',
+        EnterpriseName: userData.EnterpriseName || '',
+      });
+      setError('');
+    } catch (err) {
+      setError('Failed to load profile data. Please try again.');
+      console.error('Error fetching profile:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -55,16 +61,24 @@ const Profile = () => {
     setSuccess('');
   };
 
-  const handleSave = () => {
-    setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setUser({...form});
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.put('/api/profile', form);
+      setUser(response.data);
       setEditMode(false);
       setSuccess('Profile updated successfully!');
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
+      console.error('Error updating profile:', err);
+    } finally {
       setLoading(false);
-    }, 800);
+    }
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   if (loading) return (

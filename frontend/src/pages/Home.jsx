@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Home.css";
 
 export const Home = () => {
+  const [featuredCars, setFeaturedCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFeaturedCars = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/cars');
+        // Get only 6 cars for the featured section
+        setFeaturedCars(response.data.slice(0, 8));
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch cars. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedCars();
+  }, []);
+
+
   return (
     <div className="home-container">
       {/* Hero Section */}
@@ -106,29 +128,35 @@ export const Home = () => {
       <section className="featured-cars">
         <div className="section-header">
           <h2>Choisissez La Voiture qui Vous Convient</h2>
-          <a href="#" className="view-all">Voir Tout</a>
+          <a href="/listing" className="view-all">Voir Tout</a>
         </div>
         <div className="cars-grid">
-          {[1, 2, 3, 4, 5, 6].map((index) => (
-            <div className="car-card" key={index}>
-              <div className="car-image">
-                <img src="/images/cars/car1.png" alt="Mercedes" />
-              </div>
-              <div className="car-details">
-                <div className="car-header">
-                  <h3>Mercedes</h3>
-                  <p className="car-price">25€<span>/jour</span></p>
+          {loading ? (
+            <div className="loading-spinner">Loading...</div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
+          ) : (
+            featuredCars.map((car) => (
+              <div className="car-card" key={car.id}>
+                <div className="car-image">
+                  <img src={car.image} alt={car.name} />
                 </div>
-                <p className="car-type">Sedan</p>
-                <div className="car-features">
-                  <span>Automatique</span>
-                  <span>4 Places</span>
-                  <span>Climatisé</span>
+                <div className="car-details">
+                  <div className="car-header">
+                    <h3>{car.brand}</h3>
+                    <p className="car-price">{car.price}€<span>/jour</span></p>
+                  </div>
+                  <p className="car-type">{car.type}</p>
+                  <div className="car-features">
+                    <span>{car.transmission}</span>
+                    <span>{car.seats} Places</span>
+                    <span>{car.fuel_type}</span>
+                  </div>
+                  <button className="btn-view-details">Voir les détails</button>
                 </div>
-                <button className="btn-view-details">Voir les détails</button>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 

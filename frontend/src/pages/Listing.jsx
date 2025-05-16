@@ -292,7 +292,7 @@ export const Listing = () => {
                       <span>{vehicle.fuel_type}</span>
                     </div>
                     <button className="listing-page-rent-button">
-                      Rent Now
+                      Details
                     </button>
                   </div>
                 </div>

@@ -24,6 +24,7 @@ import LoueurProfile from './pages/Loueur/LoueurProfile';
 import PublicProfile from './pages/PublicProfile';
 import DetailCar from './pages/DetailCar';
 import Reservation from './pages/Reservation';
+import About from './pages/About';
 
 
 const PrivateRoute = ({ children }) => {
@@ -126,6 +127,7 @@ const App = () => {
                                 {/* Public routes */}
                                 <Route path="/" element={<Home />} />
                                 <Route path="/listing" element={<Listing />} />
+                                <Route path='/About' element={<About/>} ></Route>
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
                                 <Route path="/profile" element={
