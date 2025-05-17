@@ -75,7 +75,7 @@ const LoueurPublicProfile = () => {
                 <div className="car-card">
                   <div className="car-image-container">
                     <img 
-                      src={car.srcimg || '/images/cars/default-car.jpg'} 
+                      src={`http://127.0.0.1:8000${car.srcimg}` || '/images/cars/default-car.jpg'} 
                       alt={`${car.marque} ${car.modele}`} 
                       className="car-image"
                       onError={(e) => {

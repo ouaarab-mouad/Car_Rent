@@ -125,6 +125,7 @@ const App = () => {
                         <main className="main-content">
                             <Routes>
                                 {/* Public routes */}
+                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                                 <Route path="/" element={<Home />} />
                                 <Route path="/listing" element={<Listing />} />
                                 <Route path='/About' element={<About/>} />
@@ -194,7 +195,6 @@ const App = () => {
 
                                 <Route path="/cars/:id" element={<DetailCar />} />
                                 <Route path="/reservation/:carId" element={<Reservation />} />
-                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                             </Routes>
                         </main>
                         <Footer />

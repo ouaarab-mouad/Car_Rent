@@ -1,273 +1,214 @@
 .about-container {
-    font-family: 'Inter', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     color: #333;
-    overflow-x: hidden;
-}
-
-/* Hero Section */
-.about-hero {
+  }
+  
+  /* Hero Section */
+  .about-hero {
     background-size: cover;
     background-position: center;
-    height: 600px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-}
-
-.hero-overlay {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 3rem;
+  }
+  
+  .hero-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
     text-align: center;
     color: white;
-    max-width: 900px;
-    border-radius: 16px;
-    backdrop-filter: blur(5px);
-}
-
-.about-hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.about-hero p {
+    max-width: 800px;
+    border-radius: 8px;
+  }
+  
+  .about-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-hero p {
     font-size: 1.5rem;
-    line-height: 1.6;
-    opacity: 0.9;
-}
-
-/* Stats Section */
+  }
+  
+  /* Stats Section */
 .stats-section {
-    padding: 6rem 0;
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    color: white;
+  padding: 4rem 0;
+  color: white;
 }
 
 .stats-container {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    gap: 3rem;
-    padding: 0 2rem;
+  display: flex;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  gap: 2rem; /* Ajout d'un espace entre les éléments */
 }
 
 .stat-item {
-    padding: 2rem;
-    flex: 1;
-    min-width: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
+  padding: 0 1.5rem; /* Espace interne supplémentaire */
+  flex: 1; /* Chaque élément prend la même largeur */
+  min-width: 150px; /* Largeur minimale pour éviter le chevauchement */
 }
 
 .stat-item h2 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-    color: #fff;
+  font-size: 3rem;
+  margin-bottom: 1rem; /* Espace augmenté entre le chiffre et le texte */
+  line-height: 1;
 }
 
 .stat-item p {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  margin-top: 0.5rem; /* Espace supplémentaire au-dessus du texte */
+  white-space: nowrap; /* Empêche le texte de se diviser sur plusieurs lignes */
 }
-
-/* About Section */
-.about-section {
-    max-width: 900px;
-    margin: 6rem auto;
+  
+  /* About Section */
+  .about-section {
+    max-width: 800px;
+    margin: 4rem auto;
     padding: 0 2rem;
     text-align: center;
-}
-
-.about-section h2 {
-    font-size: 2.8rem;
-    margin-bottom: 2rem;
+  }
+  
+  .about-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     color: #2c3e50;
-    font-weight: 700;
-}
-
-.about-section p {
-    font-size: 1.2rem;
+  }
+  
+  .about-section p {
+    font-size: 1.1rem;
     line-height: 1.8;
-    color: #4a5568;
-}
-
-/* Testimonials Section */
-.testimonials-section {
+  }
+  
+  /* Testimonials Section */
+  .testimonials-section {
     background-size: cover;
     background-position: center;
-    padding: 6rem 0;
+    padding: 4rem 0;
     position: relative;
     color: white;
-}
-
-.testimonial-overlay {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 3rem 2rem;
-}
-
-.testimonials-section h2 {
+  }
+  
+  .testimonial-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+  }
+  
+  .testimonials-section h2 {
     text-align: center;
-    font-size: 2.8rem;
-    margin-bottom: 4rem;
-    font-weight: 700;
-}
-
-.testimonials-grid {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-}
-
-.testimonial-card {
+  }
+  
+  .testimonial-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 2.5rem;
-    border-radius: 16px;
+    padding: 2rem;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-}
-
-.rating {
-    font-size: 1.8rem;
+  }
+  
+  .rating {
+    font-size: 1.5rem;
+    font-weight: bold;
     color: #f1c40f;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-card p {
+    line-height: 1.6;
     margin-bottom: 1.5rem;
-}
-
-.testimonial-card p {
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-}
-
-.author {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #f1c40f;
-}
-
-/* Features Section */
-.features-section {
-    padding: 6rem 0;
-    background: linear-gradient(135deg, #5937E0 0%, #7c4dff 100%);
+  }
+  
+  .author {
+    font-weight: bold;
+  }
+  
+  /* Features Section */
+  .features-section {
+    padding: 4rem 0;
     color: white;
     text-align: center;
-}
-
-.features-section h2 {
-    font-size: 2.8rem;
-    margin-bottom: 4rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.features-grid {
+  }
+  
+  .features-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    margin-left: 20px;
+    margin-top: 30px;
+  }
+  
+  .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-}
-
-.feature-card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem;
-    border-radius: 16px;
-    min-height: 250px;
+  }
+  
+  .feature-card {
+    background: rgba(255, 255, 255, 0.733);
+    padding: 2rem;
+    border-radius: 8px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.feature-card h3 {
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-.reserve-btn {
+  }
+  
+  .feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    
+  }
+  
+  .reserve-btn {
     background: #5937E0;
     color: #ffffff;
     border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.reserve-btn:hover {
+    transition: all 0.3s;
+    font-size: 1rem;
+  }
+  
+  .reserve-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    background: #4a2bc0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-container, .testimonials-grid, .features-grid {
+      grid-template-columns: 1fr;
+    }
+    
     .about-hero {
-        height: 500px;
+      height: 400px;
     }
-
+    
     .about-hero h1 {
-        font-size: 2.5rem;
+      font-size: 2rem;
     }
-
+    
     .about-hero p {
-        font-size: 1.2rem;
+      font-size: 1.2rem;
     }
-
-    .stats-container {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .stat-item {
-        min-width: auto;
-    }
-
-    .testimonials-grid,
-    .features-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .about-section h2,
-    .testimonials-section h2,
-    .features-section h2 {
-        font-size: 2.2rem;
-    }
-}
+  }

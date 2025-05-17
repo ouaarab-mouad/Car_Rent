@@ -286,10 +286,7 @@ export const Navbar = () => {
                 
                 <Link to="/profile" className="dropdown-item">
                   <User size={18} /> Mon profil
-                </Link>
-                <Link to="/settings" className="dropdown-item">
-                  <Settings size={18} /> Paramètres
-                </Link>
+                </Link>                
                 <button 
                   onClick={handleLogout} 
                   className="dropdown-item logout"
