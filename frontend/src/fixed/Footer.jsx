@@ -18,7 +18,7 @@ export const Footer = () => {
       <div className="contact-section">
         <div className="contact-card">
           <div className="icon-wrapper">
-            <Car size={24} className="contact-icon" />
+            <Car size={24} className="contact-icon-home" />
           </div>
           <div className="contact-info">
             <h3>Location</h3>
@@ -27,7 +27,7 @@ export const Footer = () => {
         
         <div className="contact-card">
           <div className="icon-wrapper">
-            <MapPin size={24} className="contact-icon" />
+            <MapPin size={24} className="contact-icon-home" />
           </div>
           <div className="contact-info">
             <p>Address</p>
@@ -37,7 +37,7 @@ export const Footer = () => {
         
         <div className="contact-card">
           <div className="icon-wrapper">
-            <Mail size={24} className="contact-icon" />
+            <Mail size={24} className="contact-icon-home" />
           </div>
           <div className="contact-info">
             <p>Email</p>
@@ -47,7 +47,7 @@ export const Footer = () => {
         
         <div className="contact-card">
           <div className="icon-wrapper">
-            <Phone size={24} className="contact-icon" />
+            <Phone size={24} className="contact-icon-home" />
           </div>
           <div className="contact-info">
             <p>Phone</p>
