@@ -93,7 +93,7 @@ const ClientDashboard = () => {
           >
             <option value="all">Toutes les réservations</option>
             <option value="confirmé">Confirmées</option>
-            <option value="en attente">En attente</option>
+            <option value="en_attente">En attente</option>
             <option value="annulé">Annulées</option>
             <option value="terminé">Terminées</option>
           </select>

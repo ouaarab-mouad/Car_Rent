@@ -57,7 +57,7 @@ export default function Reservation() {
         date_fin: dateFin
       });
       setSuccess('Réservation créée avec succès!');
-      setTimeout(() => navigate('/profile'), 2000);
+      setTimeout(() => navigate('/client/dashboard'), 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Erreur lors de la réservation');
     }
