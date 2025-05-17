@@ -31,6 +31,7 @@ import ClientRoutes from './pages/ClientRoutes';
 import axios from 'axios';
 import Reservations from './pages/Loueur/Reservations';
 import LoueurStatistics from './pages/Loueur/Statistics';
+import { ContactUs } from './pages/ContactUs';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -131,6 +132,7 @@ const App = () => {
                                 <Route path='/About' element={<About/>} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/register" element={<Register />} />
+                                <Route path="/contact" element={<ContactUs/>} />
                                 <Route path="/profile" element={
                                   <PrivateRoute>
                                     <ProfileSwitcher />
