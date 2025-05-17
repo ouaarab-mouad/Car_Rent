@@ -42,4 +42,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/loueur/reservations', [\App\Http\Controllers\LoueurController::class, 'reservations']);
     Route::post('/loueur/reservations/{id}/accept', [\App\Http\Controllers\LoueurController::class, 'acceptReservation']);
     Route::post('/loueur/reservations/{id}/refuse', [\App\Http\Controllers\LoueurController::class, 'refuseReservation']);
+    Route::post('/client/reservations/{id}/cancel', [\App\Http\Controllers\ReservationController::class, 'cancel']);
 });

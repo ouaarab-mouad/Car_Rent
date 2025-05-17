@@ -407,3 +407,21 @@
       transform: rotate(90deg);
     }
   }
+
+  .client-cancel-button {
+    padding: 0.5rem 1rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .client-cancel-button:hover {
+    background-color: #c0392b;
+  }

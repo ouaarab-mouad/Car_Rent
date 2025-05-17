@@ -84,4 +84,16 @@ class ReservationController extends Controller
             'reservations' => $formatted
         ]);
     }
+
+    // Cancel a reservation for the authenticated client
+    public function cancel(Request $request, $id)
+    {
+        $client = $request->user();
+        $reservation = Reservation::where('id', $id)
+            ->where('client_id', $client->id)
+            ->firstOrFail();
+        $reservation->statut = 'annulé';
+        $reservation->save();
+        return response()->json(['message' => 'Réservation annulée', 'reservation' => $reservation]);
+    }
 } 

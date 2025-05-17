@@ -8,6 +8,7 @@ const ClientDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -62,6 +63,26 @@ const ClientDashboard = () => {
     ? reservations 
     : reservations.filter(res => res.statut?.toLowerCase() === filter);
 
+  const handleCancelReservation = async (id) => {
+    const confirm = window.confirm('Êtes-vous sûr de vouloir annuler cette réservation ?');
+    if (!confirm) return;
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(`http://localhost:8000/api/client/reservations/${id}/cancel`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setReservations(prev => prev.map(res =>
+        res.id === id ? { ...res, statut: 'annulé' } : res
+      ));
+      setNotification({ type: 'success', message: 'Réservation annulée avec succès.' });
+      setTimeout(() => setNotification(null), 4000);
+    } catch (err) {
+      setNotification({ type: 'error', message: 'Erreur lors de l\'annulation de la réservation.' });
+      setTimeout(() => setNotification(null), 4000);
+      console.error('Cancel reservation error:', err);
+    }
+  };
+
   if (loading) return (
     <div className="loading-container">
       <div className="loader"></div>
@@ -82,6 +103,20 @@ const ClientDashboard = () => {
 
   return (
     <div className="client-dashboard">
+      {notification && (
+        <div style={{
+          background: notification.type === 'success' ? '#e8f5e9' : '#ffebee',
+          color: notification.type === 'success' ? '#2e7d32' : '#c62828',
+          border: `1px solid ${notification.type === 'success' ? '#a5d6a7' : '#ffcdd2'}`,
+          borderRadius: 8,
+          padding: '1rem 1.5rem',
+          marginBottom: 20,
+          textAlign: 'center',
+          fontWeight: 500
+        }}>
+          {notification.message}
+        </div>
+      )}
       <div className="client-dashboard-header">
         <h2>Mes Réservations</h2>
         <div className="client-filter-controls">
@@ -167,6 +202,15 @@ const ClientDashboard = () => {
                 <Link to={`/cars/${res.car.id}`} className="client-details-button">
                   Voir détails
                 </Link>
+                {['en attente', 'en_attente', 'confirmé', 'confirmée'].includes(res.statut?.toLowerCase()) &&
+                  new Date(res.date_debut) > new Date() && (
+                    <button
+                      className="client-cancel-button"
+                      onClick={() => handleCancelReservation(res.id)}
+                    >
+                      Annuler
+                    </button>
+                  )}
               </div>
             </div>
           ))}
