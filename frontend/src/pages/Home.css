@@ -382,20 +382,26 @@ section {
 }
 
 .btn-view-details {
+  display: block;
   width: 100%;
-  background-color: #5937E0;
+  padding: 12px;
+  background: #6c5ce7;
   color: white;
   border: none;
-  padding: 0.875rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  border-radius: 12px;
   font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: auto;
 }
 
 .btn-view-details:hover {
-  background-color: #4926c4;
+  background: #5649c0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
 /* Stats Section */
