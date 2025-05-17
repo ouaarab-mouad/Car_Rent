@@ -23,6 +23,29 @@ class ReservationController extends Controller
         $loueur_id = $voiture->utilisateur_id;
         $prix_par_jour = $voiture->prix_par_jour;
 
+        // Check for existing reservations in the same date range
+        $existingReservation = Reservation::where('voiture_id', $request->voiture_id)
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('date_debut', [$request->date_debut, $request->date_fin])
+                    ->orWhereBetween('date_fin', [$request->date_debut, $request->date_fin])
+                    ->orWhere(function ($q) use ($request) {
+                        $q->where('date_debut', '<=', $request->date_debut)
+                            ->where('date_fin', '>=', $request->date_fin);
+                    });
+            })
+            ->where('statut', '!=', 'annulé')
+            ->first();
+
+        if ($existingReservation) {
+            return response()->json([
+                'message' => 'Le véhicule est déjà réservé pour cette période.',
+                'existing_reservation' => [
+                    'date_debut' => $existingReservation->date_debut,
+                    'date_fin' => $existingReservation->date_fin
+                ]
+            ], 422);
+        }
+
         $start = new \DateTime($request->date_debut);
         $end = new \DateTime($request->date_fin);
         $days = $start->diff($end)->days;
@@ -84,4 +107,4 @@ class ReservationController extends Controller
             'reservations' => $formatted
         ]);
     }
-} 
+}

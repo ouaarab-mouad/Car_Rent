@@ -443,3 +443,36 @@
       padding-left: 2.5rem;
     }
   }
+  
+  .existing-reservation-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 0.375rem;
+    color: #856404;
+  }
+  
+  .warning-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: #856404;
+  }
+  
+  .warning-content {
+    flex-grow: 1;
+  }
+  
+  .warning-content p {
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .warning-content .reservation-dates {
+    font-weight: 500;
+    margin-top: 0.25rem;
+  }
