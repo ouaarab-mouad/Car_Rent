@@ -28,6 +28,15 @@ class LoueurController extends Controller
             ->firstOrFail();
         $reservation->statut = 'acceptée';
         $reservation->save();
+
+        // Update car availability
+        $car = $reservation->voiture;
+        if ($car) {
+            $car->status = 'reserve';
+            $car->disponible = false;
+            $car->save();
+        }
+
         return response()->json(['message' => 'Réservation acceptée', 'reservation' => $reservation]);
     }
 
