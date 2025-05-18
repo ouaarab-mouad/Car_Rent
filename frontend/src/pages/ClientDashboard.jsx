@@ -14,7 +14,7 @@ const ClientDashboard = () => {
     const fetchReservations = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('/api/client/reservations', {
+        const res = await axios.get('http://127.0.0.1:8000/api/client/reservations', {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('API response:', res.data);
@@ -128,7 +128,7 @@ const ClientDashboard = () => {
           >
             <option value="all">Toutes les réservations</option>
             <option value="confirmé">Confirmées</option>
-            <option value="en attente">En attente</option>
+            <option value="en_attente">En attente</option>
             <option value="annulé">Annulées</option>
             <option value="terminé">Terminées</option>
           </select>
@@ -161,7 +161,7 @@ const ClientDashboard = () => {
               
               <div className="client-reservation-car-details">
                 {res.car.srcimg ? (
-                  <img src={res.car.srcimg} alt={`${res.car.marque} ${res.car.modele}`} className="client-car-image" />
+                  <img src={`http://127.0.0.1:8000${res.car.srcimg}`} alt={`${res.car.marque} ${res.car.modele}`} className="client-car-image" />
                 ) : (
                   <div className="client-car-image-placeholder">
                     <span>Image non disponible</span>

@@ -1,6 +1,6 @@
 // src/pages/Listing.js
 import React, { useState, useEffect } from "react";
-import { FaCar, FaChevronDown, FaChevronUp, FaSearch, FaPlus, FaUserCircle, FaCalendarAlt } from "react-icons/fa";
+import { FaCar, FaChevronDown, FaChevronUp, FaSearch, FaPlus, FaUserCircle, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import axios from "axios";
 import "./Listing.css";
 import { Link } from 'react-router-dom';
@@ -76,7 +76,7 @@ export const Listing = () => {
       vehicle.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       vehicle.brand.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesBrand = selectedBrand === "All" || vehicle.brand === selectedBrand;
-    const matchesLocation = selectedLocation === "All" || vehicle.location === selectedLocation;
+    const matchesLocation = selectedLocation === "All" || vehicle.ville === selectedLocation;
     const matchesPrice = vehicle.price <= priceRange;
     const matchesColor = selectedColor === "" || vehicle.color === selectedColor;
     const matchesCategories = selectedCategories.length === 0 || 
@@ -88,7 +88,7 @@ export const Listing = () => {
   });
 
   const brands = ["All", ...new Set(vehicles.map(vehicle => vehicle.brand))];
-  const locations = ["All", ...new Set(vehicles.map(vehicle => vehicle.location))];
+  const locations = ["All", ...new Set(vehicles.map(vehicle => vehicle.ville))];
   const categories = ["Sedan", "SUV", "Sports", "Luxury", "Electric", "Hybrid"];
   const colors = [
     { name: "Red", code: "#FF0000" },
@@ -282,6 +282,13 @@ export const Listing = () => {
                   <div className="listing-page-image-container">
                     <img src={vehicle.image} alt={vehicle.name} className="listing-page-car-image" />
                     <div className="listing-page-price-badge">{vehicle.price} DH/J</div>
+                    <div className={`listing-page-status-badge ${vehicle.status}`}>
+                      {vehicle.status === 'disponible' && 'Disponible'}
+                      {vehicle.status === 'non_disponible' && 'Non disponible'}
+                      {vehicle.status === 'en_location' && 'En location'}
+                      {vehicle.status === 'en_maintenance' && 'En maintenance'}
+                      {vehicle.status === 'reserve' && 'Réservé'}
+                    </div>
                   </div>
                   <div className="listing-page-car-details">
                     <h3 className="listing-page-car-brand">{vehicle.brand}</h3>
@@ -291,8 +298,12 @@ export const Listing = () => {
                       <span>{vehicle.transmission}</span>
                       <span>{vehicle.fuel_type}</span>
                     </div>
+                    <div className="listing-page-car-location">
+                      <FaMapMarkerAlt className="location-icon" />
+                      <span>{vehicle.ville}</span>
+                    </div>
                     <button className="listing-page-rent-button">
-                      Rent Now
+                      Details
                     </button>
                     {vehicle.utilisateur_id && (
                       <Link

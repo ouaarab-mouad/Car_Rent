@@ -331,7 +331,7 @@ export default function ProfessionalReservations() {
               <div key={res.id} className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div className="relative">
                   <img 
-                    src={res.voiture.srcimg} 
+                    src={`http://127.0.0.1:8000`} 
                     alt={`${res.voiture.marque} ${res.voiture.modele}`} 
                     className="w-full h-48 object-cover"
                   />

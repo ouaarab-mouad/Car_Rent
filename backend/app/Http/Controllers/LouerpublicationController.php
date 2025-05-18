@@ -17,7 +17,7 @@ class LouerpublicationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware('auth:sanctum')->except(['show']);
     }
 
 
@@ -32,21 +32,21 @@ class LouerpublicationController extends Controller
     {
         try {
             $car = Voiture::findOrFail($id);
-            
+
             // Check if the authenticated user is the owner of the car
             if (auth()->id() !== $car->utilisateur_id) {
                 return response()->json([
                     'message' => 'Unauthorized. You can only delete your own cars.'
                 ], 403);
             }
-            
+
             // Delete the car
             $car->delete();
-            
+
             return response()->json([
                 'message' => 'Car deleted successfully'
             ]);
-            
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'message' => 'Car not found'
@@ -150,7 +150,7 @@ class LouerpublicationController extends Controller
             $voitures = Voiture::where('utilisateur_id', Auth::id())
                 ->with('utilisateur')
                 ->get();
-            
+
             // Transform conditions for each car
             foreach ($voitures as $voiture) {
                 if (is_string($voiture->conditions)) {
@@ -188,7 +188,7 @@ class LouerpublicationController extends Controller
         try {
             // Find the car by ID
             $voiture = Voiture::findOrFail($id);
-            
+
             // Check if user owns this car
             if ($voiture->utilisateur_id !== Auth::id()) {
                 throw new AuthorizationException('You can only modify your own cars');
@@ -231,18 +231,18 @@ class LouerpublicationController extends Controller
 
         // Handle conditions - ensure it's properly formatted as JSON
         $conditions = $validatedData['conditions'];
-        
+
         // If conditions is a string, decode it
         if (is_string($conditions)) {
             $decoded = json_decode($conditions, true);
             $conditions = is_array($decoded) ? $decoded : [];
         }
-        
+
         // Ensure conditions is an array
         if (!is_array($conditions)) {
             $conditions = [];
         }
-        
+
         // Define all possible conditions with default values
         $defaultConditions = [
             'airConditioner' => false,
@@ -251,23 +251,23 @@ class LouerpublicationController extends Controller
             'abs' => false,
             'cruiseControl' => false
         ];
-        
+
         // Filter to only include valid conditions
         $validConditions = array_intersect_key($conditions, $defaultConditions);
-        
+
         // Merge with defaults to ensure all conditions are present
         $validatedData['conditions'] = array_merge($defaultConditions, $validConditions);
-        
+
         // Convert to JSON string for storage
         $validatedData['conditions'] = json_encode($validatedData['conditions']);
 
         try {
             \Log::info('Starting car update', ['car_id' => $id, 'user_id' => Auth::id()]);
-            
+
             // Handle image upload if provided
             if ($request->hasFile('image')) {
                 \Log::info('New image provided for update');
-                
+
                 // Delete old image if it exists
                 if ($voiture->srcimg) {
                     $oldImagePath = str_replace('/storage/', '', $voiture->srcimg);
@@ -276,7 +276,7 @@ class LouerpublicationController extends Controller
                         \Log::info('Old image deleted', ['path' => $oldImagePath]);
                     }
                 }
-                
+
                 // Store new image
                 $image = $request->file('image');
                 $imgPath = $image->store('louerlisting', 'public');
@@ -297,10 +297,10 @@ class LouerpublicationController extends Controller
 
             // Log the data being used for update
             \Log::info('Updating car with data:', $validatedData);
-            
+
             // Update the car with the validated data
             $voiture->update($validatedData);
-            
+
             // Refresh the model to get the updated data
             $voiture->refresh();
             \Log::info('Car updated successfully', ['car_id' => $voiture->id]);
@@ -330,14 +330,14 @@ class LouerpublicationController extends Controller
     public function show($id)
     {
         try {
-            $voiture = Voiture::with('utilisateur')->findOrFail($id);
+            $car = Voiture::with('utilisateur:id,nom,prenom,phone')->findOrFail($id);
 
             // Transform the conditions to a proper array if it's stored as JSON
-            if (is_string($voiture->conditions)) {
-                $decoded = json_decode($voiture->conditions, true);
-                $voiture->conditions = is_array($decoded) ? $decoded : [];
-            } elseif (!is_array($voiture->conditions)) {
-                $voiture->conditions = [];
+            if (is_string($car->conditions)) {
+                $decoded = json_decode($car->conditions, true);
+                $car->conditions = is_array($decoded) ? $decoded : [];
+            } elseif (!is_array($car->conditions)) {
+                $car->conditions = [];
             }
 
             // Ensure all condition fields are present with default values
@@ -348,14 +348,14 @@ class LouerpublicationController extends Controller
                 'abs' => false,
                 'cruiseControl' => false
             ];
-            $voiture->conditions = array_merge($defaultConditions, $voiture->conditions);
+            $car->conditions = array_merge($defaultConditions, $car->conditions);
 
             // Ensure image URL is absolute
-            if ($voiture->srcimg && preg_match('#^/storage#', $voiture->srcimg)) {
-                $voiture->srcimg = url($voiture->srcimg);
+            if ($car->srcimg && preg_match('#^/storage#', $car->srcimg)) {
+                $car->srcimg = url($car->srcimg);
             }
 
-            return response()->json($voiture);
+            return response()->json($car);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Car not found',

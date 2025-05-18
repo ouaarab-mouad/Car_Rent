@@ -1,0 +1,128 @@
+.public-profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, #5937E0 0%, #3700b3 100%);
+  padding: 2rem;
+  border-radius: 1rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.profile-info h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-info .email,
+.profile-info .phone {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.25rem 0;
+}
+
+.cars-section {
+  margin-top: 2rem;
+}
+
+.cars-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.car-card {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+}
+
+.car-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.car-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-details {
+  padding: 1.5rem;
+}
+
+.car-details h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #5937E0;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.car-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.car-features span {
+  background: #f0f4ff;
+  color: #5937E0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.view-details-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: #5937E0;
+  color: white;
+  text-align: center;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.view-details-btn:hover {
+  background: #3700b3;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #5937E0;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+} 

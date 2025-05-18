@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Voiture;
-use App\Models\Reservation;
-use App\Models\Avis;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,25 +13,36 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // Only run AdminSeeder if no users exist
-        if (!\App\Models\User::count()) {
-            $this->call([
-                AdminSeeder::class,
-            ]);
-        }
+        // Create Admin
+        User::create([
+            'nom' => 'Admin',
+            'prenom' => 'User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+            'phone' => '0612345678',
+            'role' => 'administrateur'
+        ]);
 
-        // Create users
-        User::factory(10)->create();
+        // Create Loueur
+        User::create([
+            'nom' => 'Loueur',
+            'prenom' => 'Test',
+            'email' => 'loueur@example.com',
+            'password' => Hash::make('password'),
+            'phone' => '0623456789',
+            'role' => 'loueur'
+        ]);
 
-        // Create cars
-        Voiture::factory(20)->create();
-
-        // Create reservations
-        Reservation::factory(30)->create();
-
-        // Create reviews
-        Avis::factory(40)->create();
+        // Create Client
+        User::create([
+            'nom' => 'Client',
+            'prenom' => 'Test',
+            'email' => 'client@example.com',
+            'password' => Hash::make('password'),
+            'phone' => '0634567890',
+            'role' => 'client'
+        ]);
     }
 }

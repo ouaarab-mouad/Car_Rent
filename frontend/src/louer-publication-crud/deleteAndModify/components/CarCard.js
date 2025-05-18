@@ -60,9 +60,9 @@ function CarCard({ car, onDelete }) {
 
   return (
     <div className="car-card">
-      <div className="car-image">
+      <div className="car-image" style={{padding:0}} >
         {srcimg ? (
-          <img src={srcimg} alt={modele} className="car-img" />
+          <img src={srcimg} alt={modele} className="car-img" style={{width: '450px'}} />
         ) : (
           <div className="car-silhouette" />
         )}

@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { CalendarDays, Car, Clock, CreditCard, Loader2, User, Check, X, AlertTriangle } from 'lucide-react';
+import { CalendarDays, Car, Clock, CreditCard, Loader2, User, Check, X, AlertTriangle, Phone } from 'lucide-react';
 import axios from 'axios';
 
 export default function ProfessionalReservations() {
@@ -332,7 +331,7 @@ export default function ProfessionalReservations() {
               <div key={res.id} className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div className="relative">
                   <img 
-                    src={res.voiture.srcimg} 
+                    src={`http://127.0.0.1:8000${res.voiture.srcimg}`} 
                     alt={`${res.voiture.marque} ${res.voiture.modele}`} 
                     className="w-full h-48 object-cover"
                   />
@@ -353,6 +352,13 @@ export default function ProfessionalReservations() {
                       <User className="h-4 w-4 mr-2 text-gray-400" />
                       <span>
                         {res.client.prenom} {res.client.nom}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-700">
+                      <Phone className="h-4 w-4 mr-2 text-gray-400" />
+                      <span>
+                        {res.client.phone || 'Non disponible'}
                       </span>
                     </div>
                     

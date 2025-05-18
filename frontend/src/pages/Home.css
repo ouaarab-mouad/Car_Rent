@@ -183,14 +183,25 @@ section {
 
 .image-container {
   flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .image-container img {
-  max-width: 100%;
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .steps-container {
@@ -371,20 +382,26 @@ section {
 }
 
 .btn-view-details {
+  display: block;
   width: 100%;
-  background-color: #5937E0;
+  padding: 12px;
+  background: #6c5ce7;
   color: white;
   border: none;
-  padding: 0.875rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  border-radius: 12px;
   font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: auto;
 }
 
 .btn-view-details:hover {
-  background-color: #4926c4;
+  background: #5649c0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
 /* Stats Section */
@@ -636,4 +653,41 @@ section {
   .stats-content p {
     font-size: 1rem;
   }
+}
+
+.loading-spinner {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #6c5ce7;
+    font-weight: 500;
+}
+
+.error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: #ef4444;
+    font-size: 1.1rem;
+    background-color: #fee2e2;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+/* Remove any existing drag & drop related styles */
+.image-container::before,
+.image-container::after {
+  display: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure no other elements are overlaying the image */
+.image-container > * {
+  position: static;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
