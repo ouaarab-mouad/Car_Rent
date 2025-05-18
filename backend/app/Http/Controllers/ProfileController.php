@@ -25,7 +25,7 @@ class ProfileController extends Controller
             return response()->json($user);
         }
         // Otherwise, return only public info
-        $public = $user->only(['id', 'nom', 'prenom', 'email', 'role', 'EnterpriseName', 'vehicles']);
+        $public = $user->only(['id', 'nom', 'prenom', 'email', 'role', 'EnterpriseName', 'vehicles','ville']);
         return response()->json($public);
     }
 
@@ -49,9 +49,10 @@ class ProfileController extends Controller
             'prenom' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|max:255|unique:users,email,' . $user->id,
             'phone' => 'sometimes|string|max:20',
+            'ville' => 'sometimes|string|max:255',
             'EnterpriseName' => 'sometimes|string|max:255',
         ]);
         $user->update($data);
         return response()->json($user);
     }
-} 
+}

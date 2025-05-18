@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { User, Mail, Phone, Briefcase, Edit2, Check, X, ArrowLeft } from 'lucide-react';
+import { User, Mail, Phone, Briefcase, Edit2, Check, X, ArrowLeft, MapPin } from 'lucide-react';
 import axios from 'axios';
+
+const villesMaroc = [
+    'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir', 'Meknès', 'Oujda', 'Kenitra', 'Tétouan', 'Safi', 'El Jadida', 'Béni Mellal', 'Nador', 'Taza', 'Khouribga', 'Settat', 'Larache', 'Ksar El Kebir', 'Guelmim', 'Berrechid', 'Ouarzazate', 'Al Hoceima', 'Errachidia', 'Khemisset', 'Khénifra', 'Mohammedia', 'Salé', 'Essaouira', 'Azrou', 'Ifrane', 'Taroudant', 'Taourirt', 'Sidi Slimane', 'Sidi Kacem', 'Sidi Bennour', 'Sefrou', 'Youssoufia', 'Midelt', 'Oued Zem', 'El Hajeb', 'Boujdour', 'Boulemane', 'Jerada', 'Tan-Tan', 'Dakhla', 'Laâyoune', 'Smara', 'Zagora', 'Tiznit', 'Chefchaouen'
+];
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [form, setForm] = useState({ nom: '', prenom: '', email: '', phone: '', EnterpriseName: '' });
+  const [form, setForm] = useState({ nom: '', prenom: '', email: '', phone: '', ville: '', EnterpriseName: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -25,6 +29,7 @@ const Profile = () => {
           prenom: res.data.prenom || '',
           email: res.data.email || '',
           phone: res.data.phone || '',
+          ville: res.data.ville || '',
           EnterpriseName: res.data.EnterpriseName || '',
         });
       } catch (err) {
@@ -53,6 +58,7 @@ const Profile = () => {
       prenom: user.prenom || '',
       email: user.email || '',
       phone: user.phone || '',
+      ville: user.ville || '',
       EnterpriseName: user.EnterpriseName || '',
     });
     setError('');
@@ -138,6 +144,11 @@ const Profile = () => {
               <div className="px-3 py-1 bg-white/10 rounded-full text-sm flex items-center">
                 <Phone size={14} className="mr-2" />
                 {user.phone}
+              </div>
+
+              <div className="px-3 py-1 bg-white/10 rounded-full text-sm flex items-center">
+                <MapPin size={14} className="mr-2" />
+                {user.ville}
               </div>
               
               {user.role === 'loueur' && (
@@ -233,6 +244,27 @@ const Profile = () => {
                 />
               ) : (
                 <div className="p-3 bg-gray-50 rounded-lg text-gray-800">{user.phone}</div>
+              )}
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Ville</label>
+              {editMode ? (
+                <select
+                  name="ville"
+                  value={form.ville}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all outline-none"
+                >
+                  <option value="">Select your city</option>
+                  {villesMaroc.map((ville) => (
+                    <option key={ville} value={ville}>
+                      {ville}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="p-3 bg-gray-50 rounded-lg text-gray-800">{user.ville}</div>
               )}
             </div>
             

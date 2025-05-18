@@ -26,7 +26,8 @@ class User extends Authenticatable
         'licence',
         'EnterpriseName',
         'requested_role',
-        'role_status'
+        'role_status',
+        'ville'
     ];
 
     /**
@@ -115,7 +116,7 @@ class User extends Authenticatable
         } elseif ($role === 'client') {
             return $this->isClient();
         }
-        
+
         return false;
     }
 }
