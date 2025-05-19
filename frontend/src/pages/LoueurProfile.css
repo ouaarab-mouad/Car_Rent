@@ -1,0 +1,346 @@
+.comments-section {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.comment img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.comment-header h4 {
+    margin: 0;
+}
+
+.comment-header small {
+    color: #666;
+}
+
+.comment-body {
+    margin-top: 0.5rem;
+}
+/* Variables for colors */
+:root {
+    --color-white: #ffffff;
+    --color-medium-blue: #6EA5D3; /* Medium-light blue as requested */
+    --color-light-blue: #e6f2ff;
+    --color-dark-blue: #2C70B1;
+    --color-gray: #f5f5f5;
+    --color-text: #333333;
+    --color-border: #e0e0e0;
+    --color-star: #ffc107;
+}
+
+/* Comment system container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-gray);
+    padding: 20px;
+}
+
+/* Comment Form Container Specific Styles */
+.comment-form-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.comment-form-container h2 {
+    color: var(--color-dark-blue);
+    margin-bottom: 20px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.comment-form-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-medium-blue);
+}
+
+.comment-form-container .form-group {
+    margin-bottom: 20px;
+}
+
+.comment-form-container .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.comment-form-container .form-group input,
+.comment-form-container .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.comment-form-container .form-group input:focus,
+.comment-form-container .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-medium-blue);
+    box-shadow: 0 0 0 2px rgba(110, 165, 211, 0.2);
+}
+
+.comment-form-container .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Star Rating Specific Styles */
+.comment-form-container .stars-container {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-form-container .star {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin: 0;
+    padding: 0;
+}
+
+.comment-form-container .star.active,
+.comment-form-container .star:hover,
+.comment-form-container .star:hover ~ .star {
+    color: #ddd; /* Reset color for stars after hovered star */
+}
+
+.comment-form-container .star.active,
+.comment-form-container .star:hover {
+    color: var(--color-star);
+}
+
+.comment-form-container .star[data-value="1"].active ~ .star,
+.comment-form-container .star[data-value="1"]:hover ~ .star {
+    color: #ddd;
+}
+
+.comment-form-container .star[data-value="2"].active ~ .star:nth-child(n+3),
+.comment-form-container .star[data-value="2"]:hover ~ .star:nth-child(n+3) {
+    color: #ddd;
+}
+
+.comment-form-container .star[data-value="3"].active ~ .star:nth-child(n+4),
+.comment-form-container .star[data-value="3"]:hover ~ .star:nth-child(n+4) {
+    color: #ddd;
+}
+
+.comment-form-container .star[data-value="4"].active ~ .star:last-child,
+.comment-form-container .star[data-value="4"]:hover ~ .star:last-child {
+    color: #ddd;
+}
+
+.comment-form-container .submit-btn {
+    background-color: var(--color-medium-blue);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.comment-form-container .submit-btn:hover {
+    background-color: var(--color-dark-blue);
+}
+
+/* Comments Display Container Specific Styles */
+.comments-display-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+.comments-display-container h2 {
+    color: var(--color-dark-blue);
+    margin-bottom: 20px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.comments-display-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-medium-blue);
+}
+
+.comments-display-container .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin: 0;
+}
+
+/* Comment Card Specific Styles */
+.comments-display-container .comment-card {
+    background-color: var(--color-light-blue);
+    border-radius: 8px;
+    padding: 18px;
+    border-left: 4px solid var(--color-medium-blue);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.comments-display-container .comment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.comments-display-container .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comments-display-container .comment-header h3 {
+    font-size: 16px;
+    color: var(--color-dark-blue);
+    margin: 0;
+    font-weight: 500;
+}
+
+.comments-display-container .comment-rating {
+    display: flex;
+    gap: 2px;
+}
+
+/* Comment Section Star Ratings */
+.comments-display-container .comment-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.comments-display-container .comment-rating .fa-star,
+.comments-display-container .comment-rating .fas.fa-star {
+    font-size: 14px;
+    color: #ddd;
+    display: inline-block;
+}
+
+.comments-display-container .comment-rating .fa-star.filled,
+.comments-display-container .comment-rating .fas.fa-star.filled {
+    color: var(--color-star);
+}
+
+.comments-display-container .comment-text {
+    font-size: 14px;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.comments-display-container .comment-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #777;
+    margin: 0;
+}
+
+/* Responsive Design Specific to Components */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .comment-form-container,
+    .comments-display-container {
+        min-width: 100%;
+    }
+}
+
+/* Custom scrollbar Specific to Comments List */
+.comments-display-container .comments-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.comments-display-container .comments-list::-webkit-scrollbar-track {
+    background: var(--color-light-blue);
+    border-radius: 10px;
+}
+
+.comments-display-container .comments-list::-webkit-scrollbar-thumb {
+    background: var(--color-medium-blue);
+    border-radius: 10px;
+}
+
+.comments-display-container .comments-list::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark-blue);
+}

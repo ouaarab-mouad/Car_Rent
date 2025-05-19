@@ -69,6 +69,7 @@ const DetailCar = () => {
       </div>
     );
   }
+  console.log('Car details:', car);
 
   return (
     <div className="detail-car-container">
@@ -147,7 +148,7 @@ const DetailCar = () => {
               <div className="rental-details">
                 <div className="info-item rental-person">
                   <span className="info-label">Loué par</span>
-                  <Link to={`/loueur/public/${car.utilisateur_id}`} className="owner-link">
+                  <Link to={`/loueur/public/${car.utilisateur.id}`} className="owner-link">
                     <FaUser className="info-icon" />
                     <span className="info-value owner-name">{car.utilisateur?.nom} {car.utilisateur?.prenom}</span>
                   </Link>

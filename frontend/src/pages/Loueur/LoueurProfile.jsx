@@ -3,16 +3,48 @@ import { FaCar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaStar, FaBuilding, FaUser,
 import axios from '../../utils/axios';
 import './LoueurProfile.css';
 import { Link } from 'react-router-dom';
+import '../../pages/LoueurProfile.css';
 
 const LoueurProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [commentsLoading, setCommentsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [commentsError, setCommentsError] = useState('');
   const [visibleCars, setVisibleCars] = useState(6);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     fetchLoueurProfile();
   }, []);
+
+  const fetchComments = async () => {
+    if (!user?.id) {
+      console.log('No user ID available from profile');
+      return;
+    }
+    
+    setCommentsLoading(true);
+    setCommentsError('');
+    try {
+      console.log('Fetching comments for user ID:', user.id);
+      const res = await axios.get(`/api/comments/${user.id}`);
+      console.log('Comments response:', res.data);
+      console.log('Comments array length:', res.data.length);
+      setComments(res.data);
+    } catch (err) {
+      console.error('Error fetching comments:', err.response?.data || err.message);
+      setCommentsError('Failed to load comments. Please try again later.');
+    } finally {
+      setCommentsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchComments();
+    }
+  }, [user?.id]);
 
   const fetchLoueurProfile = async () => {
     setLoading(true);
@@ -182,6 +214,69 @@ const LoueurProfile = () => {
           </div>
         )}
       </div>
+        {/* Comments Section */}
+        <div className="profile-section">
+          <div className="section-header">
+            <h2 className="section-title">
+              <FaStar /> Avis des clients
+            </h2>
+          </div>
+          
+          {commentsLoading ? (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Chargement des commentaires...</p>
+            </div>
+          ) : commentsError ? (
+            <div className="error-message">
+              {commentsError}
+              <button onClick={fetchComments} className="retry-button">
+                Réessayer
+              </button>
+            </div>
+          ) : comments && comments.length > 0 ? (
+            <div className="comments-grid">
+              {comments.map((comment) => (
+                <div className="comment-card" key={comment.id}>
+                  <div className="comment-header">
+                    <div className="comment-user">
+                      <div className="user-avatar">
+                        {comment.user ? comment.user.charAt(0).toUpperCase() : 'U'}
+                      </div>
+                      <h3 className="user-name">{comment.user || 'Utilisateur anonyme'}</h3>
+                    </div>
+                    <div className="comment-rating">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaStar
+                          key={star}
+                          color={star <= comment.etoiles ? "#ffc107" : "#e4e5e9"}
+                          style={{
+                            fontSize: '14px',
+                            marginRight: '2px',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="comment-text">{comment.description}</p>
+                  <div className="comment-footer">
+                    <span className="comment-date">
+                      {new Date(comment.created_at).toLocaleDateString('fr-FR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="no-comments">
+              <p>Aucun commentaire pour le moment.</p>
+            </div>
+          )}
+        </div>
     </div>
   );
 };
