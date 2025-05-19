@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalCars: 0,
-    totalRentals: 0,
+    totalReservations: 0,
     totalRevenue: 0,
     recentRentals: [],
     recentUsers: []
@@ -21,27 +21,32 @@ const AdminDashboard = () => {
       try {
         console.log('Fetching dashboard data...');
         
-        const [usersRes, carsRes] = await Promise.all([
+        const [usersRes, carsRes, reservationsRes] = await Promise.all([
           axios.get('/api/users'),
-          axios.get('/api/voitures')
+          axios.get('/api/voitures'),
+          axios.get('/api/reservations')
         ]);
 
         console.log('Users response:', usersRes.data);
         console.log('Cars response:', carsRes.data);
+        console.log('Reservations response:', reservationsRes.data);
 
         // Extract data from the response
         const users = usersRes.data.data || [];
         const cars = carsRes.data.data || [];
+        const reservations = reservationsRes.data.data || [];
 
         setStats(prevStats => ({
           ...prevStats,
           totalUsers: users.length,
-          totalCars: cars.length
+          totalCars: cars.length,
+          totalReservations: reservations.length
         }));
 
         console.log('Updated stats:', {
           totalUsers: users.length,
-          totalCars: cars.length
+          totalCars: cars.length,
+          totalReservations: reservations.length
         });
 
       } catch (error) {
@@ -88,6 +93,16 @@ const AdminDashboard = () => {
             <div className="stat-info">
               <h3>Voitures</h3>
               <p>{stats.totalCars}</p>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon reservations">
+              <FaCalendarAlt />
+            </div>
+            <div className="stat-info">
+              <h3>Réservations</h3>
+              <p>{stats.totalReservations}</p>
             </div>
           </div>
         </div>

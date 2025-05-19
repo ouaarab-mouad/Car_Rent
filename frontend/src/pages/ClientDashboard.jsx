@@ -8,6 +8,7 @@ const ClientDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [cancellingId, setCancellingId] = useState(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -27,6 +28,63 @@ const ClientDashboard = () => {
     };
     fetchReservations();
   }, []);
+
+  const handleCancelReservation = async (reservationId) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')) {
+      return;
+    }
+
+    setCancellingId(reservationId);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      console.log('Attempting to cancel reservation:', reservationId);
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/client/reservations/${reservationId}/cancel`,
+        {},
+        {
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      
+      console.log('Cancel response:', response.data);
+      
+      // Update the local state to reflect the cancellation
+      setReservations(prevReservations => 
+        prevReservations.map(res => 
+          res.id === reservationId 
+            ? { ...res, statut: 'annulé' }
+            : res
+        )
+      );
+
+      // Show success message
+      alert(response.data.message || 'Réservation annulée avec succès');
+    } catch (err) {
+      console.error('Error cancelling reservation:', err);
+      console.error('Error details:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status
+      });
+      
+      // Show the specific error message from the backend if available
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data?.error || 
+                          err.message || 
+                          'Erreur lors de l\'annulation de la réservation. Veuillez réessayer.';
+      alert(errorMessage);
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -164,9 +222,20 @@ const ClientDashboard = () => {
                   <span className="client-price-label">Prix total</span>
                   <span className="client-price-value">{res.prix_total} DH</span>
                 </div>
-                <Link to={`/cars/${res.car.id}`} className="client-details-button">
-                  Voir détails
-                </Link>
+                <div className="client-reservation-actions">
+                  <Link to={`/cars/${res.car.id}`} className="client-details-button">
+                    Voir détails
+                  </Link>
+                  {res.statut?.toLowerCase() === 'en_attente' && (
+                    <button 
+                      className="client-cancel-button"
+                      onClick={() => handleCancelReservation(res.id)}
+                      disabled={cancellingId === res.id}
+                    >
+                      {cancellingId === res.id ? 'Annulation...' : 'Annuler'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}

@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Voiture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ReservationController extends Controller
 {
@@ -106,5 +107,106 @@ class ReservationController extends Controller
             'success' => true,
             'reservations' => $formatted
         ]);
+    }
+
+    public function cancel($id)
+    {
+        try {
+            $reservation = Reservation::findOrFail($id);
+
+            // Log the current state
+            Log::info('Attempting to cancel reservation', [
+                'reservation_id' => $id,
+                'current_status' => $reservation->statut,
+                'client_id' => $reservation->client_id,
+                'auth_id' => Auth::id()
+            ]);
+
+            // Check if the reservation belongs to the authenticated client
+            if ($reservation->client_id !== Auth::id()) {
+                Log::warning('Unauthorized cancellation attempt', [
+                    'reservation_id' => $id,
+                    'client_id' => $reservation->client_id,
+                    'auth_id' => Auth::id()
+                ]);
+                return response()->json([
+                    'message' => 'Non autorisé à annuler cette réservation'
+                ], 403);
+            }
+
+            // Check if the reservation is in a cancellable state
+            if ($reservation->statut !== 'en_attente') {
+                Log::warning('Invalid status for cancellation', [
+                    'reservation_id' => $id,
+                    'current_status' => $reservation->statut
+                ]);
+                return response()->json([
+                    'message' => 'Cette réservation ne peut pas être annulée'
+                ], 400);
+            }
+
+            // Update the reservation status
+            $reservation->statut = 'annulé';
+
+            try {
+                $saved = $reservation->save();
+                if (!$saved) {
+                    Log::error('Failed to save reservation status', [
+                        'reservation_id' => $id,
+                        'attempted_status' => 'annulé'
+                    ]);
+                    throw new \Exception('Failed to save reservation status');
+                }
+            } catch (\Exception $e) {
+                Log::error('Database error while saving', [
+                    'reservation_id' => $id,
+                    'error' => $e->getMessage(),
+                    'sql' => $e->getPrevious() ? $e->getPrevious()->getMessage() : 'No SQL error'
+                ]);
+                throw $e;
+            }
+
+            Log::info('Reservation cancelled successfully', [
+                'reservation_id' => $id
+            ]);
+
+            return response()->json([
+                'message' => 'Réservation annulée avec succès',
+                'reservation' => $reservation
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error cancelling reservation', [
+                'reservation_id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'message' => 'Erreur lors de l\'annulation de la réservation',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Get all reservations for admin dashboard
+    public function getAllReservations()
+    {
+        try {
+            $reservations = Reservation::with(['client', 'loueur', 'voiture'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $reservations
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching all reservations: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch reservations: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

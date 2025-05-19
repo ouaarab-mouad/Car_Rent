@@ -13,7 +13,6 @@ export const Listing = () => {
   const [selectedBrand, setSelectedBrand] = useState("All");
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [priceRange, setPriceRange] = useState(2000);
-  const [selectedColor, setSelectedColor] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCondition, setSelectedCondition] = useState("All");
   const [brandDropdownOpen, setBrandDropdownOpen] = useState(false);
@@ -52,11 +51,6 @@ export const Listing = () => {
     setVisibleCars(6);
   };
 
-  const handleColorSelect = (color) => {
-    setSelectedColor(color === selectedColor ? '' : color);
-    setVisibleCars(6);
-  };
-
   const handleCategoryToggle = (category) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter(cat => cat !== category));
@@ -92,13 +86,6 @@ export const Listing = () => {
     'Citadine', 'Compacte', 'Berline', 'SUV', 'Coupé', 'Cabriolet', 'Break', 
     'Monospace', '4x4', 'Pick-up', 'Utilitaire', 'Sport', 'Luxe', 'Électrique', 
     'Hybride', 'Diesel', 'Essence'
-  ];
-  const colors = [
-    { name: "Red", code: "#FF0000" },
-    { name: "Blue", code: "#0000FF" },
-    { name: "Black", code: "#000000" },
-    { name: "White", code: "#FFFFFF" },
-    { name: "Silver", code: "#C0C0C0" }
   ];
 
   const loadMoreCars = () => {
@@ -199,26 +186,6 @@ export const Listing = () => {
             <div className="listing-page-price-labels">
               <span>350</span>
               <span>2000</span>
-            </div>
-          </div>
-
-          {/* Color Filter */}
-          <div className="listing-page-filter-group">
-            <label>Colors</label>
-            <div className="listing-page-color-options">
-              {colors.map(color => (
-                <div 
-                  key={color.name}
-                  className={`listing-page-color-option ${selectedColor === color.name ? 'selected' : ''}`}
-                  onClick={() => handleColorSelect(color.name)}
-                >
-                  <span 
-                    className="listing-page-color-circle"
-                    style={{ backgroundColor: color.code }}
-                  ></span>
-                  <span className="listing-page-color-name">{color.name}</span>
-                </div>
-              ))}
             </div>
           </div>
 

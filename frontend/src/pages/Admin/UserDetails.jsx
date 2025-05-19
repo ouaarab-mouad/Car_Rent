@@ -21,6 +21,7 @@ export const UserDetails = () => {
                 
                 if (response.data.success) {
                     setUser(response.data.data);
+                    console.log('User reservations:', response.data.data.reservations);
                 } else {
                     setError('Failed to load user details');
                 }
@@ -206,15 +207,96 @@ export const UserDetails = () => {
 
                 {user.reservations && user.reservations.length > 0 && (
                     <div className="reservations-section">
-                        <h3>Reservations</h3>
-                        <div className="reservations-list">
-                            {user.reservations.map((reservation) => (
-                                <div key={reservation.id} className="reservation-card">
-                                    <div className="reservation-info">
-                                        <p><strong>Vehicle:</strong> {reservation.vehicle?.brand} {reservation.vehicle?.model}</p>
-                                        <p><strong>Start Date:</strong> {new Date(reservation.start_date).toLocaleDateString()}</p>
-                                        <p><strong>End Date:</strong> {new Date(reservation.end_date).toLocaleDateString()}</p>
-                                        <p><strong>Status:</strong> <span className={`status-badge ${reservation.status}`}>{reservation.status}</span></p>
+                        <h3>Réservations</h3>
+                        <div className="reservations-grid">
+                            {user.reservations.map((reservation) => {
+                                console.log('Reservation data:', reservation);
+                                return (
+                                    <div key={reservation.id} className="reservation-card">
+                                        <div className="reservation-image">
+                                            <img 
+                                                src={reservation.voiture?.srcimg || 'https://via.placeholder.com/300x200?text=No+Image'} 
+                                                alt={`${reservation.voiture?.marque || 'Car'} ${reservation.voiture?.modele || ''}`}
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="reservation-info">
+                                            <h4>Réservation #{reservation.id}</h4>
+                                            <div className="reservation-details">
+                                                <p>
+                                                    <strong>Voiture:</strong> {
+                                                        reservation.voiture ? 
+                                                        `${reservation.voiture.marque} ${reservation.voiture.modele}` :
+                                                        'Voiture non disponible'
+                                                    }
+                                                </p>
+                                                <p>
+                                                    <strong>Date de début:</strong> {new Date(reservation.date_debut).toLocaleDateString()}
+                                                </p>
+                                                <p>
+                                                    <strong>Date de fin:</strong> {new Date(reservation.date_fin).toLocaleDateString()}
+                                                </p>
+                                                <p>
+                                                    <strong>Prix total:</strong> {reservation.prix_total} €
+                                                </p>
+                                                <p>
+                                                    <strong>Statut:</strong>
+                                                    <span className={`status-badge ${reservation.statut}`}>
+                                                        {reservation.statut === 'en_attente' ? 'En attente' :
+                                                         reservation.statut === 'acceptée' ? 'Acceptée' :
+                                                         reservation.statut === 'refusée' ? 'Refusée' :
+                                                         reservation.statut === 'annulé' ? 'Annulée' :
+                                                         reservation.statut}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {user.role === 'client' && (!user.reservations || user.reservations.length === 0) && (
+                    <div className="no-reservations-message">
+                        <p>Cet utilisateur n'a pas encore de réservations.</p>
+                    </div>
+                )}
+
+                {user.vehicles && user.vehicles.length > 0 && (
+                    <div className="vehicles-section">
+                        <h3>Voitures du Loueur</h3>
+                        <div className="vehicles-grid">
+                            {user.vehicles.map((vehicle) => (
+                                <div key={vehicle.id} className="vehicle-card">
+                                    <div className="vehicle-image">
+                                        <img 
+                                            src={vehicle.srcimg || 'https://via.placeholder.com/300x200?text=No+Image'} 
+                                            alt={`${vehicle.marque} ${vehicle.modele}`}
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="vehicle-info">
+                                        <h4>{vehicle.marque} {vehicle.modele}</h4>
+                                        <div className="vehicle-details">
+                                            <p><strong>Catégorie:</strong> {vehicle.categorie}</p>
+                                            <p><strong>Ville:</strong> {vehicle.ville}</p>
+                                            <p><strong>Prix par jour:</strong> {vehicle.prix_par_jour} €</p>
+                                            <p><strong>Statut:</strong> 
+                                                <span className={`status-badge ${vehicle.status}`}>
+                                                    {vehicle.status === 'disponible' ? 'Disponible' : 
+                                                     vehicle.status === 'non_disponible' ? 'Non Disponible' : 
+                                                     vehicle.status}
+                                                </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -222,21 +304,9 @@ export const UserDetails = () => {
                     </div>
                 )}
 
-                {user.vehicles && user.vehicles.length > 0 && (
-                    <div className="vehicles-section">
-                        <h3>Vehicles</h3>
-                        <div className="vehicles-list">
-                            {user.vehicles.map((vehicle) => (
-                                <div key={vehicle.id} className="vehicle-card">
-                                    <div className="vehicle-info">
-                                        <p><strong>Brand:</strong> {vehicle.brand}</p>
-                                        <p><strong>Model:</strong> {vehicle.model}</p>
-                                        <p><strong>Year:</strong> {vehicle.year}</p>
-                                        <p><strong>Status:</strong> <span className={`status-badge ${vehicle.status}`}>{vehicle.status}</span></p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                {user.role === 'loueur' && (!user.vehicles || user.vehicles.length === 0) && (
+                    <div className="no-vehicles-message">
+                        <p>Ce loueur n'a pas encore de voitures enregistrées.</p>
                     </div>
                 )}
             </div>

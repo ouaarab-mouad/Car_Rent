@@ -84,12 +84,19 @@ export const AuthProvider = ({ children }) => {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 setUser(response.data.user);
                 setError(null);
-                return true;
+                return { 
+                    success: true, 
+                    user: response.data.user,
+                    token: response.data.token
+                };
             }
             throw new Error('Invalid registration response');
         } catch (error) {
-            setError(error.response?.data?.message || 'Registration failed');
-            return false;
+            console.error('Registration error:', error);
+            return { 
+                success: false, 
+                error: error.response?.data?.message || 'Registration failed' 
+            };
         }
     };
 

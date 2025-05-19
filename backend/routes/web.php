@@ -16,8 +16,8 @@ Route::prefix('api')->group(function () {
 
     // Voiture routes
     Route::get('/voitures', [VoitureController::class, 'index']);
-    Route::get('/voiture/{id}', [VoitureController::class, 'show']);
-    Route::delete('/voiture/{id}', [VoitureController::class, 'destroy']);
+    Route::get('/voitures/{id}', [VoitureController::class, 'show']);
+    Route::delete('/voitures/{id}', [VoitureController::class, 'destroy']);
 
     // Reservation routes
 

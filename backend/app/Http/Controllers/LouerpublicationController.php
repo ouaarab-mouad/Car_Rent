@@ -355,9 +355,13 @@ class LouerpublicationController extends Controller
                 $car->srcimg = url($car->srcimg);
             }
 
-            return response()->json($car);
+            return response()->json([
+                'success' => true,
+                'data' => $car
+            ]);
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Car not found',
                 'error' => $e->getMessage()
             ], 404);

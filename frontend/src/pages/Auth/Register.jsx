@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
@@ -20,8 +20,61 @@ export const Register = () => {
         EnterpriseName: '',
         licence: null
     });
-    const { register, error } = useAuth();
+    const { register, error, user, loading } = useAuth();
     const navigate = useNavigate();
+    const [errors, setErrors] = useState({
+        nom: '',
+        prenom: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        phone: '',
+        ville: '',
+        role: '',
+        EnterpriseName: '',
+        licence: '',
+        general: ''
+    });
+
+    // Redirect if user is already authenticated
+    useEffect(() => {
+        if (user) {
+            // Redirect based on role
+            switch(user.role) {
+                case 'loueur':
+                    navigate('/loueur/dashboard');
+                    break;
+                case 'client':
+                    navigate('/client/dashboard');
+                    break;
+                case 'administrateur':
+                case 'admin':
+                    navigate('/admin/dashboard');
+                    break;
+                default:
+                    navigate('/');
+            }
+        }
+    }, [user, navigate]);
+
+    // Show loading state while checking authentication
+    if (loading) {
+        return (
+            <div className="auth-container">
+                <div className="auth-box">
+                    <div className="loading-container">
+                        <div className="loader"></div>
+                        <p>Chargement...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Don't render the form if user is authenticated
+    if (user) {
+        return null;
+    }
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -29,10 +82,26 @@ export const Register = () => {
             ...prev,
             [name]: files ? files[0] : value
         }));
+        // Clear error for this field when user starts typing
+        setErrors(prev => ({ ...prev, [name]: '' }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({
+            nom: '',
+            prenom: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+            phone: '',
+            ville: '',
+            role: '',
+            EnterpriseName: '',
+            licence: '',
+            general: ''
+        });
+
         const formDataToSend = new FormData();
         
         // Append basic user information
@@ -53,148 +122,196 @@ export const Register = () => {
             }
         }
 
-        const success = await register(formDataToSend);
-        if (success) {
+        const result = await register(formDataToSend);
+        console.log('Registration result:', result);
+
+        if (result.success) {
             if (formData.role === 'loueur') {
                 alert('Registration successful! Your loueur status is pending admin approval. You will be notified once approved.');
+                navigate('/login');
+            } else {
+                // For regular clients, navigate to their dashboard
+                navigate('/client/dashboard');
             }
-            navigate('/client/dashboard');
+        } else {
+            if (result.error) {
+                if (typeof result.error === 'object') {
+                    setErrors(result.error);
+                } else {
+                    setErrors({
+                        general: result.error
+                    });
+                }
+            }
         }
     };
 
     return (
         <div className="auth-container register-page">
-            <div className="auth-box"  >
-                <h2>Register</h2>
-                {error && <div className="error-message" >{error}</div>}
-                <form onSubmit={handleSubmit} >
+            <div className="auth-box-auth">
+                <h2>Inscription</h2>
+                {errors.general && (
+                    <div className="error-message-auth" role="alert">
+                        {errors.general}
+                    </div>
+                )}
+                <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>First Name</label>
+                        <label htmlFor="prenom">Prénom</label>
                         <input
+                            id="prenom"
                             type="text"
                             name="prenom"
                             value={formData.prenom}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your first name"
+                            placeholder="Entrez votre prénom"
+                            className={errors.prenom ? 'error' : ''}
                         />
+                        {errors.prenom && <span className="error-text">{errors.prenom}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Last Name</label>
+                        <label htmlFor="nom">Nom</label>
                         <input
+                            id="nom"
                             type="text"
                             name="nom"
                             value={formData.nom}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your last name"
+                            placeholder="Entrez votre nom"
+                            className={errors.nom ? 'error' : ''}
                         />
+                        {errors.nom && <span className="error-text">{errors.nom}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Email</label>
+                        <label htmlFor="email">Email</label>
                         <input
+                            id="email"
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your email address"
+                            placeholder="Entrez votre adresse email"
+                            className={errors.email ? 'error' : ''}
                         />
+                        {errors.email && <span className="error-text">{errors.email}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Phone</label>
+                        <label htmlFor="phone">Téléphone</label>
                         <input
+                            id="phone"
                             type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your phone number (e.g., 0612345678)"
+                            placeholder="Entrez votre numéro de téléphone (ex: 0612345678)"
+                            className={errors.phone ? 'error' : ''}
                         />
+                        {errors.phone && <span className="error-text">{errors.phone}</span>}
                     </div>
                     <div className="form-group">
-                        <label>City</label>
+                        <label htmlFor="ville">Ville</label>
                         <select
+                            id="ville"
                             name="ville"
                             value={formData.ville}
                             onChange={handleChange}
                             required
-                            className="form-select"
+                            className={`form-select ${errors.ville ? 'error' : ''}`}
                         >
-                            <option value="">Select your city</option>
+                            <option value="">Sélectionnez votre ville</option>
                             {villesMaroc.map((ville) => (
                                 <option key={ville} value={ville}>
                                     {ville}
                                 </option>
                             ))}
                         </select>
+                        {errors.ville && <span className="error-text">{errors.ville}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Password</label>
+                        <label htmlFor="password">Mot de passe</label>
                         <input
+                            id="password"
                             type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your password (min. 8 characters)"
+                            placeholder="Entrez votre mot de passe (min. 8 caractères)"
+                            className={errors.password ? 'error' : ''}
                         />
+                        {errors.password && <span className="error-text">{errors.password}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Confirm Password</label>
+                        <label htmlFor="password_confirmation">Confirmer le mot de passe</label>
                         <input
+                            id="password_confirmation"
                             type="password"
                             name="password_confirmation"
                             value={formData.password_confirmation}
                             onChange={handleChange}
                             required
-                            placeholder="Confirm your password"
+                            placeholder="Confirmez votre mot de passe"
+                            className={errors.password_confirmation ? 'error' : ''}
                         />
+                        {errors.password_confirmation && <span className="error-text">{errors.password_confirmation}</span>}
                     </div>
                     <div className="form-group">
-                        <label>Role</label>
+                        <label htmlFor="role">Type de compte</label>
                         <select
+                            id="role"
                             name="role"
                             value={formData.role}
                             onChange={handleChange}
                             required
+                            className={errors.role ? 'error' : ''}
                         >
                             <option value="client">Client</option>
                             <option value="loueur">Loueur</option>
                         </select>
+                        {errors.role && <span className="error-text">{errors.role}</span>}
                     </div>
                     {formData.role === 'loueur' && (
                         <div className="role-specific-fields">
                             <div className="form-group">
-                                <label>Enterprise Name</label>
+                                <label htmlFor="EnterpriseName">Nom de l'entreprise</label>
                                 <input
+                                    id="EnterpriseName"
                                     type="text"
                                     name="EnterpriseName"
                                     value={formData.EnterpriseName}
                                     onChange={handleChange}
                                     required
-                                    placeholder="Enter your enterprise name"
+                                    placeholder="Entrez le nom de votre entreprise"
+                                    className={errors.EnterpriseName ? 'error' : ''}
                                 />
+                                {errors.EnterpriseName && <span className="error-text">{errors.EnterpriseName}</span>}
                             </div>
                             <div className="form-group">
-                                <label>Licence Document</label>
+                                <label htmlFor="licence">Document de licence</label>
                                 <input
+                                    id="licence"
                                     type="file"
                                     name="licence"
                                     onChange={handleChange}
                                     accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                     required
+                                    className={errors.licence ? 'error' : ''}
                                 />
+                                {errors.licence && <span className="error-text">{errors.licence}</span>}
                                 <small className="form-text">
-                                    Please upload your business licence or authorization document (PDF, DOC, or image)
+                                    Veuillez télécharger votre licence commerciale ou document d'autorisation (PDF, DOC, ou image)
                                 </small>
                             </div>
                         </div>
                     )}
-                    <button type="submit" className="auth-button">Register</button>
+                    <button type="submit" className="auth-button">S'inscrire</button>
                 </form>
                 <p className="auth-link">
-                    Already have an account? <a href="/login">Login</a>
+                    Vous avez déjà un compte ? <a href="/login">Se connecter</a>
                 </p>
             </div>
         </div>

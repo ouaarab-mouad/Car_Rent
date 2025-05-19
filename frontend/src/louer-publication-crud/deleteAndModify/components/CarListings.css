@@ -3,6 +3,7 @@
   grid-template-columns: repeat(3, 1fr); /* Exactly 3 cards per row */
   gap: 30px;
   width: 100%;
+
  
 }
 

@@ -157,7 +157,11 @@ export const ListeVoitures = () => {
     };
 
     const handleDetailsClick = (voitureId) => {
-        console.log('Navigating to car details for ID:', voitureId);
+        console.log('=== Details Click Debug ===');
+        console.log('Car ID:', voitureId);
+        console.log('Current URL:', window.location.href);
+        console.log('Navigating to:', `/admin/dashboard/voitures/${voitureId}`);
+        
         if (!voitureId) {
             console.error('No car ID provided');
             setMessage({
@@ -166,7 +170,17 @@ export const ListeVoitures = () => {
             });
             return;
         }
-        navigate(`/admin/dashboard/voitures/${voitureId}`);
+        
+        try {
+            navigate(`/admin/dashboard/voitures/${voitureId}`);
+            console.log('Navigation completed');
+        } catch (error) {
+            console.error('Navigation error:', error);
+            setMessage({
+                type: 'error',
+                text: 'Failed to navigate to car details'
+            });
+        }
     };
 
     // Message component

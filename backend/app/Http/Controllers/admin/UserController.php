@@ -129,7 +129,9 @@ class UserController extends Controller
     {
         try {
             \Log::info('Fetching user details with related data', ['user_id' => $id]);
-            $user = User::with(['reservations', 'vehicles'])->find($id);
+            $user = User::with(['reservations' => function($query) {
+                $query->with('voiture');
+            }, 'vehicles'])->find($id);
 
             if (!$user) {
                 return response()->json([

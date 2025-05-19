@@ -1,7 +1,7 @@
 // CarManagement.js
 import React, { useEffect, useState } from 'react';
 import CarListings from './components/CarListings';
-import './styles/CarManagement.css';
+import './App.css';
 import axios from 'axios';
 
 function CarManagement() {
@@ -64,7 +64,7 @@ function CarManagement() {
     <div className="car-management">
       <div className="container">
         <div className="car-management-header">
-          <h1 id="page-title" className="page-title">my listing</h1>
+          <h1 className="page-title">My Listings</h1>
           <button 
             className="add-car-button"
             onClick={handleAddCar}

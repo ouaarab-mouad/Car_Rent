@@ -35,12 +35,17 @@ class VoitureController extends Controller
     public function show($id)
     {
         try {
+            \Log::info('Fetching voiture details', ['id' => $id]);
+
             $voiture = Voiture::with(['utilisateur', 'reservations' => function($query) {
                 $query->where('statut', '!=', 'cancelled')
                       ->orderBy('date_debut', 'desc');
             }])->find($id);
 
+            \Log::info('Query result:', ['voiture' => $voiture ? $voiture->toArray() : null]);
+
             if (!$voiture) {
+                \Log::warning('Voiture not found', ['id' => $id]);
                 return response()->json([
                     'success' => false,
                     'message' => 'Car not found'
@@ -85,6 +90,8 @@ class VoitureController extends Controller
                     ];
                 })
             ];
+
+            \Log::info('Returning formatted data', ['data' => $formattedData]);
 
             return response()->json([
                 'success' => true,

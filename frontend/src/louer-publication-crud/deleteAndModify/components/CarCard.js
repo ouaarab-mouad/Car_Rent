@@ -60,33 +60,28 @@ function CarCard({ car, onDelete }) {
 
   return (
     <div className="car-card">
-      <div className="car-image" style={{padding:0}} >
+      <div className="car-image">
         {srcimg ? (
-          <img src={srcimg} alt={modele} className="car-img" style={{width: '450px'}} />
+          <img src={srcimg} alt={`${marque} ${modele}`} className="car-img" />
         ) : (
           <div className="car-silhouette" />
         )}
       </div>
-      <div className="car-actions">
-        {showConfirm && (
-          <div className="confirm-dialog">
-            <p>Are you sure you want to delete this car?</p>
-            <button className="confirm-yes" onClick={handleDelete}>Yes</button>
-            <button className="confirm-no" onClick={() => setShowConfirm(false)}>No</button>
-          </div>
-        )}
-      </div>
+      
       <div className="car-info">
         <div className="car-header">
           <div className="car-details">
             <h3>{marque} {modele}</h3>
-            <p className="car-type">{categorie} - {ville}</p>
+            <p className="car-type">
+              <span>🚗</span> {categorie} • <span>📍</span> {ville}
+            </p>
           </div>
           <div className="car-price">
             <span className="price">{prix_par_jour} DH</span>
             <span className="period">par jour</span>
           </div>
         </div>
+
         <div className="car-features">
           {mainFeatures.map((feature, index) =>
             conditions && conditions[feature.key] ? (
@@ -97,11 +92,26 @@ function CarCard({ car, onDelete }) {
             ) : null
           )}
         </div>
+
         <div className="car-actions">
-          <button className="delete-button" onClick={() => setShowConfirm(true)}>Delete</button>
-          <Link to={`/loueur/modify/${id}`} className="modify-button">View and Modify</Link>
+          <button className="delete-button" onClick={() => setShowConfirm(true)}>
+            <span>🗑️</span> Delete
+          </button>
+          <Link to={`/loueur/modify/${id}`} className="modify-button">
+            <span>✏️</span> View and Modify
+          </Link>
         </div>
       </div>
+
+      {showConfirm && (
+        <div className="confirm-dialog">
+          <p>Are you sure you want to delete this car?</p>
+          <div>
+            <button className="confirm-yes" onClick={handleDelete}>Yes, Delete</button>
+            <button className="confirm-no" onClick={() => setShowConfirm(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

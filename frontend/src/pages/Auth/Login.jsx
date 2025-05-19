@@ -65,9 +65,9 @@ export const Login = () => {
 
     return (
         <div className="auth-container">
-            <div className="auth-box">
+            <div className="auth-box-auth" style={{maxWidth: '500px'}}>
                 <h2>Connexion</h2>
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {errorMessage && <div className="error-message-auth">{errorMessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Email</label>

@@ -12,35 +12,48 @@ export const DetailsVoiture = () => {
     const [message, setMessage] = useState({ type: '', text: '' });
 
     useEffect(() => {
-        console.log('DetailsVoiture mounted with ID:', id);
+        console.log('=== DetailsVoiture Component Mounted ===');
+        console.log('Car ID from params:', id);
+        console.log('Current URL:', window.location.href);
+
         const fetchVoitureDetails = async () => {
             try {
                 console.log('Fetching car details for ID:', id);
-                const response = await axios.get(`/api/cars/${id}`);
-                console.log('Car details response:', response.data);
+                const response = await axios.get(`http://127.0.0.1:8000/api/voitures/${id}`);
+                console.log('API Response:', response);
+                console.log('Response data:', response.data);
                 
                 if (response.data.success) {
+                    console.log('Setting voiture data:', response.data.data);
                     setVoiture(response.data.data);
                 } else {
+                    console.error('API returned success: false', response.data);
                     throw new Error(response.data.message || 'Failed to load car details');
                 }
             } catch (error) {
-                console.error('Error fetching car details:', error);
+                console.error('=== Error Details ===');
+                console.error('Error object:', error);
                 console.error('Error response:', error.response);
+                console.error('Error message:', error.message);
+                console.error('Error stack:', error.stack);
+                
                 setMessage({
                     type: 'error',
                     text: error.response?.data?.message || error.message || 'Failed to load car details'
                 });
                 
                 if (error.response?.status === 403) {
+                    console.log('Redirecting to login due to 403 error');
                     navigate('/login');
                 }
             } finally {
+                console.log('Setting loading to false');
                 setLoading(false);
             }
         };
 
         if (id) {
+            console.log('ID exists, fetching car details');
             fetchVoitureDetails();
         } else {
             console.error('No car ID provided');
@@ -51,6 +64,28 @@ export const DetailsVoiture = () => {
             setLoading(false);
         }
     }, [id, navigate]);
+
+    const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete this car?')) {
+            try {
+                const response = await axios.delete(`http://127.0.0.1:8000/api/voitures/${id}`);
+                if (response.data.success) {
+                    setMessage({
+                        type: 'success',
+                        text: 'Car deleted successfully'
+                    });
+                    setTimeout(() => {
+                        navigate('/admin/voitures');
+                    }, 2000);
+                }
+            } catch (error) {
+                setMessage({
+                    type: 'error',
+                    text: error.response?.data?.message || 'Failed to delete car'
+                });
+            }
+        }
+    };
 
     if (loading) {
         return (
@@ -102,7 +137,7 @@ export const DetailsVoiture = () => {
             )}
 
             <div className="details-header">
-                <button onClick={() => navigate('/admin/voitures')} className="back-btn">
+                <button onClick={() => navigate('/admin/dashboard/voitures')} className="back-btn">
                     <i className="fas fa-arrow-left"></i> Back to Cars
                 </button>
                 <h1>Car Details</h1>
@@ -196,14 +231,9 @@ export const DetailsVoiture = () => {
                 </div>
 
                 <div className="details-actions">
-                    
                     <button 
                         className="action-btn delete-btn"
-                        onClick={() => {
-                            if (window.confirm('Are you sure you want to delete this car?')) {
-                                // Handle delete
-                            }
-                        }}
+                        onClick={handleDelete}
                     >
                         <i className="fas fa-trash"></i> Delete Car
                     </button>
