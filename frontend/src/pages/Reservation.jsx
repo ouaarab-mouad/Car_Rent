@@ -17,6 +17,7 @@ export default function Reservation() {
   const [success, setSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [daysCount, setDaysCount] = useState(0);
+  const [existingReservation, setExistingReservation] = useState(null);
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -50,6 +51,8 @@ export default function Reservation() {
     setSubmitting(true);
     setError('');
     setSuccess('');
+    setExistingReservation(null);
+
     try {
       await axios.post('/api/reservations', {
         voiture_id: carId,
@@ -57,9 +60,16 @@ export default function Reservation() {
         date_fin: dateFin
       });
       setSuccess('Réservation créée avec succès!');
-      setTimeout(() => navigate('/profile'), 2000);
+      setTimeout(() => navigate('/client/dashboard'), 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de la réservation');
+      if (err.response?.status === 422) {
+        setError(err.response.data.message);
+        if (err.response.data.existing_reservation) {
+          setExistingReservation(err.response.data.existing_reservation);
+        }
+      } else {
+        setError(err.response?.data?.message || 'Erreur lors de la réservation');
+      }
     }
     setSubmitting(false);
   };
@@ -203,6 +213,19 @@ export default function Reservation() {
                     <div className="summary-row total">
                       <span>Montant total:</span>
                       <span>{total} DH</span>
+                    </div>
+                  </div>
+                )}
+
+                {existingReservation && (
+                  <div className="existing-reservation-warning">
+                    <AlertCircle className="warning-icon" />
+                    <div className="warning-content">
+                      <p>Période déjà réservée :</p>
+                      <p className="reservation-dates">
+                        Du {new Date(existingReservation.date_debut).toLocaleDateString('fr-FR')} 
+                        au {new Date(existingReservation.date_fin).toLocaleDateString('fr-FR')}
+                      </p>
                     </div>
                   </div>
                 )}

@@ -33,6 +33,7 @@ class AuthController extends Controller
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:8|confirmed',
                 'role' => 'required|in:client,loueur',
+                'ville' => 'required|string|max:255',
                 'EnterpriseName' => 'required_if:role,loueur|string|max:255',
                 'licence' => 'required_if:role,loueur|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048'
             ]);
@@ -50,6 +51,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'phone' => $phone,
+                'ville' => $request->ville,
                 'role' => $request->role === 'client' ? 'client' : 'client', // Default to client until approved
                 'requested_role' => $request->role,
                 'role_status' => $request->role === 'client' ? 'approved' : 'pending'

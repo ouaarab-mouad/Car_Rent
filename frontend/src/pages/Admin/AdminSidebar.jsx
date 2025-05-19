@@ -23,7 +23,7 @@ const AdminSidebar = () => {
       icon: <FaCar />,
       label: 'Gestion des voitures'
     },
-    {
+    /*{
       path: '/admin/statistics',
       icon: <FaChartLine />,
       label: 'Statistiques'
@@ -32,7 +32,7 @@ const AdminSidebar = () => {
       path: '/admin/settings',
       icon: <FaCog />,
       label: 'Paramètres'
-    }
+    }*/
   ];
 
   return (

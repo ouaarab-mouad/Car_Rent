@@ -76,6 +76,7 @@ export const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            placeholder="Entrez votre adresse email"
                         />
                     </div>
                     <div className="form-group">
@@ -85,6 +86,7 @@ export const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            placeholder="Entrez votre mot de passe"
                         />
                     </div>
                     <button type="submit" className="auth-button" disabled={loading}>

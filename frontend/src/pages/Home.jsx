@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
 
@@ -152,7 +153,7 @@ export const Home = () => {
                     <span>{car.seats} Places</span>
                     <span>{car.fuel_type}</span>
                   </div>
-                  <button className="btn-view-details">Voir les détails</button>
+                  <Link to={`/cars/${car.id}`} className="btn-view-details">Voir les détails</Link>
                 </div>
               </div>
             ))

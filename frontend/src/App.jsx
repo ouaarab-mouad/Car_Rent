@@ -30,6 +30,7 @@ import ClientRoutes from './pages/ClientRoutes';
 import axios from 'axios';
 import Reservations from './pages/Loueur/Reservations';
 import LoueurStatistics from './pages/Loueur/Statistics';
+import { ContactUs } from './pages/ContactUs';
 
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
@@ -127,12 +128,14 @@ const App = () => {
                         <main className="main-content">
                             <Routes>
                                 {/* Public routes */}
+                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                                 <Route path="/" element={<Home />} />
                                 <Route path="/listing" element={<Listing />} />
                                 <Route path='/About' element={<AboutUs/>} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/contact" element={<ContactUs />} />
                                 <Route path="/register" element={<Register />} />
+                                <Route path="/contact" element={<ContactUs/>} />
                                 <Route path="/profile" element={
                                   <PrivateRoute>
                                     <ProfileSwitcher />
@@ -197,7 +200,6 @@ const App = () => {
 
                                 <Route path="/cars/:id" element={<DetailCar />} />
                                 <Route path="/reservation/:carId" element={<Reservation />} />
-                                <Route path="/loueur/public/:id" element={<LoueurPublicProfile />} />
                             </Routes>
                         </main>
                         <Footer />

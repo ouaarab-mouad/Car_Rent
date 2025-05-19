@@ -3,6 +3,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
+const villesMaroc = [
+    'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir', 'Meknès', 'Oujda', 'Kenitra', 'Tétouan', 'Safi', 'El Jadida', 'Béni Mellal', 'Nador', 'Taza', 'Khouribga', 'Settat', 'Larache', 'Ksar El Kebir', 'Guelmim', 'Berrechid', 'Ouarzazate', 'Al Hoceima', 'Errachidia', 'Khemisset', 'Khénifra', 'Mohammedia', 'Salé', 'Essaouira', 'Azrou', 'Ifrane', 'Taroudant', 'Taourirt', 'Sidi Slimane', 'Sidi Kacem', 'Sidi Bennour', 'Sefrou', 'Youssoufia', 'Midelt', 'Oued Zem', 'El Hajeb', 'Boujdour', 'Boulemane', 'Jerada', 'Tan-Tan', 'Dakhla', 'Laâyoune', 'Smara', 'Zagora', 'Tiznit', 'Chefchaouen'
+];
+
 export const Register = () => {
     const [formData, setFormData] = useState({
         nom: '',
@@ -11,6 +15,7 @@ export const Register = () => {
         password: '',
         password_confirmation: '',
         phone: '',
+        ville: '',
         role: 'client',
         EnterpriseName: '',
         licence: null
@@ -37,6 +42,7 @@ export const Register = () => {
         formDataToSend.append('password', formData.password);
         formDataToSend.append('password_confirmation', formData.password_confirmation);
         formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('ville', formData.ville);
         formDataToSend.append('role', formData.role);
 
         // Only append EnterpriseName and licence if role is loueur
@@ -70,6 +76,7 @@ export const Register = () => {
                             value={formData.prenom}
                             onChange={handleChange}
                             required
+                            placeholder="Enter your first name"
                         />
                     </div>
                     <div className="form-group">
@@ -80,6 +87,7 @@ export const Register = () => {
                             value={formData.nom}
                             onChange={handleChange}
                             required
+                            placeholder="Enter your last name"
                         />
                     </div>
                     <div className="form-group">
@@ -90,6 +98,7 @@ export const Register = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            placeholder="Enter your email address"
                         />
                     </div>
                     <div className="form-group">
@@ -100,7 +109,25 @@ export const Register = () => {
                             value={formData.phone}
                             onChange={handleChange}
                             required
+                            placeholder="Enter your phone number (e.g., 0612345678)"
                         />
+                    </div>
+                    <div className="form-group">
+                        <label>City</label>
+                        <select
+                            name="ville"
+                            value={formData.ville}
+                            onChange={handleChange}
+                            required
+                            className="form-select"
+                        >
+                            <option value="">Select your city</option>
+                            {villesMaroc.map((ville) => (
+                                <option key={ville} value={ville}>
+                                    {ville}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="form-group">
                         <label>Password</label>
@@ -110,6 +137,7 @@ export const Register = () => {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            placeholder="Enter your password (min. 8 characters)"
                         />
                     </div>
                     <div className="form-group">
@@ -120,6 +148,7 @@ export const Register = () => {
                             value={formData.password_confirmation}
                             onChange={handleChange}
                             required
+                            placeholder="Confirm your password"
                         />
                     </div>
                     <div className="form-group">
@@ -157,7 +186,7 @@ export const Register = () => {
                                     required
                                 />
                                 <small className="form-text">
-                                    Please upload your business licence or authorization document
+                                    Please upload your business licence or authorization document (PDF, DOC, or image)
                                 </small>
                             </div>
                         </div>
