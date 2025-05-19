@@ -78,18 +78,21 @@ export const Listing = () => {
     const matchesBrand = selectedBrand === "All" || vehicle.brand === selectedBrand;
     const matchesLocation = selectedLocation === "All" || vehicle.ville === selectedLocation;
     const matchesPrice = vehicle.price <= priceRange;
-    const matchesColor = selectedColor === "" || vehicle.color === selectedColor;
     const matchesCategories = selectedCategories.length === 0 || 
-      selectedCategories.some(category => vehicle.category.includes(category));
-    const matchesCondition = selectedCondition === "All" || vehicle.condition === selectedCondition;
+      selectedCategories.includes(vehicle.type);
+    const matchesCondition = selectedCondition === "All" || vehicle.status === selectedCondition.toLowerCase();
 
     return matchesSearch && matchesBrand && matchesLocation && matchesPrice && 
-           matchesColor && matchesCategories && matchesCondition;
+           matchesCategories && matchesCondition;
   });
 
   const brands = ["All", ...new Set(vehicles.map(vehicle => vehicle.brand))];
   const locations = ["All", ...new Set(vehicles.map(vehicle => vehicle.ville))];
-  const categories = ["Sedan", "SUV", "Sports", "Luxury", "Electric", "Hybrid"];
+  const categories = [
+    'Citadine', 'Compacte', 'Berline', 'SUV', 'Coupé', 'Cabriolet', 'Break', 
+    'Monospace', '4x4', 'Pick-up', 'Utilitaire', 'Sport', 'Luxe', 'Électrique', 
+    'Hybride', 'Diesel', 'Essence'
+  ];
   const colors = [
     { name: "Red", code: "#FF0000" },
     { name: "Blue", code: "#0000FF" },
@@ -254,7 +257,7 @@ export const Listing = () => {
           <div className="listing-page-filter-group">
             <label>Condition</label>
             <div className="listing-page-condition-options">
-              {['All', 'Excellent', 'Good', 'Fair'].map(condition => (
+              {['All', 'Disponible', 'Non disponible', 'En location', 'En maintenance', 'Reserve'].map(condition => (
                 <div 
                   key={condition}
                   className={`listing-page-condition-option ${selectedCondition === condition ? 'selected' : ''}`}
