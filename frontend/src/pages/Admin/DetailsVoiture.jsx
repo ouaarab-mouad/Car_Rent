@@ -144,6 +144,24 @@ export const DetailsVoiture = () => {
             </div>
 
             <div className="details-content">
+                <div className="details-section image-section">
+                    <h2>Car Image</h2>
+                    <div className="car-image-container">
+                        {voiture.srcimg ? (
+                            <img 
+                                src={voiture.srcimg} 
+                                alt={`${voiture.marque} ${voiture.modele}`}
+                                className="car-image"
+                            />
+                        ) : (
+                            <div className="no-image">
+                                <i className="fas fa-car"></i>
+                                <p>No image available</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 <div className="details-section">
                     <h2>Basic Information</h2>
                     <div className="details-grid">

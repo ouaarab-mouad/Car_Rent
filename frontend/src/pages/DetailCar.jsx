@@ -30,8 +30,14 @@ const DetailCar = () => {
     const fetchCar = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:8000/api/cars/${id}`);
-        setCar(res.data);
+        const res = await axios.get(`http://localhost:8000/api/voitures/${id}`);
+        console.log('Car details response:', res.data);
+        if (res.data.success) {
+          setCar(res.data.data);
+        } else {
+          console.error('Error in response:', res.data.message);
+          setCar(null);
+        }
       } catch (err) {
         console.error('Error fetching car details:', err);
         setCar(null);

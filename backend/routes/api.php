@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\VoitureController;
 use App\Http\Controllers\LouerpublicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +12,7 @@ use App\Http\Controllers\ReservationController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/cars', [App\Http\Controllers\CarController::class, 'index']); // Public cars listing
-Route::get('/cars/{id}', [LouerpublicationController::class, 'show']); // Public car details
+Route::get('/voitures/{id}', [VoitureController::class, 'show']); // Public car details
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -19,21 +20,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
 
-    // Loueur routes - Specific routes first
-    Route::get('/user/cars', [LouerpublicationController::class, 'userCars']);
-
-    // User management routes - Dynamic routes after specific ones
+    // User management routes
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'getUserDetails']);
     Route::delete('/user/{id}', [UserController::class, 'deleteUser']);
     Route::put('/user/{id}/role', [UserController::class, 'changeUserRole']);
 
     // Car management routes
-    Route::get('/voitures', [LouerpublicationController::class, 'index']);
+    Route::get('/voitures', [VoitureController::class, 'index']);
+    Route::delete('/voitures/{id}', [VoitureController::class, 'destroy']);
     Route::post('/voitures', [LouerpublicationController::class, 'store']);
     Route::put('/voitures/{id}', [LouerpublicationController::class, 'update']);
-    Route::get('/voitures/{id}', action: [LouerpublicationController::class, 'show']);
-    Route::delete('/voitures/{id}', [LouerpublicationController::class, 'destroy']);
+
+    // Loueur specific routes
+    Route::get('/user/cars', [LouerpublicationController::class, 'userCars']);
 
     // Profile routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me']);
@@ -54,7 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum'])->prefix('client')->group(function () {
     Route::post('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
 });
-// Admin Car Routes
+
+// Admin routes
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/cars/{id}', [App\Http\Controllers\admin\CarController::class, 'getCarDetails']);
     Route::delete('/cars/{id}', [App\Http\Controllers\admin\CarController::class, 'deleteCar']);
