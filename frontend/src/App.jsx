@@ -30,7 +30,6 @@ import ClientRoutes from './pages/ClientRoutes';
 import axios from 'axios';
 import Reservations from './pages/Loueur/Reservations';
 import LoueurStatistics from './pages/Loueur/Statistics';
-import { ContactUs } from './pages/ContactUs';
 
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
