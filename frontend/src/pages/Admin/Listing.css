@@ -1,0 +1,55 @@
+/* Modern and Professional Car List Styling */
+.car-table-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  width: 100%;
+  position: relative;
+}
+
+/* Filter Section */
+.filter-section {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 1200px;
+  padding: 25px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(99, 66, 255, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* Table Container */
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-top: 120px; /* Add space for the fixed filter */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .car-table-container {
+    padding: 15px;
+  }
+  
+  .filter-section {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .table-wrapper {
+    margin-top: 0;
+  }
+  
+  /* ... rest of the existing responsive code ... */
+} 

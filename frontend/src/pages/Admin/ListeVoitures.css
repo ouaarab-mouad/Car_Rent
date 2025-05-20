@@ -1,0 +1,375 @@
+/* Modern and Professional Car List Styling */
+
+.voiture-table-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 90px;
+    background: #f8fafc;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Filter Section Styles */
+.filter-section-voitures {
+    background: white;
+    padding: 1.75rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.filter-section-voitures h3 {
+    margin: 0 0 1.75rem;
+    color: #1a202c;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+}
+
+.filter-section-voitures h3 i {
+    color: #6342ff;
+    font-size: 1.4rem;
+}
+
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.filter-item label {
+    color: #4a5568;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.filter-input, .filter-select {
+    padding: 0.875rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+    color: #2d3748;
+}
+
+.filter-input:focus, .filter-select:focus {
+    outline: none;
+    border-color: #6342ff;
+    box-shadow: 0 0 0 3px rgba(99, 66, 255, 0.1);
+    background: white;
+}
+
+.filter-results {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a5568;
+    font-size: 0.9rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 1rem;
+}
+
+.filter-results i {
+    color: #6342ff;
+}
+
+/* Table Styles */
+.voiture-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.voiture-table th {
+    background: #f8fafc;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.voiture-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4a5568;
+    font-size: 0.9rem;
+}
+
+.voiture-table tr:last-child td {
+    border-bottom: none;
+}
+
+.voiture-table tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Status Badge Styles */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.disponible {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.en_location {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status-badge.en_maintenance {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* Action Buttons Styles */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.action-btn i {
+    font-size: 0.9rem;
+}
+
+.edit-btn {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.edit-btn:hover {
+    background-color: #bbdefb;
+}
+
+.delete-btn {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.delete-btn:hover {
+    background-color: #ffcdd2;
+}
+
+/* Message Alert Styles */
+.message-alert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    animation: fadeIn 0.3s ease;
+    z-index: 1000000;
+}
+
+.message-alert.success {
+    border-left: 4px solid #2e7d32;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.message-alert.error {
+    border-left: 4px solid #c62828;
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.message-icon {
+    font-size: 1.4rem;
+}
+
+.message-content {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.message-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    margin-left: auto;
+}
+
+.message-close:hover {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    backdrop-filter: blur(4px);
+}
+
+/* Delete Modal Styles */
+.delete-modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90%;
+}
+
+.delete-modal h3 {
+    margin: 0 0 1rem;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.delete-modal p {
+    margin: 0 0 1.5rem;
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.modal-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f8fafc;
+    color: #4a5568;
+}
+
+.cancel-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.confirm-btn {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.confirm-btn:hover {
+    background-color: #ffcdd2;
+}
+
+/* Loader Styles */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 1rem;
+    background: #f8f9fa;
+}
+
+.loader-container p {
+    color: #4a5568;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .voiture-table-container {
+        padding: 1rem;
+    }
+
+    .filter-group {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .voiture-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+} 
