@@ -49,13 +49,24 @@ function CarManagement() {
     fetchCars();
   }, []);
 
-  if (loading) return <div className="car-management"><div className="container"><p>Chargement...</p></div></div>;
+  if (loading) {
+    return (
+      <div className="car-management loading">
+        <div className="container">
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p className="loading-text">Loading your cars...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleDelete = (deletedId) => {
     setCars((prev) => prev.filter((c) => c.id !== deletedId));
   };
 
-  if (error) return <div className="car-management"><div className="container"><p>{error}</p></div></div>;
+  if (error) return <div className="car-management"><div className="container"><p className="error-message">{error}</p></div></div>;
 
   return (
     <div className="car-management">
