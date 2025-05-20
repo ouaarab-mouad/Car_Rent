@@ -188,6 +188,16 @@ export const ListeUsers = () => {
 
     // Message component
     const MessageAlert = ({ type, text }) => {
+        React.useEffect(() => {
+            if (text) {
+                const timer = setTimeout(() => {
+                    setMessage({ type: '', text: '' });
+                }, 3000);
+                
+                return () => clearTimeout(timer);
+            }
+        }, [text]);
+        
         if (!text) return null;
         
         return (

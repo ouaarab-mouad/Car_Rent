@@ -127,7 +127,7 @@ export const ListeVoitures = () => {
             const xsrfToken = csrfResponse.headers['x-xsrf-token'];
             
             // Then make the delete request using the correct API endpoint
-            const res = await axios.delete(`api/cars/${id}`, {
+            const res = await axios.delete(`api/voitures/${id}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-XSRF-TOKEN': xsrfToken
@@ -185,6 +185,16 @@ export const ListeVoitures = () => {
 
     // Message component
     const MessageAlert = ({ type, text }) => {
+        React.useEffect(() => {
+            if (text) {
+                const timer = setTimeout(() => {
+                    setMessage({ type: '', text: '' });
+                }, 3000);
+                
+                return () => clearTimeout(timer);
+            }
+        }, [text]);
+        
         if (!text) return null;
         
         return (
