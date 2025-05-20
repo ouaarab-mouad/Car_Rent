@@ -12,7 +12,7 @@ const Dashboard = () => {
 
       <div className="dashboard-grid">
         {/* Add New Car Card */}
-        <Link to="/loueur/add-car" className="dashboard-card">
+        <Link to="/loueur/addcar" className="dashboard-card">
           <div className="card-icon">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>

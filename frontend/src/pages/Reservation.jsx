@@ -23,9 +23,12 @@ export default function Reservation() {
     const fetchCar = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/cars/${carId}`);
-        setCar(res.data);
+        console.log('Fetching car with ID:', carId);
+        const res = await axios.get(`/api/voitures/${carId}`);
+        console.log('Car data received:', res.data);
+        setCar(res.data.data || res.data); // Handle both response formats
       } catch (err) {
+        console.error('Error fetching car:', err);
         setError('Impossible de récupérer les informations du véhicule');
       }
       setLoading(false);
@@ -117,6 +120,8 @@ export default function Reservation() {
     </div>
   );
 
+  console.log('Rendering with car data:', car);
+
   return (
     <div className="container">
       <Link to="/listing" className="back-link">
@@ -136,9 +141,13 @@ export default function Reservation() {
             <div>
               <div className="car-info">
                 <img 
-                  src={car.srcimg || '/images/cars/default-car.jpg'} 
+                  src={car.srcimg ? `http://localhost:8000${car.srcimg}` : '/images/cars/default-car.jpg'} 
                   alt={`${car.marque} ${car.modele}`} 
                   className="car-image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/cars/default-car.jpg';
+                  }}
                 />
                 <div className="car-details">
                   <h2 className="car-title">

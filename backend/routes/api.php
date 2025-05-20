@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/comments', [CommentsController::class, 'store']);
-
+    Route::get('/user/cars', [LouerpublicationController::class, 'userCars']);
     // User management routes
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'getUserDetails']);
@@ -36,7 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/voitures/{id}', [LouerpublicationController::class, 'update']);
 
     // Loueur specific routes
-    Route::get('/user/cars', [LouerpublicationController::class, 'userCars']);
 
     // Profile routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me']);

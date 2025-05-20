@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CarListings from './components/CarListings';
 import './App.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function CarManagement() {
   const [cars, setCars] = useState([]);
@@ -50,10 +51,6 @@ function CarManagement() {
 
   if (loading) return <div className="car-management"><div className="container"><p>Chargement...</p></div></div>;
 
-  const handleAddCar = () => {
-    window.location.href = '/loueur/addcar';
-  };
-
   const handleDelete = (deletedId) => {
     setCars((prev) => prev.filter((c) => c.id !== deletedId));
   };
@@ -65,12 +62,12 @@ function CarManagement() {
       <div className="container">
         <div className="car-management-header">
           <h1 className="page-title">My Listings</h1>
-          <button 
+          <Link 
+            to="/loueur/addcar"
             className="add-car-button"
-            onClick={handleAddCar}
           >
             <span className="plus-icon">+</span> Ajouter une voiture
-          </button>
+          </Link>
         </div>
         {error ? (
           <div className="error-message">{error}</div>

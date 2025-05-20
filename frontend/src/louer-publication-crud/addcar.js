@@ -171,7 +171,7 @@ export default function CarDetailsForm() {
         throw new Error('Not authenticated');
       }
 
-      const response = await axios.post('http://localhost:8000/api/cars', data, {
+      const response = await axios.post('http://localhost:8000/api/voitures', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'application/json',

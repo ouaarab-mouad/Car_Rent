@@ -146,7 +146,7 @@ class LouerpublicationController extends Controller
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
 
-            // Only get cars belonging to the authenticated user
+            // Get all cars for the authenticated user
             $voitures = Voiture::where('utilisateur_id', Auth::id())
                 ->with('utilisateur')
                 ->get();
