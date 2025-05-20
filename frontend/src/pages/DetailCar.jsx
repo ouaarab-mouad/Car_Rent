@@ -143,6 +143,20 @@ const DetailCar = () => {
                 </div>
               </div>
             </div>
+
+            {/* Car Features Section */}
+            <div className="info-group features-info">
+              <h3><FaCar /> Caractéristiques</h3>
+              <div className="features-container">
+                {car.conditions && Object.entries(car.conditions).map(([feature, value]) => (
+                  <div key={feature} className={`feature-badge ${value ? 'active' : 'inactive'}`}>
+                    <i className={`fas fa-${value ? 'check' : 'times'}-circle`}></i>
+                    <span>{feature.replace(/([A-Z])/g, ' $1').trim()}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="info-group rental-info">
               <h3>Information de location</h3>
               <div className="rental-details">

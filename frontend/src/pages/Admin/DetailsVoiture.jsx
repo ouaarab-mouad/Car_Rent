@@ -242,6 +242,22 @@ export const DetailsVoiture = () => {
                 </div>
 
                 <div className="details-section">
+                    <h2>Car Features</h2>
+                    <div className="features-grid">
+                        {voiture.conditions && Object.entries(voiture.conditions).map(([feature, value]) => (
+                            <div key={feature} className="feature-item">
+                                <span className={`feature-icon ${value ? 'active' : 'inactive'}`}>
+                                    <i className={`fas fa-${value ? 'check' : 'times'}-circle`}></i>
+                                </span>
+                                <span className="feature-name">
+                                    {feature.replace(/([A-Z])/g, ' $1').trim()}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="details-section">
                     <h2>Description</h2>
                     <div className="description-content">
                         <p>{voiture.description || 'No description provided'}</p>
