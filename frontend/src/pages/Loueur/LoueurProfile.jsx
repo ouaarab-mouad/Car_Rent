@@ -189,7 +189,10 @@ const LoueurProfile = () => {
                       <div className="car-availability">
                         <span>{car.disponibilite || 'Disponible maintenant'}</span>
                       </div>
-                      
+                      <div className="car-actions">
+                        <button className="edit-button">Modifier</button>
+                        <button className="delete-button">Supprimer</button>
+                      </div>
                     </div>
                   </div>
                 </Link>

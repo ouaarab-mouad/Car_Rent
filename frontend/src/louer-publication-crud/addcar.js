@@ -350,10 +350,10 @@ export default function CarDetailsForm() {
                     placeholder="New feature name"
                   />
                   <button onClick={addNewAttribute} className="add-button">
-                    <X size={16} />
+                    Add
                   </button>
                   <button onClick={() => setShowAttributeInput(false)} className="cancel-button">
-                    <X size={16} />
+                    Cancel
                   </button>
                 </div>
               ) : (
