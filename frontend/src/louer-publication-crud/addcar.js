@@ -82,13 +82,8 @@ export default function CarDetailsForm() {
     classe: '',
   });
 
-  const [conditions, setConditions] = useState({
-    airConditioner: true,
-    automatic: true,
-    airbag: true,
-    abs: true,
-    cruiseControl: true
-  });
+  // Initialize conditions as an empty object
+  const [conditions, setConditions] = useState({});
   
   const [showAttributeInput, setShowAttributeInput] = useState(false);
   const [newAttributeName, setNewAttributeName] = useState('');
@@ -128,9 +123,17 @@ export default function CarDetailsForm() {
   
   const addNewAttribute = () => {
     if (newAttributeName.trim() !== '') {
+      // Format the feature name to be more readable
+      const formattedName = newAttributeName
+        .trim()
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('');
+
       setConditions({
         ...conditions,
-        [newAttributeName.toLowerCase().replace(/\s+/g, '_')]: true
+        [formattedName]: true
       });
       setNewAttributeName('');
       setShowAttributeInput(false);

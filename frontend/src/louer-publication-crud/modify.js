@@ -18,13 +18,7 @@ export default function ModifyCar() {
   });
 
   const [originalConditions, setOriginalConditions] = useState(null);
-  const [conditions, setConditions] = useState({
-    airConditioner: true,
-    automatic: true,
-    airbag: true,
-    abs: true,
-    cruiseControl: true
-  });
+  const [conditions, setConditions] = useState({});
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,9 +53,17 @@ export default function ModifyCar() {
   
   const addNewAttribute = () => {
     if (newAttributeName.trim() !== '') {
+      // Format the feature name to be more readable
+      const formattedName = newAttributeName
+        .trim()
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('');
+
       setConditions({
         ...conditions,
-        [newAttributeName.toLowerCase().replace(/\s+/g, '_')]: true
+        [formattedName]: true
       });
       setNewAttributeName('');
       setShowAttributeInput(false);

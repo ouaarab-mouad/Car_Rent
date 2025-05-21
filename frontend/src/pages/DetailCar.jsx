@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FaMapMarkerAlt, FaUser, FaCalendarAlt, FaGasPump, FaCar, FaCog, FaChevronLeft } from 'react-icons/fa';
-import axios from 'axios';
-import './DetailCar.css';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import {
+  FaMapMarkerAlt,
+  FaUser,
+  FaCalendarAlt,
+  FaGasPump,
+  FaCar,
+  FaCog,
+  FaChevronLeft,
+} from "react-icons/fa";
+import axios from "axios";
+import "./DetailCar.css";
 
 const getColorCode = (colorName) => {
   const colorMap = {
-    'Blanc': '#FFFFFF',
-    'Noir': '#000000',
-    'Rouge': '#FF0000',
-    'Bleu': '#0000FF',
-    'Gris': '#808080',
-    'Argent': '#C0C0C0',
-    'Beige': '#F5F5DC',
-    'Vert': '#008000',
-    'Jaune': '#FFFF00',
-    'Orange': '#FFA500'
+    Blanc: "#FFFFFF",
+    Noir: "#000000",
+    Rouge: "#FF0000",
+    Bleu: "#0000FF",
+    Gris: "#808080",
+    Argent: "#C0C0C0",
+    Beige: "#F5F5DC",
+    Vert: "#008000",
+    Jaune: "#FFFF00",
+    Orange: "#FFA500",
   };
-  return colorMap[colorName] || '#CCCCCC';
+  return colorMap[colorName] || "#CCCCCC";
 };
 
 const DetailCar = () => {
@@ -26,20 +34,51 @@ const DetailCar = () => {
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Add feature mapping object
+  const featureMapping = {
+    0: "Climatisation",
+    1: "GPS",
+    2: "Bluetooth",
+    3: "USB",
+    4: "Radio",
+    5: "ABS",
+    6: "Airbags",
+    7: "Régulateur de vitesse",
+    8: "Caméra de recul",
+    9: "Parking assisté",
+    10: "Toit ouvrant",
+    11: "Sièges chauffants",
+    12: "Sièges électriques",
+    13: "Vitres électriques",
+    14: "Verrouillage centralisé",
+    15: "Alarme",
+    // Add more mappings as needed
+  };
+
+  // Add function to format feature name
+  const formatFeatureName = (feature) => {
+    // If it's a number (as string), use the mapping
+    if (/^\d+$/.test(feature)) {
+      return featureMapping[feature] || `Feature ${feature}`;
+    }
+    // Otherwise format the existing feature name
+    return feature.replace(/([A-Z])/g, " $1").trim();
+  };
+
   useEffect(() => {
     const fetchCar = async () => {
       setLoading(true);
       try {
         const res = await axios.get(`http://localhost:8000/api/voitures/${id}`);
-        console.log('Car details response:', res.data);
+        console.log("Car details response:", res.data);
         if (res.data.success) {
           setCar(res.data.data);
         } else {
-          console.error('Error in response:', res.data.message);
+          console.error("Error in response:", res.data.message);
           setCar(null);
         }
       } catch (err) {
-        console.error('Error fetching car details:', err);
+        console.error("Error fetching car details:", err);
         setCar(null);
       }
       setLoading(false);
@@ -65,11 +104,13 @@ const DetailCar = () => {
       <div className="detail-car-error">
         <h2>Voiture non trouvée!</h2>
         <p>La voiture que vous recherchez n'existe pas ou a été supprimée.</p>
-        <Link to="/listing" className="back-to-search">Retour à la recherche</Link>
+        <Link to="/listing" className="back-to-search">
+          Retour à la recherche
+        </Link>
       </div>
     );
   }
-  console.log('Car details:', car);
+  console.log("Car details:", car);
 
   return (
     <div className="detail-car-container">
@@ -79,19 +120,21 @@ const DetailCar = () => {
         </Link>
       </div>
       <div className="detail-car-header">
-        <h1>{car.marque} {car.modele}</h1>
+        <h1>
+          {car.marque} {car.modele}
+        </h1>
         <span className="detail-car-type">{car.categorie}</span>
       </div>
       <div className="detail-car-content">
         <div className="detail-car-image-section">
           <div className="detail-car-image-container">
-            <img 
-              src={car.srcimg || '/images/cars/default-car.jpg'} 
+            <img
+              src={car.srcimg || "/images/cars/default-car.jpg"}
               alt={`${car.marque} ${car.modele}`}
               className="detail-car-image"
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = '/images/cars/default-car.jpg';
+                e.target.src = "/images/cars/default-car.jpg";
               }}
             />
           </div>
@@ -103,7 +146,9 @@ const DetailCar = () => {
         <div className="detail-car-info">
           <div className="detail-car-main-info">
             <div className="info-group vehicle-info">
-              <h3><FaCar /> Information du véhicule</h3>
+              <h3>
+                <FaCar /> Information du véhicule
+              </h3>
               <div className="info-grid">
                 <div className="info-item">
                   <span className="info-label">Marque</span>
@@ -132,13 +177,15 @@ const DetailCar = () => {
                 <div className="info-item">
                   <span className="info-label">Transmission</span>
                   <span className="info-value">
-                    <FaCog className="info-icon" /> {car.conditions?.transmission || 'Manuel'}
+                    <FaCog className="info-icon" />{" "}
+                    {car.conditions?.transmission || "Manuel"}
                   </span>
                 </div>
                 <div className="info-item">
                   <span className="info-label">Carburant</span>
                   <span className="info-value">
-                    <FaGasPump className="info-icon" /> {car.conditions?.carburant || 'Essence'}
+                    <FaGasPump className="info-icon" />{" "}
+                    {car.conditions?.carburant || "Essence"}
                   </span>
                 </div>
               </div>
@@ -146,14 +193,46 @@ const DetailCar = () => {
 
             {/* Car Features Section */}
             <div className="info-group features-info">
-              <h3><FaCar /> Caractéristiques</h3>
+              <h3>
+                <FaCar /> Caractéristiques
+              </h3>
               <div className="features-container">
-                {car.conditions && Object.entries(car.conditions).map(([feature, value]) => (
-                  <div key={feature} className={`feature-badge ${value ? 'active' : 'inactive'}`}>
-                    <i className={`fas fa-${value ? 'check' : 'times'}-circle`}></i>
-                    <span>{feature.replace(/([A-Z])/g, ' $1').trim()}</span>
-                  </div>
-                ))}
+                {(() => {
+                  let cond = car.conditions;
+                  if (typeof cond === "string") {
+                    try {
+                      cond = JSON.parse(cond);
+                    } catch (e) {
+                      cond = {};
+                    }
+                  }
+                  return (
+                    cond &&
+                    Object.entries(cond).map(([feature, value]) => {
+                      const displayName = feature
+                        .split(/(?=[A-Z])/)
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ");
+                      return (
+                        <div
+                          key={feature}
+                          className={`feature-badge ${
+                            value ? "active" : "inactive"
+                          }`}
+                        >
+                          <i
+                            className={`fas fa-${
+                              value ? "check" : "times"
+                            }-circle`}
+                          ></i>
+                          <span>{displayName}</span>
+                        </div>
+                      );
+                    })
+                  );
+                })()}
               </div>
             </div>
 
@@ -162,22 +241,27 @@ const DetailCar = () => {
               <div className="rental-details">
                 <div className="info-item rental-person">
                   <span className="info-label">Loué par</span>
-                  <Link to={`/loueur/public/${car.utilisateur.id}`} className="owner-link">
+                  <Link
+                    to={`/loueur/public/${car.utilisateur.id}`}
+                    className="owner-link"
+                  >
                     <FaUser className="info-icon" />
-                    <span className="info-value owner-name">{car.utilisateur?.nom} {car.utilisateur?.prenom}</span>
+                    <span className="info-value owner-name">
+                      {car.utilisateur?.nom} {car.utilisateur?.prenom}
+                    </span>
                   </Link>
                 </div>
               </div>
             </div>
           </div>
           <div className="detail-car-actions">
-            <button 
-              className="reservation-button"
-              onClick={handleReservation}
-            >
+            <button className="reservation-button" onClick={handleReservation}>
               Réserver maintenant
             </button>
-            <a href={`tel:${car.utilisateur?.phone || '+212600000000'}`} className="contact-button">
+            <a
+              href={`tel:${car.utilisateur?.phone || "+212600000000"}`}
+              className="contact-button"
+            >
               Contacter le propriétaire
             </a>
           </div>
@@ -187,4 +271,4 @@ const DetailCar = () => {
   );
 };
 
-export default DetailCar; 
+export default DetailCar;
