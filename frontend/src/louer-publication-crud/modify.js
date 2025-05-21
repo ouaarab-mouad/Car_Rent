@@ -137,7 +137,7 @@ export default function ModifyCar() {
       console.log('Sending update request...');
       
       // Use POST with _method=PUT for Laravel to handle the request correctly
-      const response = await axios.post(`/api/cars/${id}`, formDataToSend, {
+      const response = await axios.post(`/api/voitures/${id}`, formDataToSend, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -182,23 +182,28 @@ export default function ModifyCar() {
         }
 
         console.log('Making request to fetch car data');
-        const response = await axios.get(`/api/cars/${id}`, {
+        const response = await axios.get(`/api/voitures/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
           }
         });
         
-        if (response.status !== 200) {
-          console.error('Failed to fetch car data. Status:', response.status);
-          throw new Error('Failed to fetch car data');
+        console.log('Raw response:', response);
+        
+        if (!response.data.success) {
+          throw new Error(response.data.message || 'Failed to fetch car data');
         }
 
-        console.log('Received car data:', response.data);
-        const carData = response.data;
+        const carData = response.data.data;
+        console.log('Processing car data:', carData);
         
-        // Set form data with proper null/undefined checks
-        setFormData({
+        if (!carData) {
+          throw new Error('No car data received');
+        }
+        
+        // Set form data with proper null/undefined checks and logging
+        const newFormData = {
           modele: carData.modele || '',
           marque: carData.marque || '',
           categorie: carData.categorie || '',
@@ -206,53 +211,54 @@ export default function ModifyCar() {
           ville: carData.ville || '',
           prix_par_jour: carData.prix_par_jour || '',
           classe: carData.classe || ''
-        });
+        };
+        
+        console.log('Setting form data:', newFormData);
+        setFormData(newFormData);
 
         // Set conditions from server data
         if (carData.conditions) {
-          // If conditions is a string, parse it
-          const serverConditions = typeof carData.conditions === 'string' 
-            ? JSON.parse(carData.conditions) 
-            : carData.conditions;
-          
-          console.log('Setting conditions from server:', serverConditions);
-          setConditions(serverConditions);
-          setOriginalConditions(serverConditions);
+          let serverConditions;
+          try {
+            serverConditions = typeof carData.conditions === 'string' 
+              ? JSON.parse(carData.conditions) 
+              : carData.conditions;
+            
+            console.log('Parsed conditions:', serverConditions);
+            setConditions(serverConditions);
+            setOriginalConditions(serverConditions);
+          } catch (e) {
+            console.error('Error parsing conditions:', e);
+            setConditions({});
+          }
         }
 
         // Set image preview if there's an existing image
         if (carData.srcimg) {
           console.log('Setting image preview:', carData.srcimg);
           setImagePreview(carData.srcimg);
-        } else {
-          console.log('No image found for this car');
         }
         
-        // Make sure to set loading to false when done
         setLoading(false);
         console.log('Finished loading car data');
       } catch (error) {
         console.error('Error fetching car data:', error);
+        console.error('Error details:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
+        });
         
         let errorMessage = 'Error loading car data. Please try again.';
         
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
-          console.error('Server responded with error:', error.response.status, error.response.data);
         } else if (error.request) {
-          // The request was made but no response was received
           errorMessage = 'No response from server. Please check your internet connection.';
-          console.error('No response received:', error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error('Error setting up request:', error.message);
         }
         
         setError(errorMessage);
         setLoading(false);
-        console.log('Error state set, loading set to false');
       }
     };
 
@@ -260,6 +266,11 @@ export default function ModifyCar() {
       fetchCarData();
     }
   }, [id]);
+
+  // Add a debug effect to monitor formData changes
+  useEffect(() => {
+    console.log('Current formData:', formData);
+  }, [formData]);
 
   if (loading) {
     return <div className="form-container">Loading...</div>;
@@ -308,8 +319,9 @@ export default function ModifyCar() {
                   type="text" 
                   placeholder="Entrer le modèle" 
                   className="form-input"
-                  value={formData.modele}
+                  value={formData.modele || ''}
                   onChange={(e) => handleInputChange('modele', e.target.value)}
+                  required
                 />
               </div>
 
@@ -320,8 +332,9 @@ export default function ModifyCar() {
                   type="text" 
                   placeholder="Entrer la marque" 
                   className="form-input"
-                  value={formData.marque}
+                  value={formData.marque || ''}
                   onChange={(e) => handleInputChange('marque', e.target.value)}
+                  required
                 />
               </div>
 
@@ -330,7 +343,7 @@ export default function ModifyCar() {
                 <label className="form-label">Catégorie</label>
                 <select
                   className="form-input"
-                  value={formData.categorie}
+                  value={formData.categorie || ''}
                   onChange={(e) => handleInputChange('categorie', e.target.value)}
                   required
                 >

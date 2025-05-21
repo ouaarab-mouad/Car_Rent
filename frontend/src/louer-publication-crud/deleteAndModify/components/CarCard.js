@@ -29,7 +29,7 @@ function CarCard({ car, onDelete }) {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:8000/api/cars/${id}`, {
+      const response = await axios.delete(`http://localhost:8000/api/voitures/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',
