@@ -151,7 +151,7 @@ export default function ModifyCar() {
       
       if (response.status === 200) {
         alert('Voiture mise à jour avec succès!');
-        navigate('/manage-cars');
+        navigate('/loueur/manage-cars');
       }
     } catch (error) {
       if (error.response?.status === 401) {
