@@ -61,6 +61,8 @@ class VoitureController extends Controller
                 'ville' => $voiture->ville,
                 'prix_par_jour' => $voiture->prix_par_jour,
                 'status' => $voiture->status,
+                'classe' => $voiture->classe,
+                "consumption-per-km" => $voiture->{"consumption-per-km"},
                 'disponible' => $voiture->disponible,
                 'srcimg' => $voiture->srcimg,
                 'conditions' => $voiture->conditions,

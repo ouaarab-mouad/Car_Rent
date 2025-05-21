@@ -186,7 +186,8 @@ export const UserDetails = () => {
                                         rel="noopener noreferrer"
                                         className="view-button"
                                     >
-                                        <i className="fas fa-external-link-alt"></i> View Full Size
+                                        <i className="fas fa-external-link-alt"></i>
+                                        View Full Size
                                     </a>
                                 </div>
                             </div>
@@ -197,10 +198,12 @@ export const UserDetails = () => {
                 {user.requested_role === 'loueur' && user.role_status === 'pending' && (
                     <div className="approval-actions">
                         <button onClick={handleApprove} className="approve-button">
-                            <i className="fas fa-check"></i> Approve as Loueur
+                            <i className="fas fa-check-circle"></i>
+                            Approve as Loueur
                         </button>
                         <button onClick={handleReject} className="reject-button">
-                            <i className="fas fa-times"></i> Reject Request
+                            <i className="fas fa-times-circle"></i>
+                            Reject Request
                         </button>
                     </div>
                 )}

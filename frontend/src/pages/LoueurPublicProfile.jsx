@@ -192,7 +192,7 @@ console.log("token",localStorage.getItem("token"))
         )}
        
       </div>
-      <div className="container">
+      <div className="container-comment">
       
         <div className="comment-form-container">
             <h2>Add a Comment</h2>
